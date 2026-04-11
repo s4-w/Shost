@@ -1,8 +1,10 @@
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { useLanguage } from "@/src/context/LanguageContext";
 
 export default function Hero() {
+  const { t, language } = useLanguage();
 
   return (
     <section className="relative h-screen flex items-center overflow-hidden bg-surface">
@@ -25,18 +27,21 @@ export default function Hero() {
             transition={{ duration: 1, ease: "easeOut" }}
           >
             <h1 className="text-6xl md:text-8xl lg:text-9xl text-primary font-serif leading-[0.9] mb-8 tracking-tighter">
-              Maximisez vos <br />
-              <span className="italic text-accent">revenus</span>
+              {language === 'fr' ? (
+                <>Maximisez vos <br /><span className="italic text-accent">revenus</span></>
+              ) : (
+                <>Maximize your <br /><span className="italic text-accent">income</span></>
+              )}
             </h1>
             <p className="text-primary text-lg md:text-xl mb-12 max-w-lg mx-auto leading-relaxed font-medium">
-              Une gestion d'exception pour vos locations saisonnières. Libérez-vous des contraintes et augmentez votre rentabilité dès aujourd'hui.
+              {t("hero.subtitle")}
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Button 
                 onClick={() => document.getElementById('estimateur')?.scrollIntoView({ behavior: 'smooth' })}
                 className="bg-primary hover:bg-accent text-white rounded-none px-12 py-8 text-sm uppercase tracking-[0.2em] transition-all shadow-xl hover:shadow-accent/20"
               >
-                Estimer mes revenus
+                {t("hero.cta.estimate")}
                 <ArrowRight className="ml-3 w-5 h-5" />
               </Button>
               <Button 
@@ -44,7 +49,7 @@ export default function Hero() {
                 onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
                 className="border-primary/20 text-primary hover:bg-primary hover:text-white rounded-none px-12 py-8 text-sm uppercase tracking-[0.2em] transition-all"
               >
-                Nos Services
+                {t("nav.services")}
               </Button>
             </div>
           </motion.div>
@@ -58,7 +63,6 @@ export default function Hero() {
         transition={{ delay: 1.5, duration: 1 }}
         className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
       >
-        <span className="text-primary text-[9px] uppercase tracking-[0.3em] font-bold">Explorer</span>
         <div className="w-[1px] h-16 bg-gradient-to-b from-accent to-transparent" />
       </motion.div>
     </section>

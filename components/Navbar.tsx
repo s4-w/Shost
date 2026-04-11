@@ -1,25 +1,26 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Logo from "@/components/Logo";
 import ContactModal from "./ContactModal";
-
-const navLinks = [
-  { name: "Accueil", href: "#" },
-  { name: "Services", href: "#services" },
-  { name: "Estimation", href: "#estimateur" },
-  { name: "Avantages", href: "#avantages" },
-  { name: "Processus", href: "#processus" },
-  { name: "FAQ", href: "#faq" },
-  { name: "Témoignages", href: "#temoignages" },
-  { name: "À propos", href: "#a-propos" },
-];
+import { useLanguage } from "@/src/context/LanguageContext";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const { language, setLanguage, t } = useLanguage();
+
+  const navLinks = [
+    { name: t("nav.home"), href: "#" },
+    { name: t("nav.services"), href: "#services" },
+    { name: t("nav.estimate"), href: "#estimateur" },
+    { name: t("nav.advantages"), href: "#avantages" },
+    { name: t("nav.process"), href: "#processus" },
+    { name: t("nav.faq"), href: "#faq" },
+    { name: t("nav.about"), href: "#a-propos" },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,11 +54,29 @@ export default function Navbar() {
               {link.name}
             </a>
           ))}
+          
+          {/* Language Switcher */}
+          <div className="flex items-center gap-3 border-l border-primary/10 pl-10 h-6">
+            <button 
+              onClick={() => setLanguage('fr')}
+              className={`text-[10px] font-bold tracking-widest transition-colors ${language === 'fr' ? 'text-accent' : 'text-primary/40 hover:text-primary'}`}
+            >
+              FR
+            </button>
+            <span className="text-[10px] text-primary/10">|</span>
+            <button 
+              onClick={() => setLanguage('en')}
+              className={`text-[10px] font-bold tracking-widest transition-colors ${language === 'en' ? 'text-accent' : 'text-primary/40 hover:text-primary'}`}
+            >
+              EN
+            </button>
+          </div>
+
           <Button 
             onClick={() => setIsContactOpen(true)}
             className="bg-primary hover:bg-accent text-white rounded-none px-10 py-6 uppercase tracking-[0.2em] text-[10px] transition-all"
           >
-            Contact
+            {t("nav.contact")}
           </Button>
         </div>
 
@@ -89,13 +108,30 @@ export default function Navbar() {
                     {link.name}
                   </a>
                 ))}
+
+                {/* Mobile Language Switcher */}
+                <div className="flex items-center gap-6 mt-6">
+                  <button 
+                    onClick={() => setLanguage('fr')}
+                    className={`text-sm font-bold tracking-[0.2em] transition-colors ${language === 'fr' ? 'text-accent' : 'text-primary/40'}`}
+                  >
+                    FRANÇAIS
+                  </button>
+                  <button 
+                    onClick={() => setLanguage('en')}
+                    className={`text-sm font-bold tracking-[0.2em] transition-colors ${language === 'en' ? 'text-accent' : 'text-primary/40'}`}
+                  >
+                    ENGLISH
+                  </button>
+                </div>
+
                 <Button 
                   onClick={() => {
                     setIsContactOpen(true);
                   }}
                   className="bg-primary hover:bg-accent text-white rounded-none w-full py-8 uppercase tracking-[0.2em] text-sm mt-10"
                 >
-                  Nous Contacter
+                  {t("nav.contact")}
                 </Button>
               </div>
             </SheetContent>

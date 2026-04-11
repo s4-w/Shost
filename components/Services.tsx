@@ -10,78 +10,110 @@ import {
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import ServiceModal from "./ServiceModal";
-
-const services = [
-  {
-    title: "Optimisation d'Annonce",
-    description: "Photos professionnelles et rédaction persuasive pour un taux d'occupation maximal.",
-    icon: Camera,
-    details: [
-      "Shooting photo professionnel HDR",
-      "Rédaction optimisée SEO multi-langues",
-      "Configuration des paramètres de réservation",
-      "Mise en avant des points forts du bien"
-    ]
-  },
-  {
-    title: "Gestion des Voyageurs",
-    description: "Communication 24/7, sélection rigoureuse et assistance personnalisée.",
-    icon: Users,
-    details: [
-      "Réponse aux demandes en moins de 15 min",
-      "Vérification d'identité des voyageurs",
-      "Gestion des cautions et litiges",
-      "Livret d'accueil numérique personnalisé"
-    ]
-  },
-  {
-    title: "Ménage & Blanchisserie",
-    description: "Nettoyage professionnel entre chaque séjour avec des standards hôteliers.",
-    icon: Sparkles,
-    details: [
-      "Nettoyage complet aux normes hôtelières",
-      "Linge de maison premium fourni",
-      "Réapprovisionnement des consommables",
-      "Contrôle qualité après chaque passage"
-    ]
-  },
-  {
-    title: "Check-in & Check-out",
-    description: "Accueil physique ou boîte à clés sécurisée pour une flexibilité totale.",
-    icon: Key,
-    details: [
-      "Accueil personnalisé des voyageurs",
-      "Remise des clés sécurisée",
-      "État des lieux d'entrée et de sortie",
-      "Présentation du quartier et des commodités"
-    ]
-  },
-  {
-    title: "Gestion des Prix",
-    description: "Algorithmes de tarification dynamique pour optimiser vos revenus chaque jour.",
-    icon: TrendingUp,
-    details: [
-      "Ajustement quotidien des tarifs",
-      "Analyse de la concurrence locale",
-      "Optimisation selon les événements locaux",
-      "Stratégie de remplissage dernière minute"
-    ]
-  },
-  {
-    title: "Maintenance",
-    description: "Interventions rapides pour les petits travaux et entretien régulier.",
-    icon: CalendarCheck,
-    details: [
-      "Petit bricolage et réparations d'urgence",
-      "Suivi de l'état général du bien",
-      "Coordination d'artisans spécialisés",
-      "Entretien préventif régulier"
-    ]
-  },
-];
+import { useLanguage } from "@/src/context/LanguageContext";
 
 export default function Services() {
-  const [selectedService, setSelectedService] = useState<typeof services[0] | null>(null);
+  const { t, language } = useLanguage();
+  const [selectedService, setSelectedService] = useState<any | null>(null);
+
+  const services = [
+    {
+      title: language === 'fr' ? "Optimisation d'Annonce" : "Listing Optimization",
+      description: language === 'fr' ? "Photos professionnelles et rédaction persuasive pour un taux d'occupation maximal." : "Professional photos and persuasive writing for maximum occupancy.",
+      icon: Camera,
+      details: language === 'fr' ? [
+        "Shooting photo professionnel HDR",
+        "Rédaction optimisée SEO multi-langues",
+        "Configuration des paramètres de réservation",
+        "Mise en avant des points forts du bien"
+      ] : [
+        "Professional HDR photo shoot",
+        "Multi-language SEO optimized writing",
+        "Booking settings configuration",
+        "Highlighting property strengths"
+      ]
+    },
+    {
+      title: language === 'fr' ? "Gestion des Voyageurs" : "Guest Management",
+      description: language === 'fr' ? "Communication 24/7, sélection rigoureuse et assistance personnalisée." : "24/7 communication, rigorous selection, and personalized assistance.",
+      icon: Users,
+      details: language === 'fr' ? [
+        "Réponse aux demandes en moins de 15 min",
+        "Vérification d'identité des voyageurs",
+        "Gestion des cautions et litiges",
+        "Livret d'accueil numérique personnalisé"
+      ] : [
+        "Response to requests in under 15 min",
+        "Guest identity verification",
+        "Security deposit and dispute management",
+        "Personalized digital welcome book"
+      ]
+    },
+    {
+      title: language === 'fr' ? "Ménage & Blanchisserie" : "Cleaning & Laundry",
+      description: language === 'fr' ? "Nettoyage professionnel entre chaque séjour avec des standards hôteliers." : "Professional cleaning between stays with hotel standards.",
+      icon: Sparkles,
+      details: language === 'fr' ? [
+        "Nettoyage complet aux normes hôtelières",
+        "Linge de maison premium fourni",
+        "Réapprovisionnement des consommables",
+        "Contrôle qualité après chaque passage"
+      ] : [
+        "Full cleaning to hotel standards",
+        "Premium linens provided",
+        "Consumables replenishment",
+        "Quality control after each visit"
+      ]
+    },
+    {
+      title: language === 'fr' ? "Check-in & Check-out" : "Check-in & Check-out",
+      description: language === 'fr' ? "Accueil physique ou boîte à clés sécurisée pour une flexibilité totale." : "Physical welcome or secure key box for total flexibility.",
+      icon: Key,
+      details: language === 'fr' ? [
+        "Accueil personnalisé des voyageurs",
+        "Remise des clés sécurisée",
+        "État des lieux d'entrée et de sortie",
+        "Présentation du quartier et des commodités"
+      ] : [
+        "Personalized guest welcome",
+        "Secure key handover",
+        "Entry and exit inventory",
+        "Neighborhood and amenities presentation"
+      ]
+    },
+    {
+      title: language === 'fr' ? "Gestion des Prix" : "Price Management",
+      description: language === 'fr' ? "Algorithmes de tarification dynamique pour optimiser vos revenus chaque jour." : "Dynamic pricing algorithms to optimize your income every day.",
+      icon: TrendingUp,
+      details: language === 'fr' ? [
+        "Ajustement quotidien des tarifs",
+        "Analyse de la concurrence locale",
+        "Optimisation selon les événements locaux",
+        "Stratégie de remplissage dernière minute"
+      ] : [
+        "Daily price adjustment",
+        "Local competition analysis",
+        "Optimization based on local events",
+        "Last-minute filling strategy"
+      ]
+    },
+    {
+      title: language === 'fr' ? "Maintenance" : "Maintenance",
+      description: language === 'fr' ? "Interventions rapides pour les petits travaux et entretien régulier." : "Quick interventions for small repairs and regular maintenance.",
+      icon: CalendarCheck,
+      details: language === 'fr' ? [
+        "Petit bricolage et réparations d'urgence",
+        "Suivi de l'état général du bien",
+        "Coordination d'artisans spécialisés",
+        "Entretien préventif régulier"
+      ] : [
+        "Small DIY and emergency repairs",
+        "General property condition monitoring",
+        "Specialized craftsman coordination",
+        "Regular preventive maintenance"
+      ]
+    },
+  ];
 
   return (
     <section id="services" className="py-24 bg-secondary">
@@ -93,7 +125,7 @@ export default function Services() {
             viewport={{ once: true }}
             className="text-primary uppercase tracking-[0.4em] text-xs font-bold mb-4 block"
           >
-            Notre Expertise
+            {language === 'fr' ? 'Notre Expertise' : 'Our Expertise'}
           </motion.span>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -102,7 +134,7 @@ export default function Services() {
             transition={{ delay: 0.1 }}
             className="text-4xl md:text-5xl font-serif mb-6"
           >
-            Une gestion complète pour votre sérénité
+            {language === 'fr' ? 'Une gestion complète pour votre sérénité' : 'Complete management for your peace of mind'}
           </motion.h2>
           <motion.div 
             initial={{ scaleX: 0 }}
@@ -134,7 +166,7 @@ export default function Services() {
                     {service.description}
                   </p>
                   <div className="mt-8 flex items-center gap-2 text-accent text-[10px] uppercase tracking-[0.2em] font-bold opacity-0 group-hover:opacity-100 transition-opacity">
-                    Voir les détails <span>→</span>
+                    {language === 'fr' ? 'Voir les détails' : 'View details'} <span>→</span>
                   </div>
                 </CardContent>
               </Card>

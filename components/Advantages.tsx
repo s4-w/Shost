@@ -1,25 +1,28 @@
 import { motion } from "motion/react";
 import { Clock, BarChart3, ShieldCheck } from "lucide-react";
-
-const advantages = [
-  {
-    title: "Gain de Temps",
-    description: "Libérez-vous des contraintes quotidiennes. Nous nous occupons de tout, vous profitez de votre temps libre.",
-    icon: Clock,
-  },
-  {
-    title: "Revenus Boostés",
-    description: "Grâce à notre expertise et nos outils de tarification, nos propriétaires voient leurs revenus augmenter de 30% en moyenne.",
-    icon: BarChart3,
-  },
-  {
-    title: "Tranquillité d'Esprit",
-    description: "Assurance, sélection des voyageurs et entretien régulier. Votre bien est entre de bonnes mains.",
-    icon: ShieldCheck,
-  },
-];
+import { useLanguage } from "@/src/context/LanguageContext";
 
 export default function Advantages() {
+  const { language } = useLanguage();
+
+  const advantages = [
+    {
+      title: language === 'fr' ? "Gain de Temps" : "Time Saving",
+      description: language === 'fr' ? "Libérez-vous des contraintes quotidiennes. Nous nous occupons de tout, vous profitez de votre temps libre." : "Free yourself from daily constraints. We take care of everything, you enjoy your free time.",
+      icon: Clock,
+    },
+    {
+      title: language === 'fr' ? "Revenus Boostés" : "Boosted Income",
+      description: language === 'fr' ? "Grâce à notre expertise et nos outils de tarification, nos propriétaires voient leurs revenus augmenter de 30% en moyenne." : "Thanks to our expertise and pricing tools, our owners see their income increase by 30% on average.",
+      icon: BarChart3,
+    },
+    {
+      title: language === 'fr' ? "Tranquillité d'Esprit" : "Peace of Mind",
+      description: language === 'fr' ? "Assurance, sélection des voyageurs et entretien régulier. Votre bien est entre de bonnes mains." : "Insurance, guest selection, and regular maintenance. Your property is in good hands.",
+      icon: ShieldCheck,
+    },
+  ];
+
   return (
     <section id="avantages" className="py-24 bg-surface text-primary overflow-hidden">
       <div className="container mx-auto px-6">
@@ -31,7 +34,7 @@ export default function Advantages() {
               viewport={{ once: true }}
               className="text-primary uppercase tracking-[0.4em] text-xs font-bold mb-6 block"
             >
-              Pourquoi SHOST ?
+              {language === 'fr' ? 'Pourquoi SHOST ?' : 'Why SHOST?'}
             </motion.span>
             <motion.h2 
               initial={{ opacity: 0, y: 20 }}
@@ -40,10 +43,12 @@ export default function Advantages() {
               transition={{ delay: 0.1 }}
               className="text-4xl md:text-6xl font-serif mb-8 leading-tight tracking-tight"
             >
-              L'excellence au service de votre patrimoine
+              {language === 'fr' ? "L'excellence au service de votre patrimoine" : "Excellence at the service of your heritage"}
             </motion.h2>
             <p className="text-primary text-lg mb-12 leading-relaxed max-w-xl">
-              Nous ne sommes pas juste une conciergerie. Nous sommes votre partenaire stratégique pour transformer votre bien en une source de revenus pérenne et haut de gamme.
+              {language === 'fr' 
+                ? "Nous ne sommes pas juste une conciergerie. Nous sommes votre partenaire stratégique pour transformer votre bien en une source de revenus pérenne et haut de gamme."
+                : "We are not just a concierge service. We are your strategic partner to transform your property into a sustainable and high-end source of income."}
             </p>
 
             <div className="space-y-12">
@@ -84,7 +89,9 @@ export default function Advantages() {
               />
               <div className="absolute -bottom-10 -left-10 bg-secondary p-12 shadow-2xl border border-primary/5">
                 <span className="text-7xl font-serif font-bold block mb-2 text-primary">+30%</span>
-                <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary">Revenus moyens constatés</span>
+                <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary">
+                  {language === 'fr' ? 'Revenus moyens constatés' : 'Average income observed'}
+                </span>
               </div>
             </motion.div>
             {/* Decorative element */}

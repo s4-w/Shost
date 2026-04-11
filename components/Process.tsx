@@ -1,30 +1,33 @@
 import { motion } from "motion/react";
 import { Search, Camera, Key, Wallet } from "lucide-react";
-
-const steps = [
-  {
-    icon: Search,
-    title: "Estimation & Rencontre",
-    description: "Nous analysons le potentiel de votre bien et définissons ensemble vos objectifs de revenus lors d'une visite personnalisée."
-  },
-  {
-    icon: Camera,
-    title: "Mise en Valeur",
-    description: "Shooting photo professionnel, rédaction d'annonces optimisées et diffusion sur les plus grandes plateformes de réservation."
-  },
-  {
-    icon: Key,
-    title: "Gestion Opérationnelle",
-    description: "Nous prenons le relais : sélection des voyageurs, accueil, ménage hôtelier et maintenance de votre bien 24/7."
-  },
-  {
-    icon: Wallet,
-    title: "Revenus & Sérénité",
-    description: "Suivez vos performances en temps réel sur votre espace propriétaire et recevez vos revenus chaque mois, sans effort."
-  }
-];
+import { useLanguage } from "@/src/context/LanguageContext";
 
 export default function Process() {
+  const { language } = useLanguage();
+
+  const steps = [
+    {
+      icon: Search,
+      title: language === 'fr' ? "Estimation & Rencontre" : "Estimation & Meeting",
+      description: language === 'fr' ? "Nous analysons le potentiel de votre bien et définissons ensemble vos objectifs de revenus lors d'une visite personnalisée." : "We analyze your property's potential and define your income goals together during a personalized visit."
+    },
+    {
+      icon: Camera,
+      title: language === 'fr' ? "Mise en Valeur" : "Highlighting",
+      description: language === 'fr' ? "Shooting photo professionnel, rédaction d'annonces optimisées et diffusion sur les plus grandes plateformes de réservation." : "Professional photo shoot, optimized listing writing, and distribution on major booking platforms."
+    },
+    {
+      icon: Key,
+      title: language === 'fr' ? "Gestion Opérationnelle" : "Operational Management",
+      description: language === 'fr' ? "Nous prenons le relais : sélection des voyageurs, accueil, ménage hôtelier et maintenance de votre bien 24/7." : "We take over: guest selection, welcome, hotel-standard cleaning, and 24/7 property maintenance."
+    },
+    {
+      icon: Wallet,
+      title: language === 'fr' ? "Revenus & Sérénité" : "Income & Peace of Mind",
+      description: language === 'fr' ? "Suivez vos performances en temps réel sur votre espace propriétaire et recevez vos revenus chaque mois, sans effort." : "Track your performance in real-time and receive your income every month, effortlessly."
+    }
+  ];
+
   return (
     <section id="processus" className="py-24 bg-white">
       <div className="container mx-auto px-6">
@@ -35,7 +38,7 @@ export default function Process() {
             viewport={{ once: true }}
             className="text-primary uppercase tracking-[0.3em] text-[10px] font-bold mb-4 block"
           >
-            Simplicité & Transparence
+            {language === 'fr' ? 'Simplicité & Transparence' : 'Simplicity & Transparency'}
           </motion.span>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -44,7 +47,7 @@ export default function Process() {
             transition={{ delay: 0.1 }}
             className="text-4xl md:text-5xl font-serif text-primary"
           >
-            Votre projet en 4 étapes
+            {language === 'fr' ? 'Votre projet en 4 étapes' : 'Your project in 4 steps'}
           </motion.h2>
         </div>
 

@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Calculator, TrendingUp, Home, Building2, Star, Sparkles, Check, ChevronRight, ChevronLeft } from "lucide-react";
+import { Calculator, TrendingUp, Home, Building2, Star, Sparkles, Check, ChevronRight, ChevronLeft, Info, X, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Logo from "@/components/Logo";
+import { useLanguage } from "@/src/context/LanguageContext";
 
 type Step = 1 | 2 | 3;
 
 export default function RevenueEstimator() {
+  const { t, language } = useLanguage();
   const [step, setStep] = useState<Step>(1);
   const [city, setCity] = useState("");
   const [propertyType, setPropertyType] = useState<"apartment" | "house" | "villa">("apartment");
@@ -17,6 +19,7 @@ export default function RevenueEstimator() {
   
   const [estimation, setEstimation] = useState<{ monthly: number; annual: number } | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
+  const [isInfoOpen, setIsInfoOpen] = useState(false);
 
   const toggleAmenity = (amenity: string) => {
     setAmenities(prev => 
@@ -53,12 +56,12 @@ export default function RevenueEstimator() {
   };
 
   const amenityList = [
-    { id: "pool", label: "Piscine", icon: "🏊‍♂️" },
-    { id: "terrace", label: "Terrasse", icon: "☀️" },
-    { id: "parking", label: "Parking", icon: "🚗" },
-    { id: "ac", label: "Climatisation", icon: "❄️" },
-    { id: "view", label: "Vue Exceptionnelle", icon: "🌅" },
-    { id: "gym", label: "Salle de sport", icon: "💪" },
+    { id: "pool", label: language === 'fr' ? "Piscine" : "Pool", icon: "🏊‍♂️" },
+    { id: "terrace", label: language === 'fr' ? "Terrasse" : "Terrace", icon: "☀️" },
+    { id: "parking", label: language === 'fr' ? "Parking" : "Parking", icon: "🚗" },
+    { id: "ac", label: language === 'fr' ? "Climatisation" : "AC", icon: "❄️" },
+    { id: "view", label: language === 'fr' ? "Vue Exceptionnelle" : "Great View", icon: "🌅" },
+    { id: "gym", label: language === 'fr' ? "Salle de sport" : "Gym", icon: "💪" },
   ];
 
   return (
@@ -80,14 +83,22 @@ export default function RevenueEstimator() {
                 viewport={{ once: true }}
                 className="text-accent uppercase tracking-[0.3em] text-[10px] font-bold mb-6 block"
               >
-                Simulateur de revenus
+                {t("estimator.tagline")}
               </motion.span>
               <h2 className="text-4xl md:text-6xl font-serif mb-8 leading-tight text-white">
-                Estimez vos <br />gains potentiels
+                {language === 'fr' ? <>Estimez vos <br />gains potentiels</> : <>Estimate your <br />potential earnings</>}
               </h2>
               <p className="text-white/70 text-lg leading-relaxed mb-12">
-                Découvrez en moins de 2 minutes combien votre propriété pourrait vous rapporter avec une gestion professionnelle SHOST.
+                {t("estimator.desc")}
               </p>
+
+              <button 
+                onClick={() => setIsInfoOpen(true)}
+                className="flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-bold text-accent hover:text-white transition-colors mb-12 group"
+              >
+                <Info className="w-4 h-4" />
+                <span className="border-b border-accent/30 group-hover:border-white transition-colors">{t("estimator.method")}</span>
+              </button>
 
               <div className="space-y-8">
                 {[1, 2, 3].map((s) => (
@@ -102,10 +113,10 @@ export default function RevenueEstimator() {
                       <p className={`text-[10px] uppercase tracking-[0.2em] font-bold ${
                         step === s ? "text-white" : "text-white/40"
                       }`}>
-                        {s === 1 ? "Localisation" : s === 2 ? "Caractéristiques" : "Prestations"}
+                        {s === 1 ? t("estimator.step1") : s === 2 ? t("estimator.step2") : t("estimator.step3")}
                       </p>
                       <p className={`text-xs ${step === s ? "text-white/60" : "text-white/20"}`}>
-                        {s === 1 ? "Ville et type de bien" : s === 2 ? "Standing et chambres" : "Équipements exclusifs"}
+                        {s === 1 ? t("estimator.step1.desc") : s === 2 ? t("estimator.step2.desc") : t("estimator.step3.desc")}
                       </p>
                     </div>
                   </div>
@@ -122,7 +133,9 @@ export default function RevenueEstimator() {
                     </div>
                   ))}
                 </div>
-                <p className="text-[10px] text-white/60 uppercase tracking-widest">+50 propriétaires nous font confiance</p>
+                <p className="text-[10px] text-white/60 uppercase tracking-widest">
+                  {language === 'fr' ? '+50 propriétaires nous font confiance' : '+50 owners trust us'}
+                </p>
               </div>
             </div>
           </div>
@@ -142,20 +155,20 @@ export default function RevenueEstimator() {
                     >
                       <div className="space-y-6">
                         <label className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary flex items-center gap-2">
-                          <Home className="w-3 h-3 text-accent" /> Où se situe votre bien ?
+                          <Home className="w-3 h-3 text-accent" /> {t("estimator.city.label")}
                         </label>
                         <Input 
                           required
                           value={city}
                           onChange={(e) => setCity(e.target.value)}
-                          placeholder="Ex: Paris 8ème, Cannes, Courchevel..." 
+                          placeholder={t("estimator.city.placeholder")} 
                           className="rounded-none border-primary/10 focus:border-accent py-10 text-xl px-8 shadow-sm"
                         />
                       </div>
 
                       <div className="space-y-6">
                         <label className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary flex items-center gap-2">
-                          <Building2 className="w-3 h-3 text-accent" /> Type de propriété
+                          <Building2 className="w-3 h-3 text-accent" /> {t("estimator.type.label")}
                         </label>
                         <div className="grid grid-cols-3 gap-6">
                           {(["apartment", "house", "villa"] as const).map((type) => (
@@ -167,7 +180,7 @@ export default function RevenueEstimator() {
                               }`}
                             >
                               <span className="text-xs font-bold uppercase tracking-widest">
-                                {type === "apartment" ? "Appartement" : type === "house" ? "Maison" : "Villa"}
+                                {type === "apartment" ? t("estimator.type.apt") : type === "house" ? t("estimator.type.house") : t("estimator.type.villa")}
                               </span>
                             </button>
                           ))}
@@ -179,7 +192,7 @@ export default function RevenueEstimator() {
                         onClick={() => setStep(2)}
                         className="w-full bg-primary hover:bg-accent text-white rounded-none py-10 uppercase tracking-[0.2em] text-xs font-bold transition-all group shadow-2xl"
                       >
-                        Continuer l'estimation
+                        {t("estimator.continue")}
                         <ChevronRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                       </Button>
                     </motion.div>
@@ -195,7 +208,7 @@ export default function RevenueEstimator() {
                     >
                       <div className="space-y-6">
                         <label className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary flex items-center gap-2">
-                          <Star className="w-3 h-3 text-accent" /> Standing de la propriété
+                          <Star className="w-3 h-3 text-accent" /> {t("estimator.standing.label")}
                         </label>
                         <div className="space-y-4">
                           {(["standard", "premium", "luxury"] as const).map((s) => (
@@ -208,10 +221,10 @@ export default function RevenueEstimator() {
                             >
                               <div className="text-left">
                                 <p className="text-sm font-bold uppercase tracking-widest mb-1">
-                                  {s === "standard" ? "Standard" : s === "premium" ? "Premium" : "Ultra Luxe"}
+                                  {s === "standard" ? t("estimator.standing.standard") : s === "premium" ? t("estimator.standing.premium") : t("estimator.standing.luxury")}
                                 </p>
                                 <p className={`text-xs ${standing === s ? "text-white/60" : "text-primary/40"}`}>
-                                  {s === "standard" ? "Confortable et moderne" : s === "premium" ? "Prestations haut de gamme" : "Exceptionnel, design & services"}
+                                  {s === "standard" ? t("estimator.standing.standard.desc") : s === "premium" ? t("estimator.standing.premium.desc") : t("estimator.standing.luxury.desc")}
                                 </p>
                               </div>
                               {standing === s && <Check className="w-5 h-5 text-accent" />}
@@ -222,7 +235,7 @@ export default function RevenueEstimator() {
 
                       <div className="space-y-6">
                         <label className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary flex items-center gap-2">
-                          <Calculator className="w-3 h-3 text-accent" /> Nombre de chambres
+                          <Calculator className="w-3 h-3 text-accent" /> {t("estimator.rooms.label")}
                         </label>
                         <div className="flex items-center gap-4">
                           {[1, 2, 3, 4, "5+"].map((num) => (
@@ -247,13 +260,13 @@ export default function RevenueEstimator() {
                           onClick={() => setStep(1)}
                           className="flex-1 border-primary/10 text-primary rounded-none py-10 uppercase tracking-[0.2em] text-xs font-bold"
                         >
-                          <ChevronLeft className="mr-2 w-4 h-4" /> Retour
+                          <ChevronLeft className="mr-2 w-4 h-4" /> {t("estimator.back")}
                         </Button>
                         <Button 
                           onClick={() => setStep(3)}
                           className="flex-1 bg-primary hover:bg-accent text-white rounded-none py-10 uppercase tracking-[0.2em] text-xs font-bold transition-all"
                         >
-                          Suivant
+                          {t("estimator.next")}
                         </Button>
                       </div>
                     </motion.div>
@@ -269,7 +282,7 @@ export default function RevenueEstimator() {
                     >
                       <div className="space-y-6">
                         <label className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary flex items-center gap-2">
-                          <Sparkles className="w-3 h-3 text-accent" /> Équipements & Atouts
+                          <Sparkles className="w-3 h-3 text-accent" /> {t("estimator.amenities.label")}
                         </label>
                         <div className="grid grid-cols-2 gap-4">
                           {amenityList.map((item) => (
@@ -293,14 +306,14 @@ export default function RevenueEstimator() {
                           onClick={() => setStep(2)}
                           className="flex-1 border-primary/10 text-primary rounded-none py-10 uppercase tracking-[0.2em] text-xs font-bold"
                         >
-                          <ChevronLeft className="mr-2 w-4 h-4" /> Retour
+                          <ChevronLeft className="mr-2 w-4 h-4" /> {t("estimator.back")}
                         </Button>
                         <Button 
                           onClick={calculateRevenue}
                           disabled={isCalculating}
                           className="flex-1 bg-accent hover:bg-primary text-white rounded-none py-10 uppercase tracking-[0.2em] text-xs font-bold transition-all shadow-2xl shadow-accent/20"
                         >
-                          {isCalculating ? "Analyse du marché..." : "Calculer mes gains"}
+                          {isCalculating ? t("estimator.calculating") : t("estimator.calculate")}
                         </Button>
                       </div>
                     </motion.div>
@@ -318,19 +331,19 @@ export default function RevenueEstimator() {
                 </div>
                 
                 <div className="mb-12">
-                  <h4 className="text-primary uppercase tracking-[0.4em] text-[10px] font-bold mb-6">Estimation mensuelle brute</h4>
+                  <h4 className="text-primary uppercase tracking-[0.4em] text-[10px] font-bold mb-6">{t("estimator.result.label")}</h4>
                   <p className="text-8xl md:text-9xl font-serif text-primary mb-4 leading-none">
                     {estimation.monthly.toLocaleString()}€
                   </p>
                   <div className="h-[2px] w-32 bg-accent mx-auto mb-8" />
                   <p className="text-primary/40 uppercase tracking-[0.3em] text-xs font-bold">
-                    Potentiel annuel : <span className="text-primary">{estimation.annual.toLocaleString()}€</span>
+                    {t("estimator.result.annual")} : <span className="text-primary">{estimation.annual.toLocaleString()}€</span>
                   </p>
                 </div>
 
                 <div className="bg-secondary/50 p-10 mb-12 border border-primary/5">
                   <p className="text-primary/70 leading-relaxed italic text-lg">
-                    "Votre bien à {city} présente un fort potentiel. Avec notre gestion optimisée, vous pourriez atteindre ces revenus dès le premier trimestre."
+                    "{t("estimator.result.quote").replace("{city}", city)}"
                   </p>
                 </div>
 
@@ -339,14 +352,14 @@ export default function RevenueEstimator() {
                     onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
                     className="flex-1 bg-primary hover:bg-accent text-white rounded-none py-10 uppercase tracking-[0.2em] text-xs font-bold transition-all shadow-xl"
                   >
-                    Étude gratuite complète
+                    {t("estimator.result.cta")}
                   </Button>
                   <Button 
                     onClick={reset}
                     variant="outline"
                     className="flex-1 border-primary/10 text-primary rounded-none py-10 uppercase tracking-[0.2em] text-xs font-bold"
                   >
-                    Nouvelle simulation
+                    {t("estimator.result.reset")}
                   </Button>
                 </div>
               </motion.div>
@@ -354,6 +367,90 @@ export default function RevenueEstimator() {
           </div>
         </div>
       </div>
+
+      {/* Methodology Modal */}
+      <AnimatePresence>
+        {isInfoOpen && (
+          <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 md:p-6">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsInfoOpen(false)}
+              className="absolute inset-0 bg-primary/80 backdrop-blur-md"
+            />
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative bg-white w-full max-w-2xl shadow-2xl p-8 md:p-12 overflow-y-auto max-h-[90vh]"
+            >
+              <button 
+                onClick={() => setIsInfoOpen(false)}
+                className="absolute top-6 right-6 text-primary/40 hover:text-primary transition-colors"
+              >
+                <X className="w-6 h-6" />
+              </button>
+
+              <div className="space-y-10">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto mb-6 p-3">
+                    <Logo className="w-full" light={false} />
+                  </div>
+                  <h3 className="text-3xl font-serif text-primary mb-4">{t("method.title")}</h3>
+                  <p className="text-primary/60 text-sm leading-relaxed max-w-md mx-auto">
+                    {t("method.desc")}
+                  </p>
+                </div>
+
+                <div className="grid gap-8">
+                  {[
+                    {
+                      title: t("method.geo.title"),
+                      text: t("method.geo.desc")
+                    },
+                    {
+                      title: t("method.standing.title"),
+                      text: t("method.standing.desc")
+                    },
+                    {
+                      title: t("method.amenities.title"),
+                      text: t("method.amenities.desc")
+                    },
+                    {
+                      title: t("method.shost.title"),
+                      text: t("method.shost.desc")
+                    }
+                  ].map((item, i) => (
+                    <div key={i} className="flex gap-6">
+                      <span className="text-accent font-serif text-2xl opacity-50">0{i+1}</span>
+                      <div>
+                        <h4 className="text-xs font-bold uppercase tracking-widest text-primary mb-2">{item.title}</h4>
+                        <p className="text-primary/60 text-sm leading-relaxed">{item.text}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="bg-secondary/50 p-6 border border-primary/5 text-center">
+                  <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-primary/40 mb-2">{t("method.note")}</p>
+                  <p className="text-xs text-primary/70 italic">
+                    {t("method.note.desc")}
+                  </p>
+                </div>
+
+                <Button 
+                  onClick={() => setIsInfoOpen(false)}
+                  className="w-full bg-primary text-white rounded-none py-6 uppercase tracking-[0.2em] text-xs font-bold"
+                >
+                  {t("method.close")}
+                </Button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

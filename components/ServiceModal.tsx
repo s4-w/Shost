@@ -3,6 +3,7 @@ import { X, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/Logo";
 import { useState } from "react";
+import { useLanguage } from "@/src/context/LanguageContext";
 
 interface ServiceModalProps {
   isOpen: boolean;
@@ -15,6 +16,7 @@ interface ServiceModalProps {
 }
 
 export default function ServiceModal({ isOpen, onClose, service }: ServiceModalProps) {
+  const { language } = useLanguage();
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   if (!service) return null;
@@ -43,28 +45,37 @@ export default function ServiceModal({ isOpen, onClose, service }: ServiceModalP
                 onClose();
               }}
               className="absolute top-6 right-6 z-[110] text-primary/40 hover:text-primary transition-colors p-2 hover:bg-primary/5 rounded-full"
-              aria-label="Fermer"
+              aria-label={language === 'fr' ? "Fermer" : "Close"}
             >
               <X className="w-6 h-6" />
             </button>
 
             {/* Content */}
             <div className="flex-1 p-10 md:p-16">
-              <span className="text-accent uppercase tracking-[0.4em] text-[10px] font-bold mb-4 block">Service Premium</span>
+              <span className="text-accent uppercase tracking-[0.4em] text-[10px] font-bold mb-4 block">
+                {language === 'fr' ? 'Service Premium' : 'Premium Service'}
+              </span>
               <h3 className="text-4xl font-serif mb-6 text-primary">{service.title}</h3>
               <p className="text-primary text-lg leading-relaxed mb-8">
                 {service.description}
               </p>
               
               <div className="space-y-4 mb-10">
-                <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-primary">Ce qui est inclus :</p>
+                <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-primary">
+                  {language === 'fr' ? 'Ce qui est inclus :' : 'What is included:'}
+                </p>
                 <ul className="grid grid-cols-1 gap-3">
-                  {(service.details || [
+                  {(service.details || (language === 'fr' ? [
                     "Gestion professionnelle et rigoureuse",
                     "Reporting détaillé mensuel",
                     "Support dédié 24/7",
                     "Optimisation continue des performances"
-                  ]).map((item, i) => (
+                  ] : [
+                    "Professional and rigorous management",
+                    "Detailed monthly reporting",
+                    "Dedicated 24/7 support",
+                    "Continuous performance optimization"
+                  ])).map((item, i) => (
                     <li key={i} className="flex items-start gap-3 text-sm text-primary">
                       <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
                       {item}
@@ -80,7 +91,7 @@ export default function ServiceModal({ isOpen, onClose, service }: ServiceModalP
                 }}
                 className="bg-primary hover:bg-accent text-white rounded-none px-10 py-6 uppercase tracking-[0.2em] text-[10px] transition-all"
               >
-                En savoir plus
+                {language === 'fr' ? 'En savoir plus' : 'Learn more'}
               </Button>
             </div>
 
