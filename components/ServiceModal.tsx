@@ -52,9 +52,6 @@ export default function ServiceModal({ isOpen, onClose, service }: ServiceModalP
 
             {/* Content */}
             <div className="flex-1 p-10 md:p-16">
-              <span className="text-accent uppercase tracking-[0.4em] text-[10px] font-bold mb-4 block">
-                {language === 'fr' ? 'Service Premium' : 'Premium Service'}
-              </span>
               <h3 className="text-4xl font-serif mb-6 text-primary">{service.title}</h3>
               <p className="text-primary text-lg leading-relaxed mb-8">
                 {service.description}
@@ -77,7 +74,7 @@ export default function ServiceModal({ isOpen, onClose, service }: ServiceModalP
                     "Continuous performance optimization"
                   ])).map((item, i) => (
                     <li key={i} className="flex items-start gap-3 text-sm text-primary">
-                      <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+                      <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                       {item}
                     </li>
                   ))}

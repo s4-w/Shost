@@ -22,12 +22,12 @@ export default function Services() {
       description: language === 'fr' ? "Photos professionnelles et rédaction persuasive pour un taux d'occupation maximal." : "Professional photos and persuasive writing for maximum occupancy.",
       icon: Camera,
       details: language === 'fr' ? [
-        "Shooting photo professionnel HDR",
+        "Shooting photo HDR",
         "Rédaction optimisée SEO multi-langues",
         "Configuration des paramètres de réservation",
         "Mise en avant des points forts du bien"
       ] : [
-        "Professional HDR photo shoot",
+        "HDR photo shoot",
         "Multi-language SEO optimized writing",
         "Booking settings configuration",
         "Highlighting property strengths"
@@ -55,12 +55,12 @@ export default function Services() {
       icon: Sparkles,
       details: language === 'fr' ? [
         "Nettoyage complet aux normes hôtelières",
-        "Linge de maison premium fourni",
+        "Entretien du linge propriétaire",
         "Réapprovisionnement des consommables",
         "Contrôle qualité après chaque passage"
       ] : [
         "Full cleaning to hotel standards",
-        "Premium linens provided",
+        "Owner's linen maintenance",
         "Consumables replenishment",
         "Quality control after each visit"
       ]

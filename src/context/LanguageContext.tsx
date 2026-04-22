@@ -14,11 +14,12 @@ const translations = {
     "nav.home": "Accueil",
     "nav.services": "Services",
     "nav.estimate": "Estimation",
-    "nav.advantages": "Avantages",
+    "nav.frustrations": "Frustrations",
     "nav.process": "Processus",
     "nav.faq": "FAQ",
     "nav.about": "À propos",
     "nav.contact": "Contact",
+    "nav.fees": "Honoraires",
     
     // Hero
     "hero.tagline": "Conciergerie de Luxe & Gestion Locative",
@@ -94,11 +95,12 @@ const translations = {
     "nav.home": "Home",
     "nav.services": "Services",
     "nav.estimate": "Estimation",
-    "nav.advantages": "Advantages",
+    "nav.frustrations": "Frustrations",
     "nav.process": "Process",
     "nav.faq": "FAQ",
     "nav.about": "About",
     "nav.contact": "Contact",
+    "nav.fees": "Fees",
     
     // Hero
     "hero.tagline": "Luxury Concierge & Rental Management",

@@ -6,8 +6,9 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Services from "@/components/Services";
+import Fees from "@/components/Fees";
 import RevenueEstimator from "@/components/RevenueEstimator";
-import Advantages from "@/components/Advantages";
+import Frustrations from "@/components/Frustrations";
 import Process from "@/components/Process";
 import FAQ from "@/components/FAQ";
 import About from "@/components/About";
@@ -24,8 +25,9 @@ export default function App() {
         <main>
           <Hero />
           <Services />
+          <Fees />
           <RevenueEstimator />
-          <Advantages />
+          <Frustrations />
           <Process />
           <FAQ />
           <About />

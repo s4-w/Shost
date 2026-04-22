@@ -14,7 +14,7 @@ export default function Process() {
     {
       icon: Camera,
       title: language === 'fr' ? "Mise en Valeur" : "Highlighting",
-      description: language === 'fr' ? "Shooting photo professionnel, rédaction d'annonces optimisées et diffusion sur les plus grandes plateformes de réservation." : "Professional photo shoot, optimized listing writing, and distribution on major booking platforms."
+      description: language === 'fr' ? "Shooting photo, rédaction d'annonces optimisées et diffusion sur les plus grandes plateformes de réservation." : "Photo shoot, optimized listing writing, and distribution on major booking platforms."
     },
     {
       icon: Key,

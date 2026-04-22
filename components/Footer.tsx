@@ -1,9 +1,19 @@
 import { Instagram, Facebook, Linkedin } from "lucide-react";
 import Logo from "@/components/Logo";
 import { useLanguage } from "@/src/context/LanguageContext";
+import { useState } from "react";
+import LegalModal, { LegalType } from "./LegalModal";
 
 export default function Footer() {
   const { t, language } = useLanguage();
+  const [legalModal, setLegalModal] = useState<{ isOpen: boolean; type: LegalType }>({
+    isOpen: false,
+    type: 'mentions'
+  });
+
+  const openLegal = (type: LegalType) => {
+    setLegalModal({ isOpen: true, type });
+  };
 
   return (
     <footer className="bg-primary text-white pt-24 pb-12">
@@ -36,7 +46,8 @@ export default function Footer() {
             <ul className="space-y-5 text-sm font-medium">
               <li><a href="#" className="hover:text-accent transition-colors">{t("nav.home")}</a></li>
               <li><a href="#services" className="hover:text-accent transition-colors">{t("nav.services")}</a></li>
-              <li><a href="#avantages" className="hover:text-accent transition-colors">{language === 'fr' ? 'Vos Avantages' : 'Your Advantages'}</a></li>
+              <li><a href="#honoraires" className="hover:text-accent transition-colors">{t("nav.fees")}</a></li>
+              <li><a href="#frustrations" className="hover:text-accent transition-colors">{t("nav.frustrations")}</a></li>
               <li><a href="#faq" className="hover:text-accent transition-colors">FAQ</a></li>
             </ul>
           </div>
@@ -46,10 +57,38 @@ export default function Footer() {
               {language === 'fr' ? 'Légal' : 'Legal'}
             </h4>
             <ul className="space-y-5 text-sm font-medium">
-              <li><a href="#" className="hover:text-accent transition-colors">{language === 'fr' ? 'Mentions Légales' : 'Legal Notice'}</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors">{language === 'fr' ? 'Confidentialité' : 'Privacy Policy'}</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors">{language === 'fr' ? 'CGV' : 'Terms of Service'}</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors">Cookies</a></li>
+              <li>
+                <button 
+                  onClick={() => openLegal('mentions')}
+                  className="hover:text-accent transition-colors cursor-pointer"
+                >
+                  {language === 'fr' ? 'Mentions Légales' : 'Legal Notice'}
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => openLegal('privacy')}
+                  className="hover:text-accent transition-colors cursor-pointer"
+                >
+                  {language === 'fr' ? 'Confidentialité' : 'Privacy Policy'}
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => openLegal('terms')}
+                  className="hover:text-accent transition-colors cursor-pointer"
+                >
+                  {language === 'fr' ? 'CGV' : 'Terms of Service'}
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => openLegal('cookies')}
+                  className="hover:text-accent transition-colors cursor-pointer"
+                >
+                  Cookies
+                </button>
+              </li>
             </ul>
           </div>
 
@@ -81,6 +120,12 @@ export default function Footer() {
           </div>
         </div>
       </div>
+
+      <LegalModal 
+        isOpen={legalModal.isOpen} 
+        onClose={() => setLegalModal({ ...legalModal, isOpen: false })}
+        type={legalModal.type}
+      />
     </footer>
   );
 }
