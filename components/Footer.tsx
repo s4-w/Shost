@@ -18,8 +18,8 @@ export default function Footer() {
   return (
     <footer className="bg-primary text-white pt-24 pb-12">
       <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-24">
-          <div className="space-y-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-24 text-center lg:text-left">
+          <div className="space-y-8 flex flex-col items-center lg:items-start">
             <a href="#" className="flex items-center group max-w-[160px]">
               <Logo className="w-full" light={true} />
             </a>
@@ -41,7 +41,7 @@ export default function Footer() {
             </div>
           </div>
 
-          <div>
+          <div className="flex flex-col items-center lg:items-start">
             <h4 className="text-xs uppercase tracking-[0.3em] font-bold mb-10 text-white/20">Navigation</h4>
             <ul className="space-y-5 text-sm font-medium">
               <li><a href="#" className="hover:text-accent transition-colors">{t("nav.home")}</a></li>
@@ -52,7 +52,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className="flex flex-col items-center lg:items-start">
             <h4 className="text-xs uppercase tracking-[0.3em] font-bold mb-10 text-white/20">
               {language === 'fr' ? 'Légal' : 'Legal'}
             </h4>
@@ -92,14 +92,14 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className="flex flex-col items-center lg:items-start">
             <h4 className="text-xs uppercase tracking-[0.3em] font-bold mb-10 text-white/20">Newsletter</h4>
             <p className="text-white/40 mb-8 text-sm">
               {language === 'fr' 
                 ? 'Recevez nos conseils exclusifs pour optimiser vos locations.' 
                 : 'Receive our exclusive advice to optimize your rentals.'}
             </p>
-            <form className="flex gap-2">
+            <form className="flex gap-2 w-full max-w-sm">
               <input 
                 type="email" 
                 placeholder={language === 'fr' ? "Votre email" : "Your email"} 

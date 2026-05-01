@@ -14,13 +14,39 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => {
+
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      phone: "Non spécifié (Modal)",
+      city: "Général (Modal)",
+      message: formData.get("message"),
+      source: "Formulaire de contact (Modal)"
+    };
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+      } else {
+        const errorData = await response.json();
+        alert(`Erreur: ${errorData.error}`);
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+      alert("Une erreur est survenue lors de l'envoi.");
+    } finally {
       setIsSubmitting(false);
-      setIsSubmitted(true);
-    }, 1500);
+    }
   };
 
   return (
@@ -53,24 +79,30 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
             </button>
 
             {/* Left Side - Info */}
-            <div className="hidden md:block w-2/5 bg-primary p-12 text-white">
+            <div className="hidden md:flex md:w-2/5 bg-primary p-12 text-white flex-col justify-center items-start text-left">
               <h3 className="text-3xl font-serif mb-8">Contact Privilégié</h3>
-              <p className="text-white mb-12 text-sm leading-relaxed">
+              <p className="text-white mb-12 text-sm leading-relaxed opacity-80">
                 Notre équipe vous accompagne avec passion dans la valorisation de votre patrimoine immobilier.
               </p>
               
-              <div className="space-y-8">
-                <div className="flex items-center gap-4">
-                  <Phone className="text-accent w-5 h-5" />
-                  <span className="text-sm">+33 1 23 45 67 89</span>
+              <div className="space-y-8 w-full">
+                <div className="flex flex-row items-center gap-4">
+                  <div className="w-10 h-10 border border-white/10 flex items-center justify-center rounded-full shrink-0">
+                    <Phone className="text-accent w-4 h-4" />
+                  </div>
+                  <span className="text-sm">06 26 29 06 49</span>
                 </div>
-                <div className="flex items-center gap-4">
-                  <Mail className="text-accent w-5 h-5" />
-                  <span className="text-sm">contact@shost.fr</span>
+                <div className="flex flex-row items-center gap-4">
+                  <div className="w-10 h-10 border border-white/10 flex items-center justify-center rounded-full shrink-0">
+                    <Mail className="text-accent w-4 h-4" />
+                  </div>
+                  <span className="text-sm">shost.services@gmail.com</span>
                 </div>
-                <div className="flex items-center gap-4">
-                  <MapPin className="text-accent w-5 h-5" />
-                  <span className="text-sm">Paris, France</span>
+                <div className="flex flex-row items-center gap-4">
+                  <div className="w-10 h-10 border border-white/10 flex items-center justify-center rounded-full shrink-0">
+                    <MapPin className="text-accent w-4 h-4" />
+                  </div>
+                  <span className="text-sm">Grenoble</span>
                 </div>
               </div>
             </div>
@@ -89,15 +121,15 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   >
                     <div className="space-y-2">
                       <label className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary">Nom Complet</label>
-                      <Input required placeholder="Jean Dupont" className="rounded-none border-primary/10 py-6" />
+                      <Input name="name" required placeholder="Jean Dupont" className="rounded-none border-primary/10 py-6" />
                     </div>
                     <div className="space-y-2">
                       <label className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary">Email</label>
-                      <Input required type="email" placeholder="jean@example.com" className="rounded-none border-primary/10 py-6" />
+                      <Input name="email" required type="email" placeholder="jean@example.com" className="rounded-none border-primary/10 py-6" />
                     </div>
                     <div className="space-y-2">
                       <label className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary">Message</label>
-                      <Textarea required placeholder="Votre projet..." className="rounded-none border-primary/10 min-h-[120px]" />
+                      <Textarea name="message" required placeholder="Votre projet..." className="rounded-none border-primary/10 min-h-[120px]" />
                     </div>
                     <Button 
                       type="submit"

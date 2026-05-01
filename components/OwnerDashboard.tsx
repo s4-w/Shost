@@ -201,7 +201,7 @@ export default function OwnerDashboard() {
                   <h4 className="text-[10px] uppercase tracking-widest font-bold text-primary">Activités récentes</h4>
                   {[
                     { msg: "Nouvelle réservation - 4 nuits", time: "Il y a 2h", icon: CheckCircle2 },
-                    { msg: "Ménage terminé - Appartement Paris 8", time: "Il y a 5h", icon: CheckCircle2 }
+                    { msg: "Ménage terminé - Appartement Grenoble Centre", time: "Il y a 5h", icon: CheckCircle2 }
                   ].map((item, i) => (
                     <div key={i} className="flex items-center justify-between p-4 bg-white border border-primary/5">
                       <div className="flex items-center gap-3">

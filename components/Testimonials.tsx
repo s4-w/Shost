@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 const testimonials = [
   {
     name: "Sophie Laurent",
-    role: "Propriétaire à Paris",
+    role: "Propriétaire à Grenoble",
     content: "Depuis que SHOST gère mon appartement, je n'ai plus aucun souci. Les voyageurs sont ravis et mes revenus ont considérablement augmenté.",
     image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1974&auto=format&fit=crop",
   },

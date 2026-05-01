@@ -9,7 +9,7 @@ export default function Fees() {
     {
       icon: Zap,
       title: language === 'fr' ? "Zéro Frais Fixes" : "Zero Fixed Fees",
-      desc: language === 'fr' ? "Pas d'abonnement, pas de frais de mise en ligne. Nous investissons sur votre bien." : "No subscription, no listing fees. We invest in your property."
+      desc: language === 'fr' ? "Pas d'abonnement mensuel. Nous investissons sur votre bien pour maximiser son potentiel." : "No monthly subscription. We invest in your property to maximize its potential."
     },
     {
       icon: TrendingUp,
@@ -86,6 +86,34 @@ export default function Fees() {
               ))}
             </div>
 
+            {/* Standard Fees Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="border-t border-white/10 pt-12 mb-12"
+            >
+              <h4 className="text-[10px] uppercase tracking-[0.4em] font-bold text-accent mb-8">
+                {language === 'fr' ? "Frais Classiques" : "Classic Fees"}
+              </h4>
+              <div className="space-y-6">
+                <div className="flex justify-between items-center group">
+                  <span className="text-sm text-white/60 group-hover:text-white transition-colors">
+                    {language === 'fr' ? "Commission de Gestion" : "Management Commission"}
+                  </span>
+                  <div className="flex-grow mx-4 border-b border-dashed border-white/10"></div>
+                  <span className="text-sm font-bold text-accent">24% TTC</span>
+                </div>
+                <div className="flex justify-between items-center group">
+                  <span className="text-sm text-white/60 group-hover:text-white transition-colors">
+                    {language === 'fr' ? "Frais de démarrage" : "Starting fees"}
+                  </span>
+                  <div className="flex-grow mx-4 border-b border-dashed border-white/10"></div>
+                  <span className="text-sm font-bold text-accent">100€</span>
+                </div>
+              </div>
+            </motion.div>
+
             {/* Optional Services */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -93,30 +121,30 @@ export default function Fees() {
               viewport={{ once: true }}
               className="border-t border-white/10 pt-12"
             >
-              <h4 className="text-[10px] uppercase tracking-[0.4em] font-bold text-accent mb-8">
+              <h4 className="text-[10px] uppercase tracking-[0.4em] font-bold text-accent mb-8 opacity-60">
                 {language === 'fr' ? "Options d'achats" : "Purchase Options"}
               </h4>
               <div className="space-y-6">
                 <div className="flex justify-between items-center group">
-                  <span className="text-sm text-white/60 group-hover:text-white transition-colors">
+                  <span className="text-sm text-white/40 group-hover:text-white/60 transition-colors">
                     {language === 'fr' ? "Boîte à clés & Installation" : "Key box & Installation"}
                   </span>
-                  <div className="flex-grow mx-4 border-b border-dashed border-white/10"></div>
-                  <span className="text-sm font-bold text-accent">45€</span>
+                  <div className="flex-grow mx-4 border-b border-dashed border-white/5"></div>
+                  <span className="text-sm font-bold text-accent/60">45€</span>
                 </div>
                 <div className="flex justify-between items-center group">
-                  <span className="text-sm text-white/60 group-hover:text-white transition-colors">
+                  <span className="text-sm text-white/40 group-hover:text-white/60 transition-colors">
                     {language === 'fr' ? "Shooting Photo Professionnel" : "Professional Photo Shoot"}
                   </span>
-                  <div className="flex-grow mx-4 border-b border-dashed border-white/10"></div>
-                  <span className="text-sm font-bold text-accent">{language === 'fr' ? "dès 90€" : "from 90€"}</span>
+                  <div className="flex-grow mx-4 border-b border-dashed border-white/5"></div>
+                  <span className="text-sm font-bold text-accent/60">{language === 'fr' ? "dès 90€" : "from 90€"}</span>
                 </div>
                 <div className="flex justify-between items-center group">
-                  <span className="text-sm text-white/60 group-hover:text-white transition-colors">
-                    {language === 'fr' ? "Solutions accès intelligent (Poignée connectée...)" : "Smart access solutions (Smart lock...)"}
+                  <span className="text-sm text-white/40 group-hover:text-white/60 transition-colors">
+                    {language === 'fr' ? "Solutions accès intelligent (Digicode connecté, serrure connectée...)" : "Smart access solutions (Smart keypad, smart lock...)"}
                   </span>
-                  <div className="flex-grow mx-4 border-b border-dashed border-white/10"></div>
-                  <span className="text-sm font-bold text-accent">{language === 'fr' ? "Sur devis" : "On quote"}</span>
+                  <div className="flex-grow mx-4 border-b border-dashed border-white/5"></div>
+                  <span className="text-sm font-bold text-accent/60">{language === 'fr' ? "Sur devis" : "On quote"}</span>
                 </div>
               </div>
             </motion.div>
@@ -127,26 +155,32 @@ export default function Fees() {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="relative p-1 md:p-12 overflow-hidden group"
+              className="relative p-1 md:p-6 lg:p-12 overflow-hidden group"
             >
               {/* Card Container */}
-              <div className="bg-white/[0.02] border border-white/10 backdrop-blur-xl p-10 md:p-16 relative z-10">
+              <div className="bg-white/[0.02] border border-white/10 backdrop-blur-xl p-8 md:p-14 relative z-10">
                 <div className="flex flex-col items-center text-center">
                   <div className="w-20 h-[1px] bg-accent/50 mb-10"></div>
-                  <h3 className="text-sm font-bold uppercase tracking-[0.5em] text-accent mb-8">
-                    {language === 'fr' ? 'Commission Unique' : 'Unique Commission'}
-                  </h3>
                   
-                  <div className="relative mb-10 flex items-center justify-center">
-                    <div className="text-[9rem] md:text-[12rem] font-serif leading-none opacity-10 blur-sm absolute">24</div>
-                    <div className="text-[10rem] md:text-[13rem] font-serif leading-none text-white relative z-10 transition-transform duration-700 group-hover:scale-105">
-                      24<span className="text-4xl md:text-5xl font-sans font-light text-accent absolute top-8 md:top-12 -right-12 md:-right-16">%</span>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center mb-12 w-full">
+                    <div className="relative group/price">
+                      <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-accent mb-4">Commission</p>
+                      <div className="text-7xl md:text-8xl font-serif text-white relative inline-block transition-transform duration-500 group-hover/price:scale-110">
+                        24<span className="text-2xl font-sans font-light text-accent ml-1">%</span>
+                      </div>
+                    </div>
+                    
+                    <div className="h-[1px] md:h-20 w-20 md:w-[1px] bg-white/10 mx-auto md:mx-0"></div>
+
+                    <div className="relative group/price">
+                      <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-accent mb-4">{language === 'fr' ? 'Frais de démarrage' : 'Startup fee'}</p>
+                      <div className="text-7xl md:text-8xl font-serif text-white relative inline-block transition-transform duration-500 group-hover/price:scale-110">
+                        100<span className="text-2xl font-sans font-light text-accent ml-1">€</span>
+                      </div>
                     </div>
                   </div>
 
-                  <p className="text-2xl font-serif text-white/80 mb-6 italic">
-                    {language === 'fr' ? "Gestion complète, transparence totale." : "Full management, total transparency."}
-                  </p>
+                  <div className="w-full h-[1px] bg-white/5 mb-10"></div>
                   
                   <div className="space-y-4 mb-12 w-full max-w-xs mx-auto">
                     <div className="flex items-center gap-3 text-white/40 group/check">

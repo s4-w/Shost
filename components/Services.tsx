@@ -72,13 +72,13 @@ export default function Services() {
       details: language === 'fr' ? [
         "Accueil personnalisé des voyageurs",
         "Remise des clés sécurisée",
-        "État des lieux d'entrée et de sortie",
-        "Présentation du quartier et des commodités"
+        "Solution accès intelligent (Serrure & Digicode)",
+        "État des lieux d'entrée et de sortie"
       ] : [
         "Personalized guest welcome",
         "Secure key handover",
-        "Entry and exit inventory",
-        "Neighborhood and amenities presentation"
+        "Smart access solution (Lock & Keypad)",
+        "Entry and exit inventory"
       ]
     },
     {
@@ -152,14 +152,26 @@ export default function Services() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
+              whileHover="hover"
               transition={{ delay: index * 0.1 }}
               onClick={() => setSelectedService(service)}
               className="cursor-pointer"
             >
-              <Card className="border border-primary/5 shadow-sm bg-surface hover:bg-white hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 group h-full rounded-none">
+              <Card className="border border-primary/5 shadow-sm bg-surface hover:bg-white hover:shadow-2xl transition-all duration-500 group h-full rounded-none">
                 <CardContent className="p-10">
                   <div className="w-16 h-16 bg-secondary border border-primary/5 flex items-center justify-center mb-8 group-hover:bg-primary transition-colors">
-                    <service.icon className="text-primary group-hover:text-white transition-colors w-7 h-7" />
+                    <motion.div
+                      variants={{
+                        hover: { 
+                          scale: 1.2, 
+                          rotate: 8,
+                          y: -2
+                        }
+                      }}
+                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                    >
+                      <service.icon className="text-primary group-hover:text-white transition-colors w-7 h-7" />
+                    </motion.div>
                   </div>
                   <h3 className="text-2xl font-serif mb-4">{service.title}</h3>
                   <p className="text-primary leading-relaxed text-sm">

@@ -28,27 +28,47 @@ export default function EstimatorModal({ isOpen, onClose }: EstimatorModalProps)
     );
   };
 
-  const calculateRevenue = () => {
+  const calculateRevenue = async () => {
     setIsCalculating(true);
     
-    setTimeout(() => {
-      // Logic for estimation
-      let basePrice = city.toLowerCase().includes("paris") ? 180 : 100;
-      
-      // Multipliers
-      const typeMultiplier = propertyType === "villa" ? 2.5 : propertyType === "house" ? 1.8 : 1;
-      const standingMultiplier = standing === "luxury" ? 2 : standing === "premium" ? 1.4 : 1;
-      const amenityBonus = amenities.length * 25;
-      
-      const dailyRate = (basePrice * typeMultiplier * standingMultiplier) + amenityBonus;
-      const monthlyRevenue = Math.round(dailyRate * 22); // 22 nights avg
-      
-      setEstimation({
-        monthly: monthlyRevenue,
-        annual: monthlyRevenue * 12
+    // Logic for estimation calculation
+    let basePrice = city.toLowerCase().includes("grenoble") ? 140 : 100;
+    const typeMultiplier = propertyType === "villa" ? 2.5 : propertyType === "house" ? 1.8 : 1;
+    const standingMultiplier = standing === "luxury" ? 2 : standing === "premium" ? 1.4 : 1;
+    const amenityBonus = amenities.length * 25;
+    
+    const dailyRate = (basePrice * typeMultiplier * standingMultiplier) + amenityBonus;
+    const monthlyRevenue = Math.round(dailyRate * 22);
+    const est = {
+      monthly: monthlyRevenue,
+      annual: monthlyRevenue * 12
+    };
+
+    // Send lead to backend
+    try {
+      await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: "Lead Estimateur",
+          email: "En attente de contact",
+          phone: "N/A",
+          city: city,
+          message: `Simulation effectuée:
+            - Type: ${propertyType}
+            - Chambres: ${rooms}
+            - Standing: ${standing}
+            - Équipements: ${amenities.join(", ")}
+            - Estimation: ${est.monthly}€/mois`,
+          source: "Estimateur de revenus"
+        }),
       });
-      setIsCalculating(false);
-    }, 2000);
+    } catch (err) {
+      console.error("Failed to send estimator lead:", err);
+    }
+    
+    setEstimation(est);
+    setIsCalculating(false);
   };
 
   const reset = () => {
@@ -64,8 +84,8 @@ export default function EstimatorModal({ isOpen, onClose }: EstimatorModalProps)
     { id: "terrace", label: "Terrasse", icon: "☀️" },
     { id: "parking", label: "Parking", icon: "🚗" },
     { id: "ac", label: "Climatisation", icon: "❄️" },
+    { id: "smart_access", label: "Accès Connecté", icon: "🔐" },
     { id: "view", label: "Vue Exceptionnelle", icon: "🌅" },
-    { id: "gym", label: "Salle de sport", icon: "💪" },
   ];
 
   return (
@@ -154,7 +174,7 @@ export default function EstimatorModal({ isOpen, onClose }: EstimatorModalProps)
                             required
                             value={city}
                             onChange={(e) => setCity(e.target.value)}
-                            placeholder="Ex: Paris 8ème, Cannes, Courchevel..." 
+                            placeholder="Ex: Grenoble, Meylan, Saint-Ismier..." 
                             className="rounded-none border-primary/10 focus:border-accent py-8 text-lg px-6 shadow-sm"
                           />
                         </div>

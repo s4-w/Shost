@@ -11,15 +11,39 @@ export default function Contact() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate API call
-    setTimeout(() => {
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      phone: formData.get("phone") || "Non spécifié",
+      city: formData.get("city"),
+      message: formData.get("message"),
+      source: "Formulaire de contact (Page principale)"
+    };
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+      } else {
+        const errorData = await response.json();
+        alert(language === 'fr' ? `Erreur: ${errorData.error}` : `Error: ${errorData.error}`);
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+      alert(language === 'fr' ? "Une erreur est survenue lors de l'envoi." : "An error occurred while sending.");
+    } finally {
       setIsSubmitting(false);
-      setIsSubmitted(true);
-    }, 1500);
+    }
   };
 
   return (
@@ -27,46 +51,48 @@ export default function Contact() {
       <div className="container mx-auto px-6">
         <div className="bg-white shadow-2xl flex flex-col lg:flex-row overflow-hidden border border-primary/5">
           {/* Contact Info */}
-          <div className="lg:w-2/5 bg-primary text-white p-12 md:p-20">
-            <h2 className="text-5xl font-serif mb-10 leading-tight text-white">
+          <div className="lg:w-2/5 bg-primary text-white p-12 md:p-20 flex flex-col justify-center text-left">
+            <h2 className="text-4xl md:text-5xl font-serif mb-10 leading-tight text-white">
               {language === 'fr' ? 'Parlons de votre projet' : 'Let\'s talk about your project'}
             </h2>
-            <p className="text-white mb-16 leading-relaxed text-lg">
+            <p className="text-white mb-16 leading-relaxed text-lg opacity-80">
               {language === 'fr' 
                 ? "Vous souhaitez déléguer la gestion de votre bien ou obtenir une estimation ? Notre équipe dédiée est à votre entière disposition."
                 : "Would you like to delegate the management of your property or get an estimate? Our dedicated team is at your full disposal."}
             </p>
 
-            <div className="space-y-10">
-              <div className="flex items-center gap-8 group">
-                <div className="w-14 h-14 border border-white/10 flex items-center justify-center rounded-full group-hover:border-accent transition-colors">
+            <div className="space-y-12 flex flex-col items-start">
+              <div className="flex flex-row items-center gap-8 group w-full">
+                <div className="w-14 h-14 border border-white/10 flex items-center justify-center rounded-full group-hover:border-accent transition-colors shrink-0">
                   <Phone className="text-accent w-6 h-6" />
                 </div>
-                <div>
+                <div className="text-left">
                   <p className="text-[10px] uppercase tracking-[0.3em] text-white mb-2 font-bold">
                     {language === 'fr' ? 'Téléphone' : 'Phone'}
                   </p>
-                  <p className="text-xl font-medium">+33 1 23 45 67 89</p>
+                  <p className="text-lg md:text-xl font-medium tracking-wide">06 26 29 06 49</p>
                 </div>
               </div>
-              <div className="flex items-center gap-8 group">
-                <div className="w-14 h-14 border border-white/10 flex items-center justify-center rounded-full group-hover:border-accent transition-colors">
+              <div className="flex flex-row items-center gap-8 group w-full">
+                <div className="w-14 h-14 border border-white/10 flex items-center justify-center rounded-full group-hover:border-accent transition-colors shrink-0">
                   <Mail className="text-accent w-6 h-6" />
                 </div>
-                <div>
+                <div className="text-left">
                   <p className="text-[10px] uppercase tracking-[0.3em] text-white mb-2 font-bold">Email</p>
-                  <p className="text-xl font-medium">contact@shost.fr</p>
+                  <p className="text-xl font-medium">shost.services@gmail.com</p>
                 </div>
               </div>
-              <div className="flex items-center gap-8 group">
-                <div className="w-14 h-14 border border-white/10 flex items-center justify-center rounded-full group-hover:border-accent transition-colors">
+              <div className="flex flex-row items-center gap-8 group w-full">
+                <div className="w-14 h-14 border border-white/10 flex items-center justify-center rounded-full group-hover:border-accent transition-colors shrink-0">
                   <MapPin className="text-accent w-6 h-6" />
                 </div>
-                <div>
+                <div className="text-left">
                   <p className="text-[10px] uppercase tracking-[0.3em] text-white mb-2 font-bold">
                     {language === 'fr' ? 'Adresse' : 'Address'}
                   </p>
-                  <p className="text-xl font-medium">123 Avenue des Champs-Élysées, Paris</p>
+                  <p className="text-lg md:text-xl font-medium opacity-90">
+                    Grenoble
+                  </p>
                 </div>
               </div>
             </div>
@@ -89,22 +115,22 @@ export default function Contact() {
                       <label className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary">
                         {language === 'fr' ? 'Nom Complet' : 'Full Name'}
                       </label>
-                      <Input required placeholder={language === 'fr' ? "Jean Dupont" : "John Doe"} className="rounded-none border-primary/5 bg-white focus:border-accent transition-all py-8 px-6 shadow-sm" />
+                      <Input name="name" required placeholder={language === 'fr' ? "Jean Dupont" : "John Doe"} className="rounded-none border-primary/5 bg-white focus:border-accent transition-all py-8 px-6 shadow-sm" />
                     </div>
                     <div className="space-y-3">
                       <label className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary">Email</label>
-                      <Input required type="email" placeholder="jean@example.com" className="rounded-none border-primary/5 bg-white focus:border-accent transition-all py-8 px-6 shadow-sm" />
+                      <Input name="email" required type="email" placeholder="jean@example.com" className="rounded-none border-primary/5 bg-white focus:border-accent transition-all py-8 px-6 shadow-sm" />
                     </div>
                   </div>
                   <div className="space-y-3">
                     <label className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary">
                       {language === 'fr' ? 'Ville du bien' : 'Property city'}
                     </label>
-                    <Input required placeholder="Paris, Lyon, Bordeaux..." className="rounded-none border-primary/5 bg-white focus:border-accent transition-all py-8 px-6 shadow-sm" />
+                    <Input name="city" required placeholder="Grenoble, Meylan, Saint-Ismier..." className="rounded-none border-primary/5 bg-white focus:border-accent transition-all py-8 px-6 shadow-sm" />
                   </div>
                   <div className="space-y-3">
                     <label className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary">Message</label>
-                    <Textarea required placeholder={language === 'fr' ? "Parlez-nous de votre bien..." : "Tell us about your property..."} className="rounded-none border-primary/5 bg-white focus:border-accent transition-all min-h-[180px] p-6 shadow-sm" />
+                    <Textarea name="message" required placeholder={language === 'fr' ? "Parlez-nous de votre bien..." : "Tell us about your property..."} className="rounded-none border-primary/5 bg-white focus:border-accent transition-all min-h-[180px] p-6 shadow-sm" />
                   </div>
                   <Button 
                     type="submit"
