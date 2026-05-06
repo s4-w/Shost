@@ -44,29 +44,6 @@ export default function EstimatorModal({ isOpen, onClose }: EstimatorModalProps)
       annual: monthlyRevenue * 12
     };
 
-    // Send lead to backend
-    try {
-      await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: "Lead Estimateur",
-          email: "En attente de contact",
-          phone: "N/A",
-          city: city,
-          message: `Simulation effectuée:
-            - Type: ${propertyType}
-            - Chambres: ${rooms}
-            - Standing: ${standing}
-            - Équipements: ${amenities.join(", ")}
-            - Estimation: ${est.monthly}€/mois`,
-          source: "Estimateur de revenus"
-        }),
-      });
-    } catch (err) {
-      console.error("Failed to send estimator lead:", err);
-    }
-    
     setEstimation(est);
     setIsCalculating(false);
   };

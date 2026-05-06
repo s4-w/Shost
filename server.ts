@@ -4,7 +4,7 @@ import path from "path";
 import { Resend } from "resend";
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = Number(process.env.PORT) || 3000;
 
 // Initialize Resend lazily
 let resend: Resend | null = null;
