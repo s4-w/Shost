@@ -37,35 +37,41 @@ export default function Navbar() {
         isScrolled ? "glass py-2 shadow-sm" : "bg-transparent py-6"
       }`}
     >
-      <div className="container mx-auto px-6 flex items-center justify-between">
-        <a href="#" className="flex items-center group min-w-[100px] max-w-[120px] md:max-w-[140px] lg:max-w-[160px]">
+      <div className="container mx-auto px-6 flex items-center">
+        {/* Logo - Left Side */}
+        <a href="#" className="flex items-center group min-w-[100px] max-w-[120px] md:max-w-[140px] lg:max-w-[160px] flex-shrink-0">
           <Logo className="w-full" light={!isScrolled} />
         </a>
 
-        {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-6 lg:gap-10 ml-8">
+        {/* Desktop Links - Left Aligned */}
+        <div className="hidden md:flex items-center gap-6 lg:gap-10 ml-8 lg:ml-12 flex-grow">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
-              className="text-[10px] lg:text-[11px] font-semibold hover:text-accent transition-colors uppercase tracking-[0.2em] whitespace-nowrap"
+              className={`text-[10px] lg:text-[11px] font-semibold transition-colors uppercase tracking-[0.2em] whitespace-nowrap ${
+                isScrolled ? "text-primary hover:text-accent" : "text-white/80 hover:text-white"
+              }`}
             >
               {link.name}
             </a>
           ))}
-          
+        </div>
+
+        {/* Actions - Right Side */}
+        <div className="hidden md:flex items-center justify-end gap-6 lg:gap-10">
           {/* Language Switcher */}
-          <div className="flex items-center gap-2 lg:gap-3 border-l border-primary/10 pl-4 lg:pl-10 h-6">
+          <div className={`flex items-center gap-2 lg:gap-3 border-l h-6 pl-6 lg:pl-10 ${isScrolled ? "border-primary/10" : "border-white/10"}`}>
             <button 
               onClick={() => setLanguage('fr')}
-              className={`text-[10px] font-bold tracking-widest transition-colors ${language === 'fr' ? 'text-accent' : 'text-primary/40 hover:text-primary'}`}
+              className={`text-[10px] font-bold tracking-widest transition-colors ${language === 'fr' ? 'text-accent' : (isScrolled ? 'text-primary/40 hover:text-primary' : 'text-white/40 hover:text-white')}`}
             >
               FR
             </button>
-            <span className="text-[10px] text-primary/10">|</span>
+            <span className={`text-[10px] ${isScrolled ? "text-primary/10" : "text-white/10"}`}>|</span>
             <button 
               onClick={() => setLanguage('en')}
-              className={`text-[10px] font-bold tracking-widest transition-colors ${language === 'en' ? 'text-accent' : 'text-primary/40 hover:text-primary'}`}
+              className={`text-[10px] font-bold tracking-widest transition-colors ${language === 'en' ? 'text-accent' : (isScrolled ? 'text-primary/40 hover:text-primary' : 'text-white/40 hover:text-white')}`}
             >
               EN
             </button>
@@ -73,7 +79,9 @@ export default function Navbar() {
 
           <Button 
             onClick={() => setIsContactOpen(true)}
-            className="bg-primary hover:bg-accent text-white rounded-none px-6 lg:px-10 py-4 lg:py-6 uppercase tracking-[0.2em] text-[10px] transition-all"
+            className={`bg-primary hover:bg-accent text-white rounded-none px-6 lg:px-10 py-4 lg:py-6 uppercase tracking-[0.2em] text-[10px] transition-all ${
+              !isScrolled && "bg-white text-primary hover:bg-black hover:text-white border-none"
+            }`}
           >
             {t("nav.contact")}
           </Button>
