@@ -17,7 +17,6 @@ export default function Navbar() {
     { name: t("nav.services"), href: "#services" },
     { name: t("nav.fees"), href: "#honoraires" },
     { name: t("nav.estimate"), href: "#estimateur" },
-    { name: t("nav.frustrations"), href: "#frustrations" },
     { name: t("nav.faq"), href: "#faq" },
     { name: t("nav.about"), href: "#a-propos" },
   ];
@@ -39,24 +38,24 @@ export default function Navbar() {
       }`}
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
-        <a href="#" className="flex items-center group max-w-[160px]">
+        <a href="#" className="flex items-center group min-w-[100px] max-w-[120px] md:max-w-[140px] lg:max-w-[160px]">
           <Logo className="w-full" light={!isScrolled} />
         </a>
 
         {/* Desktop Nav */}
-        <div className="hidden lg:flex items-center gap-10">
+        <div className="hidden md:flex items-center gap-6 lg:gap-10 ml-8">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
-              className="text-[11px] font-semibold hover:text-accent transition-colors uppercase tracking-[0.2em]"
+              className="text-[10px] lg:text-[11px] font-semibold hover:text-accent transition-colors uppercase tracking-[0.2em] whitespace-nowrap"
             >
               {link.name}
             </a>
           ))}
           
           {/* Language Switcher */}
-          <div className="flex items-center gap-3 border-l border-primary/10 pl-10 h-6">
+          <div className="flex items-center gap-2 lg:gap-3 border-l border-primary/10 pl-4 lg:pl-10 h-6">
             <button 
               onClick={() => setLanguage('fr')}
               className={`text-[10px] font-bold tracking-widest transition-colors ${language === 'fr' ? 'text-accent' : 'text-primary/40 hover:text-primary'}`}
@@ -74,7 +73,7 @@ export default function Navbar() {
 
           <Button 
             onClick={() => setIsContactOpen(true)}
-            className="bg-primary hover:bg-accent text-white rounded-none px-10 py-6 uppercase tracking-[0.2em] text-[10px] transition-all"
+            className="bg-primary hover:bg-accent text-white rounded-none px-6 lg:px-10 py-4 lg:py-6 uppercase tracking-[0.2em] text-[10px] transition-all"
           >
             {t("nav.contact")}
           </Button>
@@ -87,52 +86,65 @@ export default function Navbar() {
         />
 
         {/* Mobile Nav */}
-        <div className="lg:hidden">
+        <div className="md:hidden">
           <Sheet>
             <SheetTrigger
               render={
-                <Button variant="ghost" size="icon" className="hover:bg-transparent text-black">
+                <Button variant="ghost" size="icon" className={`transition-colors ${isScrolled ? 'text-primary' : 'text-white'}`}>
                   <Menu className="w-7 h-7" />
                 </Button>
               }
             />
-            <SheetContent side="right" className="bg-surface border-l-black/10 w-full sm:max-w-md">
-              <div className="flex flex-col gap-10 mt-20 items-center">
-                <Logo className="max-w-[200px] mb-10" light={false} />
-                {navLinks.map((link) => (
-                  <a
-                    key={link.name}
-                    href={link.href}
-                    className="text-2xl font-serif hover:text-accent transition-colors"
-                  >
-                    {link.name}
-                  </a>
-                ))}
-
-                {/* Mobile Language Switcher */}
-                <div className="flex items-center gap-6 mt-6">
-                  <button 
-                    onClick={() => setLanguage('fr')}
-                    className={`text-sm font-bold tracking-[0.2em] transition-colors ${language === 'fr' ? 'text-accent' : 'text-primary/40'}`}
-                  >
-                    FRANÇAIS
-                  </button>
-                  <button 
-                    onClick={() => setLanguage('en')}
-                    className={`text-sm font-bold tracking-[0.2em] transition-colors ${language === 'en' ? 'text-accent' : 'text-primary/40'}`}
-                  >
-                    ENGLISH
-                  </button>
+            <SheetContent side="right" className="bg-white border-l-primary/5 w-full sm:max-w-md p-0 overflow-hidden">
+              <div className="flex flex-col h-full bg-surface">
+                {/* Header/Top part */}
+                <div className="p-10 border-b border-primary/5 bg-white flex flex-col items-center justify-center relative">
+                  <Logo className="max-w-[120px]" light={false} />
+                  <div className="text-[8px] uppercase tracking-[0.4em] font-bold text-primary/20 mt-4">Menu</div>
                 </div>
 
-                <Button 
-                  onClick={() => {
-                    setIsContactOpen(true);
-                  }}
-                  className="bg-primary hover:bg-accent text-white rounded-none w-full py-8 uppercase tracking-[0.2em] text-sm mt-10"
-                >
-                  {t("nav.contact")}
-                </Button>
+                {/* Nav Links */}
+                <nav className="flex-1 overflow-y-auto py-16 px-10">
+                  <div className="flex flex-col gap-10 items-center text-center">
+                    {navLinks.map((link) => (
+                      <a
+                        key={link.name}
+                        href={link.href}
+                        className="text-4xl font-serif text-primary hover:text-accent transition-all duration-300"
+                      >
+                        {link.name}
+                      </a>
+                    ))}
+                  </div>
+                </nav>
+
+                {/* Footer/Bottom part */}
+                <div className="p-10 bg-white border-t border-primary/5 space-y-12 pb-16">
+                  {/* Language Selector */}
+                  <div className="flex items-center justify-center gap-10">
+                    <button 
+                      onClick={() => setLanguage('fr')}
+                      className={`text-[12px] font-bold tracking-[0.3em] transition-all pb-2 border-b-2 ${language === 'fr' ? 'text-accent border-accent' : 'text-primary/20 border-transparent hover:text-primary'}`}
+                    >
+                      FRANÇAIS
+                    </button>
+                    <button 
+                      onClick={() => setLanguage('en')}
+                      className={`text-[12px] font-bold tracking-[0.3em] transition-all pb-2 border-b-2 ${language === 'en' ? 'text-accent border-accent' : 'text-primary/20 border-transparent hover:text-primary'}`}
+                    >
+                      ENGLISH
+                    </button>
+                  </div>
+
+                  <Button 
+                    onClick={() => {
+                      setIsContactOpen(true);
+                    }}
+                    className="bg-primary hover:bg-black text-white rounded-none w-full py-10 uppercase tracking-[0.3em] text-[12px] font-bold transition-all shadow-xl"
+                  >
+                    {t("nav.contact")}
+                  </Button>
+                </div>
               </div>
             </SheetContent>
           </Sheet>

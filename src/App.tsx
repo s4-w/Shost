@@ -8,7 +8,6 @@ import Hero from "@/components/Hero";
 import Services from "@/components/Services";
 import Fees from "@/components/Fees";
 import RevenueEstimator from "@/components/RevenueEstimator";
-import Frustrations from "@/components/Frustrations";
 import Process from "@/components/Process";
 import FAQ from "@/components/FAQ";
 import About from "@/components/About";
@@ -27,7 +26,6 @@ export default function App() {
           <Services />
           <Fees />
           <RevenueEstimator />
-          <Frustrations />
           <Process />
           <FAQ />
           <About />

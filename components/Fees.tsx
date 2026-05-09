@@ -182,34 +182,30 @@ export default function Fees() {
 
                   <div className="w-full h-[1px] bg-white/5 mb-10"></div>
                   
-                  <div className="space-y-4 mb-12 w-full max-w-xs mx-auto">
-                    <div className="flex items-center gap-3 text-white/40 group/check">
+                  <div className="space-y-5 mb-14 w-full max-w-xs mx-auto">
+                    <div className="flex items-center gap-3 text-white/50 group/check">
                       <div className="w-5 h-5 rounded-full border border-accent/20 flex items-center justify-center group-hover/check:border-accent group-hover/check:bg-accent transition-all">
                         <Check className="w-3 h-3 text-accent group-hover/check:text-primary" />
                       </div>
-                      <span className="text-xs uppercase tracking-widest font-bold">{language === 'fr' ? "Blanchisserie" : "Laundry"}</span>
+                      <span className="text-[10px] uppercase tracking-[0.2em] font-bold">
+                        {language === 'fr' ? "Ménage & Blanchisserie (Facturés voyageurs)" : "Cleaning & Laundry (Billed to guests)"}
+                      </span>
                     </div>
-                    <div className="flex items-center gap-3 text-white/40 group/check">
+                    <div className="flex items-center gap-3 text-white/50 group/check">
                       <div className="w-5 h-5 rounded-full border border-accent/20 flex items-center justify-center group-hover/check:border-accent group-hover/check:bg-accent transition-all">
                         <Check className="w-3 h-3 text-accent group-hover/check:text-primary" />
                       </div>
-                      <span className="text-xs uppercase tracking-widest font-bold">{language === 'fr' ? "Maintenance 24/7" : "24/7 Maintenance"}</span>
+                      <span className="text-[10px] uppercase tracking-[0.2em] font-bold">
+                        {language === 'fr' ? "Maintenance & Entretien technique" : "Maintenance & Technical support"}
+                      </span>
                     </div>
-                  </div>
-
-                  <div className="mb-10 w-full">
-                    <div className="bg-accent/10 border border-accent/20 p-6 rounded-none relative">
-                      <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-primary text-[10px] font-bold px-3 py-1 uppercase tracking-widest">
-                        {language === 'fr' ? "Ménage & Entretien" : "Cleaning & Maintenance"}
+                    <div className="flex items-center gap-3 text-white/50 group/check">
+                      <div className="w-5 h-5 rounded-full border border-accent/20 flex items-center justify-center group-hover/check:border-accent group-hover/check:bg-accent transition-all">
+                        <Check className="w-3 h-3 text-accent group-hover/check:text-primary" />
                       </div>
-                      <p className="text-sm md:text-base text-white font-medium leading-relaxed">
-                        {language === 'fr' 
-                          ? "Frais de ménage facturés séparément, basés sur le temps réel d'intervention." 
-                          : "Cleaning fees billed separately, based on actual intervention time."}
-                      </p>
-                      <p className="text-[10px] text-accent mt-3 uppercase tracking-widest font-bold">
-                        {language === 'fr' ? "Transparence & Équité" : "Transparency & Fairness"}
-                      </p>
+                      <span className="text-[10px] uppercase tracking-[0.2em] font-bold">
+                        {language === 'fr' ? "Support Voyageurs 24/7" : "24/7 Guest Support"}
+                      </span>
                     </div>
                   </div>
 

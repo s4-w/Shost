@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from "motion/react";
 
 interface LogoProps {
   className?: string;
@@ -9,16 +10,36 @@ export default function Logo({ className = "", light = false }: LogoProps) {
   const logoUrl = "https://i.postimg.cc/W1jN70Wd/Logo-sans-fond.png";
 
   return (
-    <div className={`flex items-center justify-center ${className}`}>
-      <img 
+    <div className={`flex items-center justify-center pt-8 ${className}`}>
+      <motion.img 
+        animate={{ 
+          y: [0, -55, 0],
+          rotate: [-12, 12, -12],
+          scale: [1, 1.15, 1]
+        }}
+        whileHover={{ scale: 1.3 }}
+        transition={{ 
+          y: {
+            duration: 1.6,
+            repeat: Infinity,
+            ease: "easeInOut"
+          },
+          rotate: {
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut"
+          },
+          scale: {
+            duration: 2.2,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }
+        }}
         src={logoUrl} 
         alt="SHOST Logo" 
-        className="w-full h-auto object-contain transition-all duration-300"
+        className="w-full h-auto object-contain transition-all duration-300 cursor-pointer"
         style={{
           // Since it's a transparent PNG, we just need to handle the color contrast.
-          // If the original is white, we invert it for light backgrounds.
-          // If the original is black, we invert it for dark backgrounds.
-          // Based on the previous black background version, the logo itself was white.
           filter: light ? 'none' : 'brightness(0)',
         }}
         referrerPolicy="no-referrer"

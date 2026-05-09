@@ -19,14 +19,14 @@ export default function Hero() {
         <div className="absolute inset-0 bg-white/20 backdrop-blur-[2px]" />
       </div>
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-6 relative z-10 pt-20">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
-            <h1 className="text-6xl md:text-8xl lg:text-9xl text-primary font-serif leading-[0.9] mb-8 tracking-tighter">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-9xl text-primary font-serif leading-[0.9] mb-8 tracking-tighter">
               {language === 'fr' ? (
                 <>Maximisez vos <br /><span className="italic text-accent">revenus</span></>
               ) : (
