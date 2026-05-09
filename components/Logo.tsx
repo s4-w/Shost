@@ -20,17 +20,17 @@ export default function Logo({ className = "", light = false }: LogoProps) {
         whileHover={{ scale: 1.3 }}
         transition={{ 
           y: {
-            duration: 1.6,
+            duration: 2.0,
             repeat: Infinity,
             ease: "easeInOut"
           },
           rotate: {
-            duration: 3,
+            duration: 3.75,
             repeat: Infinity,
             ease: "easeInOut"
           },
           scale: {
-            duration: 2.2,
+            duration: 2.75,
             repeat: Infinity,
             ease: "easeInOut"
           }
