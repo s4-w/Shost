@@ -108,6 +108,8 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
 
               <Button 
                 onClick={onClose}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 className="mt-12 w-full bg-primary hover:bg-black text-white rounded-none py-8 uppercase tracking-[0.2em] text-[10px] font-bold transition-all shadow-lg"
               >
                 Fermer

@@ -1,25 +1,45 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Calculator, TrendingUp, Home, Building2, Star, Sparkles, Check, ChevronRight, ChevronLeft, Info, X, Shield } from "lucide-react";
+import { 
+  Calculator, TrendingUp, Home, Building2, Star, Sparkles, 
+  Check, ChevronRight, ChevronLeft, Info, X, Shield, 
+  MapPin, Users, BedDouble, Award, Coins, BarChart3,
+  Waves, Droplets, TreePine, Wind, Car
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import Logo from "@/components/Logo";
 import { useLanguage } from "@/src/context/LanguageContext";
+import { cn } from "@/lib/utils";
 
-type Step = 1 | 2 | 3;
+type Step = 1 | 2 | 3 | 4;
+
+const MONTHS_FR = ['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Août','Sept','Oct','Nov','Déc'];
+const MONTHS_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const DAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+const ZONES_DATA = {
+  centre: { adr: 105, occ: 0.76, icon: "🏰", img: "https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?auto=format&fit=crop&q=80&w=800" },
+  montagne: { adr: 145, occ: 0.65, icon: "🏔️", img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800" },
+  peripherie: { adr: 85, occ: 0.72, icon: "🏡", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=800" }
+};
+
+const TYPE_MULT = { appartement: 1.0, maison: 1.15, loft: 1.1, villa: 1.35 };
+const STANDING_MULT = { standard: 1.0, premium: 1.25, luxe: 1.50 };
+const STANDING_OCC_BOOST = { standard: 0, premium: 0.05, luxe: 0.08 };
+const SEASONALITY = [0.95, 1.20, 0.90, 0.85, 0.95, 1.10, 1.25, 1.30, 0.95, 0.85, 0.80, 1.15]; // Peaks in Winter and Late Summer
+const AMENITY_BONUS = { piscine: 3200, jacuzzi: 1800, terrasse: 900, clim: 600, parking: 850 };
+const MOUNTAIN_AMENITY_BONUS = { ski_storage: 400 }; // Specific to Grenoble area
 
 export default function RevenueEstimator() {
   const { t, language } = useLanguage();
   const [step, setStep] = useState<Step>(1);
-  const [city, setCity] = useState("");
-  const [propertyType, setPropertyType] = useState<"apartment" | "house" | "villa">("apartment");
-  const [rooms, setRooms] = useState<number>(1);
-  const [standing, setStanding] = useState<"standard" | "premium" | "luxury">("premium");
-  const [amenities, setAmenities] = useState<string[]>([]);
   
-  const [estimation, setEstimation] = useState<{ monthly: number; annual: number } | null>(null);
-  const [isCalculating, setIsCalculating] = useState(false);
-  const [isInfoOpen, setIsInfoOpen] = useState(false);
+  // Selection State
+  const [zone, setZone] = useState<keyof typeof ZONES_DATA>("centre");
+  const [propertyType, setPropertyType] = useState<keyof typeof TYPE_MULT>("appartement");
+  const [bedrooms, setBedrooms] = useState(2);
+  const [maxGuests, setMaxGuests] = useState(4);
+  const [standing, setStanding] = useState<keyof typeof STANDING_MULT>("premium");
+  const [amenities, setAmenities] = useState<string[]>([]);
 
   const toggleAmenity = (amenity: string) => {
     setAmenities(prev => 
@@ -27,96 +47,139 @@ export default function RevenueEstimator() {
     );
   };
 
-  const calculateRevenue = () => {
-    setIsCalculating(true);
+  const results = useMemo(() => {
+    const z = ZONES_DATA[zone];
+    const adr = z.adr * TYPE_MULT[propertyType] * (1 + (bedrooms - 1) * 0.22) * STANDING_MULT[standing];
+    const occBase = Math.min(z.occ + STANDING_OCC_BOOST[standing], 0.95);
     
-    setTimeout(() => {
-      let basePrice = city.toLowerCase().includes("paris") ? 180 : 100;
-      const typeMultiplier = propertyType === "villa" ? 2.5 : propertyType === "house" ? 1.8 : 1;
-      const standingMultiplier = standing === "luxury" ? 2 : standing === "premium" ? 1.4 : 1;
-      const amenityBonus = amenities.length * 25;
-      
-      const dailyRate = (basePrice * typeMultiplier * standingMultiplier) + amenityBonus;
-      const monthlyRevenue = Math.round(dailyRate * 22);
-      
-      setEstimation({
-        monthly: monthlyRevenue,
-        annual: monthlyRevenue * 12
-      });
-      setIsCalculating(false);
-    }, 1500);
-  };
+    const monthlyResults = SEASONALITY.map((s, i) => {
+      const adjOcc = Math.min(occBase * s, 0.97);
+      return { 
+        rev: Math.round(DAYS[i] * adjOcc * adr), 
+        occ: adjOcc 
+      };
+    });
+
+    let gross = monthlyResults.reduce((a, m) => a + m.rev, 0);
+    amenities.forEach(a => { 
+      gross += (AMENITY_BONUS as any)[a] || (MOUNTAIN_AMENITY_BONUS as any)[a] || 0; 
+    });
+
+    const platform = Math.round(gross * 0.15);
+    const shost = Math.round(gross * 0.20);
+    const net = gross - platform - shost;
+    const avgOcc = Math.round(monthlyResults.reduce((a, m) => a + m.occ, 0) / 12 * 100);
+
+    return { 
+      gross, 
+      net, 
+      platform, 
+      shost, 
+      adr: Math.round(adr), 
+      avgOcc, 
+      monthly: monthlyResults 
+    };
+  }, [zone, propertyType, bedrooms, maxGuests, standing, amenities]);
+
+  const formatCurrency = (n: number) => 
+    new Intl.NumberFormat(language === 'fr' ? 'fr-FR' : 'en-US', { 
+      style: 'currency', 
+      currency: 'EUR', 
+      maximumFractionDigits: 0 
+    }).format(n);
 
   const reset = () => {
     setStep(1);
-    setEstimation(null);
-    setCity("");
-    setRooms(1);
+    setZone("centre");
+    setPropertyType("appartement");
+    setBedrooms(2);
+    setMaxGuests(4);
+    setStanding("premium");
     setAmenities([]);
   };
 
-  const amenityList = [
-    { id: "pool", label: language === 'fr' ? "Piscine" : "Pool", icon: "🏊‍♂️" },
-    { id: "terrace", label: language === 'fr' ? "Terrasse" : "Terrace", icon: "☀️" },
-    { id: "parking", label: language === 'fr' ? "Parking" : "Parking", icon: "🚗" },
-    { id: "ac", label: language === 'fr' ? "Climatisation" : "AC", icon: "❄️" },
-    { id: "view", label: language === 'fr' ? "Vue Exceptionnelle" : "Great View", icon: "🌅" },
-    { id: "gym", label: language === 'fr' ? "Salle de sport" : "Gym", icon: "💪" },
-  ];
+  const amenityIcons: Record<string, any> = {
+    piscine: Waves,
+    jacuzzi: Droplets,
+    terrasse: TreePine,
+    clim: Wind,
+    parking: Car,
+    ski_storage: Shield
+  };
+
+  const months = language === 'fr' ? MONTHS_FR : MONTHS_EN;
 
   return (
-    <section id="estimateur" className="py-24 bg-secondary/30">
-      <div className="container mx-auto px-6">
-        <div className="max-w-6xl mx-auto bg-white shadow-2xl overflow-hidden border border-primary/5 flex flex-col lg:flex-row min-h-[700px]">
+    <section id="estimateur" className="py-32 bg-[#F8F9FA] text-primary overflow-hidden relative">
+      {/* Background Decorative Elements */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-50">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-accent/10 blur-[120px]" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-accent/5 blur-[120px]" />
+      </div>
+
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="text-center mb-16 max-w-3xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="space-y-6"
+          >
+            <h2 className="text-4xl md:text-5xl font-serif italic mb-6">
+              {language === 'fr' ? 'Estimez vos revenus' : 'Estimate your revenue'}
+            </h2>
+            <p className="text-primary/60 font-light text-lg">
+              {language === 'fr' 
+                ? 'Découvrez le potentiel locatif de votre bien grâce à notre algorithme basé sur les données réelles du marché grenoblois.' 
+                : 'Discover your property\'s rental potential with our algorithm based on real Grenoble market data.'}
+            </p>
+          </motion.div>
+        </div>
+
+        <div className="max-w-6xl mx-auto bg-white border-2 border-primary/10 shadow-2xl flex flex-col lg:flex-row min-h-[750px] rounded-2xl overflow-hidden font-light">
           
-          {/* Left Side - Info */}
-          <div className="lg:w-2/5 bg-primary p-12 md:p-20 text-white flex flex-col justify-between relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-              <div className="absolute top-[-10%] right-[-10%] w-64 h-64 border border-white rounded-full" />
-              <div className="absolute bottom-[-20%] left-[-20%] w-96 h-96 border border-white rounded-full" />
+          {/* Left Side: Progress & Info (DARK) */}
+          <div className="lg:w-1/3 bg-primary p-12 flex flex-col justify-between relative overflow-hidden text-white">
+            {/* Modern Alpine Architecture Background */}
+            <div className="absolute inset-0 z-0 opacity-35 transition-transform duration-[10s] hover:scale-110 font-light">
+              <img 
+                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1000" 
+                alt="Modern Property" 
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/30 to-primary/90" />
             </div>
 
             <div className="relative z-10">
-              <motion.span 
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="text-accent uppercase tracking-[0.3em] text-[10px] font-bold mb-6 block"
-              >
-                {t("estimator.tagline")}
-              </motion.span>
-              <h2 className="text-4xl md:text-6xl font-serif mb-8 leading-tight text-white">
-                {language === 'fr' ? <>Estimez vos <br />gains potentiels</> : <>Estimate your <br />potential earnings</>}
+              <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-accent/30 bg-accent/10 mb-10">
+                <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+                <span className="text-[10px] font-bold uppercase tracking-widest text-accent">Estimation Grenoble</span>
+              </div>
+              
+              <h2 className="text-4xl font-serif italic mb-6 leading-tight text-white">
+                S<em>HOST</em> <br />
+                <span className="text-white/40 text-2xl not-italic font-sans font-light">Estimation Propriétaire</span>
               </h2>
-              <p className="text-white/70 text-lg leading-relaxed mb-12">
-                {t("estimator.desc")}
-              </p>
-
-              <button 
-                onClick={() => setIsInfoOpen(true)}
-                className="flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] font-bold text-accent hover:text-white transition-colors mb-12 group"
-              >
-                <Info className="w-4 h-4" />
-                <span className="border-b border-accent/30 group-hover:border-white transition-colors">{t("estimator.method")}</span>
-              </button>
-
-              <div className="space-y-8">
-                {[1, 2, 3].map((s) => (
+              
+              <div className="space-y-8 mt-16 font-light">
+                {[1, 2, 3, 4].map((s) => (
                   <div key={s} className="flex items-center gap-6">
-                    <div className={`w-10 h-10 rounded-full border flex items-center justify-center text-sm font-bold transition-all ${
-                      step === s ? "bg-accent border-accent text-white" : 
-                      step > s ? "bg-white border-white text-primary" : "border-white/20 text-white/40"
-                    }`}>
+                    <div className={cn(
+                      "w-10 h-10 rounded-full border flex items-center justify-center text-sm transition-all duration-500",
+                      step === s ? "bg-accent border-accent text-primary scale-110 shadow-lg font-bold" : 
+                      step > s ? "bg-white/20 border-white/40 text-white" : "border-white/30 text-white/60"
+                    )}>
                       {step > s ? <Check className="w-5 h-5" /> : s}
                     </div>
-                    <div>
-                      <p className={`text-[10px] uppercase tracking-[0.2em] font-bold ${
-                        step === s ? "text-white" : "text-white/40"
-                      }`}>
-                        {s === 1 ? t("estimator.step1") : s === 2 ? t("estimator.step2") : t("estimator.step3")}
-                      </p>
-                      <p className={`text-xs ${step === s ? "text-white/60" : "text-white/20"}`}>
-                        {s === 1 ? t("estimator.step1.desc") : s === 2 ? t("estimator.step2.desc") : t("estimator.step3.desc")}
+                    <div className="flex-1">
+                      <p className={cn(
+                        "text-[10px] uppercase tracking-[0.2em] font-normal transition-colors",
+                        step === s ? "text-accent" : "text-white/50"
+                      )}>
+                        {s === 1 ? (language === 'fr' ? 'Secteur Grenoble' : 'Area') : 
+                         s === 2 ? (language === 'fr' ? 'Bien' : 'Property') : 
+                         s === 3 ? (language === 'fr' ? 'Configuration' : 'Amenities') : 
+                         (language === 'fr' ? 'Revenus' : 'Revenue')}
                       </p>
                     </div>
                   </div>
@@ -124,333 +187,319 @@ export default function RevenueEstimator() {
               </div>
             </div>
 
-            <div className="relative z-10 pt-10 border-t border-white/10 mt-12">
-              <div className="flex items-center gap-4">
-                <div className="flex -space-x-3">
-                  {[1, 2, 3].map(i => (
-                    <div key={i} className="w-8 h-8 rounded-full border-2 border-primary bg-secondary overflow-hidden">
-                      <img src={`https://picsum.photos/seed/user${i}/100/100`} alt="User" referrerPolicy="no-referrer" />
-                    </div>
-                  ))}
-                </div>
-                <p className="text-[10px] text-white/60 uppercase tracking-widest">
-                  {language === 'fr' ? '+50 propriétaires nous font confiance' : '+50 owners trust us'}
-                </p>
-              </div>
+            <div className="pt-10 border-t border-white/10 opacity-40 text-[10px] uppercase tracking-widest leading-loose font-normal text-white">
+              <p>© 2026 SHOST Conciergerie</p>
+              <p>Expertise Marché Isérois</p>
             </div>
           </div>
 
-          {/* Right Side - Interactive Form */}
-          <div className="flex-1 p-12 md:p-24 flex flex-col justify-center bg-surface relative">
-            {!estimation ? (
-              <div className="w-full max-w-lg mx-auto">
-                <AnimatePresence mode="wait">
-                  {step === 1 && (
-                    <motion.div
-                      key="step1"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      className="space-y-10"
-                    >
-                      <div className="space-y-6">
-                        <label className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary flex items-center gap-2">
-                          <Home className="w-3 h-3 text-accent" /> {t("estimator.city.label")}
-                        </label>
-                        <Input 
-                          required
-                          value={city}
-                          onChange={(e) => setCity(e.target.value)}
-                          placeholder={t("estimator.city.placeholder")} 
-                          className="rounded-none border-primary/10 focus:border-accent py-10 text-xl px-8 shadow-sm"
-                        />
-                      </div>
+          {/* Right Side: Interactive Steps (LIGHT) */}
+          <div className="flex-1 p-8 lg:p-16 flex flex-col justify-center relative bg-white text-primary">
+            <AnimatePresence mode="wait">
+              {step === 1 && (
+                <motion.div
+                  key="step1"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="space-y-10"
+                >
+                  <div>
+                    <h3 className="text-3xl font-serif mb-4 italic text-primary">{language === 'fr' ? 'Secteur géographique' : 'Geographic Sector'}</h3>
+                    <p className="text-primary/50 text-sm font-light">{language === 'fr' ? "Grenoble et sa métropole offrent des dynamiques de loyers variées selon la zone." : "Grenoble and its metropolitan area offer varied rent dynamics depending on the zone."}</p>
+                  </div>
 
-                      <div className="space-y-6">
-                        <label className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary flex items-center gap-2">
-                          <Building2 className="w-3 h-3 text-accent" /> {t("estimator.type.label")}
-                        </label>
-                        <div className="grid grid-cols-3 gap-6">
-                          {(["apartment", "house", "villa"] as const).map((type) => (
-                            <button
-                              key={type}
-                              onClick={() => setPropertyType(type)}
-                              className={`py-8 border flex flex-col items-center gap-3 transition-all ${
-                                propertyType === type ? "bg-primary text-white border-primary shadow-xl scale-105" : "bg-white border-primary/5 text-primary/60 hover:border-accent"
-                              }`}
-                            >
-                              <span className="text-xs font-bold uppercase tracking-widest">
-                                {type === "apartment" ? t("estimator.type.apt") : type === "house" ? t("estimator.type.house") : t("estimator.type.villa")}
-                              </span>
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-
-                      <Button 
-                        disabled={!city}
-                        onClick={() => setStep(2)}
-                        className="w-full bg-primary hover:bg-accent text-white rounded-none py-10 uppercase tracking-[0.2em] text-xs font-bold transition-all group shadow-2xl"
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {Object.entries(ZONES_DATA).map(([key, data]) => (
+                      <motion.button
+                        key={key}
+                        whileHover={{ y: -8, boxShadow: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)" }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => setZone(key as any)}
+                        className={cn(
+                          "flex flex-col border transition-all duration-300 rounded-xl overflow-hidden group relative",
+                          zone === key ? "border-accent ring-2 ring-accent/20" : "bg-white border-black/5 hover:border-black/10 shadow-sm"
+                        )}
                       >
-                        {t("estimator.continue")}
-                        <ChevronRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                      </Button>
-                    </motion.div>
-                  )}
-
-                  {step === 2 && (
-                    <motion.div
-                      key="step2"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      className="space-y-10"
-                    >
-                      <div className="space-y-6">
-                        <label className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary flex items-center gap-2">
-                          <Star className="w-3 h-3 text-accent" /> {t("estimator.standing.label")}
-                        </label>
-                        <div className="space-y-4">
-                          {(["standard", "premium", "luxury"] as const).map((s) => (
-                            <button
-                              key={s}
-                              onClick={() => setStanding(s)}
-                              className={`w-full p-6 border flex items-center justify-between transition-all ${
-                                standing === s ? "bg-primary text-white border-primary shadow-xl" : "bg-white border-primary/5 text-primary/60 hover:border-accent"
-                              }`}
-                            >
-                              <div className="text-left">
-                                <p className="text-sm font-bold uppercase tracking-widest mb-1">
-                                  {s === "standard" ? t("estimator.standing.standard") : s === "premium" ? t("estimator.standing.premium") : t("estimator.standing.luxury")}
-                                </p>
-                                <p className={`text-xs ${standing === s ? "text-white/60" : "text-primary/40"}`}>
-                                  {s === "standard" ? t("estimator.standing.standard.desc") : s === "premium" ? t("estimator.standing.premium.desc") : t("estimator.standing.luxury.desc")}
-                                </p>
-                              </div>
-                              {standing === s && <Check className="w-5 h-5 text-accent" />}
-                            </button>
-                          ))}
+                        <div className="h-32 w-full relative overflow-hidden">
+                          <img 
+                            src={data.img} 
+                            alt={key} 
+                            className={cn(
+                              "w-full h-full object-cover transition-transform duration-700",
+                              zone === key ? "scale-110" : "scale-100 group-hover:scale-110"
+                            )}
+                          />
+                          <div className={cn(
+                            "absolute inset-0 bg-primary/20 group-hover:bg-primary/10 transition-colors",
+                            zone === key ? "bg-primary/0" : ""
+                          )} />
+                          <span className="absolute top-2 right-2 text-2xl drop-shadow-md">{data.icon}</span>
+                          
+                          {zone === key && (
+                            <div className="absolute top-2 left-2 bg-accent text-primary p-1 rounded-full shadow-lg">
+                              <Check className="w-3 h-3" />
+                            </div>
+                          )}
                         </div>
-                      </div>
-
-                      <div className="space-y-6">
-                        <label className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary flex items-center gap-2">
-                          <Calculator className="w-3 h-3 text-accent" /> {t("estimator.rooms.label")}
-                        </label>
-                        <div className="flex items-center gap-4">
-                          {[1, 2, 3, 4, "5+"].map((num) => (
-                            <button
-                              key={num}
-                              onClick={() => setRooms(typeof num === 'number' ? num : 5)}
-                              className={`flex-1 py-6 border transition-all text-sm font-bold ${
-                                (typeof num === 'number' ? rooms === num : rooms >= 5)
-                                  ? "bg-primary text-white border-primary"
-                                  : "bg-white border-primary/5 text-primary/60 hover:border-accent"
-                              }`}
-                            >
-                              {num}
-                            </button>
-                          ))}
+                        <div className={cn(
+                          "p-4 transition-colors",
+                          zone === key ? "bg-accent text-primary" : "bg-white text-primary"
+                        )}>
+                          <span className="text-[10px] font-bold uppercase tracking-widest block mb-1">
+                            {key === 'centre' ? (language === 'fr' ? 'Grenoble Centre' : 'Grenoble City Center') : 
+                             key === 'montagne' ? (language === 'fr' ? 'Massifs Alpins' : 'Alpine Mountains') : 
+                             (language === 'fr' ? 'Périphérie / Sud' : 'Grand Grenoble')}
+                          </span>
+                          <span className={cn(
+                            "text-[8px] block opacity-60 uppercase tracking-widest transition-colors font-light",
+                            zone === key ? "text-primary/70" : "text-primary/40"
+                          )}>
+                            {key === 'centre' ? (language === 'fr' ? 'Secteur Historique & Tourités' : 'Historical & Business') : 
+                             key === 'montagne' ? (language === 'fr' ? 'Vercors / Belledonne / Chartreuse' : 'Mountain Resorts') : 
+                             (language === 'fr' ? 'Agglomération & Grésivaudan' : 'Quiet Residential')}
+                          </span>
                         </div>
-                      </div>
+                      </motion.button>
+                    ))}
+                  </div>
 
-                      <div className="flex gap-6">
-                        <Button 
-                          variant="outline"
-                          onClick={() => setStep(1)}
-                          className="flex-1 border-primary/10 text-primary rounded-none py-10 uppercase tracking-[0.2em] text-xs font-bold"
+                  <div className="flex justify-end pt-10">
+                    <Button onClick={() => setStep(2)} className="bg-primary text-white hover:bg-black px-12 transition-all font-light tracking-widest uppercase text-[10px]">
+                      {language === 'fr' ? 'Suivant' : 'Next'} <ChevronRight className="ml-2 w-4 h-4" />
+                    </Button>
+                  </div>
+                </motion.div>
+              )}
+
+              {step === 2 && (
+                <motion.div
+                  key="step2"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="space-y-12"
+                >
+                  <div>
+                    <h3 className="text-3xl font-serif mb-4 italic text-primary">{language === 'fr' ? 'Type & Capacité' : 'Type & Capacity'}</h3>
+                    <p className="text-primary/50 text-sm font-light">{language === 'fr' ? "Définissez la configuration de votre bien pour affiner l'estimation." : "Define your property configuration to refine the estimate."}</p>
+                  </div>
+
+                  <div className="space-y-8">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      {(["appartement", "maison", "loft", "villa"] as const).map((type) => (
+                        <motion.button
+                          key={type}
+                          whileHover={{ y: -5, boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)" }}
+                          onClick={() => setPropertyType(type)}
+                          className={cn(
+                            "py-6 border flex flex-col items-center gap-3 transition-all rounded-xl",
+                            propertyType === type ? "bg-accent border-accent text-primary shadow-lg" : "bg-white border-black/5 text-primary hover:border-black/20"
+                          )}
                         >
-                          <ChevronLeft className="mr-2 w-4 h-4" /> {t("estimator.back")}
-                        </Button>
-                        <Button 
-                          onClick={() => setStep(3)}
-                          className="flex-1 bg-primary hover:bg-accent text-white rounded-none py-10 uppercase tracking-[0.2em] text-xs font-bold transition-all"
-                        >
-                          {t("estimator.next")}
-                        </Button>
+                          {type === 'appartement' ? <Building2 size={24} strokeWidth={1.5} /> : 
+                           type === 'maison' ? <Home size={24} strokeWidth={1.5} /> : 
+                           type === 'loft' ? <MapPin size={24} strokeWidth={1.5} /> : <Award size={24} strokeWidth={1.5} />}
+                          <span className="text-[10px] font-bold uppercase tracking-widest">{type}</span>
+                        </motion.button>
+                      ))}
+                    </div>
+
+                    <div className="space-y-6">
+                      <div className="flex justify-between items-center text-xs uppercase tracking-widest font-normal">
+                        <span className="text-primary/40">{language === 'fr' ? 'Chambres' : 'Bedrooms'}</span>
+                        <span className="text-accent">{bedrooms}</span>
                       </div>
-                    </motion.div>
-                  )}
+                      <input 
+                        type="range" min="1" max="6" value={bedrooms} step="1"
+                        onChange={(e) => setBedrooms(parseInt(e.target.value))}
+                        className="w-full accent-accent h-1 bg-black/5 rounded-full appearance-none cursor-pointer"
+                      />
+                    </div>
 
-                  {step === 3 && (
-                    <motion.div
-                      key="step3"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      className="space-y-10"
-                    >
-                      <div className="space-y-6">
-                        <label className="text-[10px] uppercase tracking-[0.3em] font-bold text-primary flex items-center gap-2">
-                          <Sparkles className="w-3 h-3 text-accent" /> {t("estimator.amenities.label")}
-                        </label>
-                        <div className="grid grid-cols-2 gap-4">
-                          {amenityList.map((item) => (
-                            <button
-                              key={item.id}
-                              onClick={() => toggleAmenity(item.id)}
-                              className={`p-6 border flex items-center gap-4 transition-all ${
-                                amenities.includes(item.id) ? "bg-primary text-white border-primary shadow-md" : "bg-white border-primary/5 text-primary/60 hover:border-accent"
-                              }`}
-                            >
-                              <span className="text-2xl">{item.icon}</span>
-                              <span className="text-xs font-bold uppercase tracking-widest">{item.label}</span>
-                            </button>
-                          ))}
-                        </div>
+                    <div className="space-y-6">
+                      <div className="flex justify-between items-center text-xs uppercase tracking-widest font-normal">
+                        <span className="text-primary/40">{language === 'fr' ? 'Voyageurs max' : 'Max guests'}</span>
+                        <span className="text-accent">{maxGuests}</span>
                       </div>
+                      <input 
+                        type="range" min="1" max="12" value={maxGuests} step="1"
+                        onChange={(e) => setMaxGuests(parseInt(e.target.value))}
+                        className="w-full accent-accent h-1 bg-black/5 rounded-full appearance-none cursor-pointer"
+                      />
+                    </div>
+                  </div>
 
-                      <div className="flex gap-6">
-                        <Button 
-                          variant="outline"
-                          onClick={() => setStep(2)}
-                          className="flex-1 border-primary/10 text-primary rounded-none py-10 uppercase tracking-[0.2em] text-xs font-bold"
+                  <div className="flex justify-between pt-10">
+                    <Button variant="outline" onClick={() => setStep(1)} className="border-primary/20 text-primary hover:bg-primary/5 font-light tracking-widest uppercase text-[10px]">
+                      <ChevronLeft className="mr-2 w-4 h-4" /> {language === 'fr' ? 'Précédent' : 'Back'}
+                    </Button>
+                    <Button onClick={() => setStep(3)} className="bg-primary text-white hover:bg-black px-12 transition-all font-light tracking-widest uppercase text-[10px]">
+                      {language === 'fr' ? 'Suivant' : 'Next'} <ChevronRight className="ml-2 w-4 h-4" />
+                    </Button>
+                  </div>
+                </motion.div>
+              )}
+
+              {step === 3 && (
+                <motion.div
+                  key="step3"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="space-y-12"
+                >
+                  <div>
+                    <h3 className="text-3xl font-serif mb-4 italic text-primary">{language === 'fr' ? 'Standing & Équipements' : 'Standing & Amenities'}</h3>
+                    <p className="text-primary/50 text-sm font-light">{language === 'fr' ? "Chaque option valorise votre annonce et booste vos revenus annuels." : "Every option adds value to your listing and boosts your annual revenue."}</p>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {(["standard", "premium", "luxe"] as const).map((s) => (
+                      <motion.button
+                        key={s}
+                        whileHover={{ y: -5, boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)" }}
+                        onClick={() => setStanding(s)}
+                        className={cn(
+                          "py-6 border flex flex-col items-center justify-center gap-2 transition-all rounded-xl",
+                          standing === s ? "bg-accent border-accent text-primary shadow-lg" : "bg-white border-black/5 text-primary hover:border-black/20"
+                        )}
+                      >
+                        <span className="text-sm font-bold uppercase tracking-widest">
+                          {s === 'luxe' ? 'Ultra-Luxe' : s === 'premium' ? 'Premium' : 'Standard'}
+                        </span>
+                        <span className={cn("text-[8px] uppercase tracking-[0.2em] font-light", standing === s ? "text-primary/60" : "text-primary/30")}>
+                          {s === 'luxe' ? '+48% de revenus' : s === 'premium' ? '+22% de revenus' : 'Confort essentiel'}
+                        </span>
+                      </motion.button>
+                    ))}
+                  </div>
+
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    {Object.entries({ ...AMENITY_BONUS, ...MOUNTAIN_AMENITY_BONUS }).map(([id, bonus]) => {
+                      const Icon = amenityIcons[id];
+                      return (
+                        <motion.button
+                          key={id}
+                          whileHover={{ scale: 1.02, backgroundColor: "rgba(16, 185, 129, 0.05)" }}
+                          onClick={() => toggleAmenity(id)}
+                          className={cn(
+                            "p-4 border flex items-center gap-4 transition-all text-left rounded-xl",
+                            amenities.includes(id) ? "bg-emerald-500 border-emerald-500 text-white shadow-lg" : "bg-white border-black/5 text-primary hover:border-black/10"
+                          )}
                         >
-                          <ChevronLeft className="mr-2 w-4 h-4" /> {t("estimator.back")}
-                        </Button>
-                        <Button 
-                          onClick={calculateRevenue}
-                          disabled={isCalculating}
-                          className="flex-1 bg-accent hover:bg-primary text-white rounded-none py-10 uppercase tracking-[0.2em] text-xs font-bold transition-all shadow-2xl shadow-accent/20"
-                        >
-                          {isCalculating ? t("estimator.calculating") : t("estimator.calculate")}
-                        </Button>
+                          <Icon size={20} strokeWidth={1.5} />
+                          <div>
+                            <span className="text-[10px] font-bold uppercase tracking-widest block">
+                              {id === 'ski_storage' ? (language === 'fr' ? 'Ski/Vélo' : 'Ski Storage') : id.charAt(0).toUpperCase() + id.slice(1)}
+                            </span>
+                            <span className={cn("text-[8px] transition-colors font-light", amenities.includes(id) ? "text-white/70" : "text-primary/40")}>+{bonus}€/an</span>
+                          </div>
+                        </motion.button>
+                      );
+                    })}
+                  </div>
+
+                  <div className="flex justify-between pt-10">
+                    <Button variant="outline" onClick={() => setStep(2)} className="border-primary/20 text-primary hover:bg-primary/5 font-light tracking-widest uppercase text-[10px]">
+                      <ChevronLeft className="mr-2 w-4 h-4" /> {language === 'fr' ? 'Précédent' : 'Back'}
+                    </Button>
+                    <Button onClick={() => setStep(4)} className="bg-primary text-white hover:bg-black px-12 transition-all font-light tracking-widest uppercase text-[10px]">
+                      {language === 'fr' ? 'Résultats' : 'Results'} <ChevronRight className="ml-2 w-4 h-4" />
+                    </Button>
+                  </div>
+                </motion.div>
+              )}
+
+              {step === 4 && (
+                <motion.div
+                  key="step4"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="space-y-8"
+                >
+                  <div className="flex items-center gap-4 text-accent text-xs font-light uppercase tracking-[0.3em]">
+                    <Award size={20} strokeWidth={1} />
+                    <span>Top 15% de la zone</span>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="bg-slate-50 border border-black/5 p-8 rounded-xl">
+                      <div className="flex items-center gap-3 text-primary/40 text-[10px] uppercase tracking-widest mb-4 font-normal">
+                        <TrendingUp size={14} /> {language === 'fr' ? 'Revenu brut estimé' : 'Estimated gross revenue'}
                       </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            ) : (
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="text-center w-full max-w-lg mx-auto"
-              >
-                <div className="w-24 h-24 bg-secondary rounded-full flex items-center justify-center mx-auto mb-10 p-4">
-                  <Logo className="w-full" light={false} />
-                </div>
-                
-                <div className="mb-12">
-                  <h4 className="text-primary uppercase tracking-[0.4em] text-[10px] font-bold mb-6">{t("estimator.result.label")}</h4>
-                  <p className="text-8xl md:text-9xl font-serif text-primary mb-4 leading-none">
-                    {estimation.monthly.toLocaleString()}€
-                  </p>
-                  <div className="h-[2px] w-32 bg-accent mx-auto mb-8" />
-                  <p className="text-primary/40 uppercase tracking-[0.3em] text-xs font-bold">
-                    {t("estimator.result.annual")} : <span className="text-primary">{estimation.annual.toLocaleString()}€</span>
-                  </p>
-                </div>
+                      <div className="text-4xl font-serif text-primary font-light">{formatCurrency(results.gross)}</div>
+                      <p className="text-[10px] text-primary/20 mt-2 font-light">basé sur 365 jours</p>
+                    </div>
 
-                <div className="bg-secondary/50 p-10 mb-12 border border-primary/5">
-                  <p className="text-primary/70 leading-relaxed italic text-lg">
-                    "{t("estimator.result.quote").replace("{city}", city)}"
-                  </p>
-                </div>
+                    <div className="bg-accent text-primary p-8 relative overflow-hidden rounded-xl shadow-xl">
+                      <div className="flex items-center gap-3 text-primary/60 text-[10px] uppercase tracking-widest mb-4 font-bold">
+                        <Coins size={14} /> {language === 'fr' ? 'Net Propriétaire' : 'Owner Net'}
+                      </div>
+                      <div className="text-4xl font-serif font-light">{formatCurrency(results.net)}</div>
+                      <p className="text-[10px] text-primary/40 mt-2 font-bold uppercase italic font-light">Après tous frais de gestion</p>
+                      <Sparkles className="absolute -bottom-2 -right-2 w-20 h-20 opacity-10 text-primary" />
+                    </div>
+                  </div>
 
-                <div className="flex flex-col sm:flex-row gap-6">
-                  <Button 
-                    onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                    className="flex-1 bg-primary hover:bg-accent text-white rounded-none py-10 uppercase tracking-[0.2em] text-xs font-bold transition-all shadow-xl"
-                  >
-                    {t("estimator.result.cta")}
-                  </Button>
-                  <Button 
-                    onClick={reset}
-                    variant="outline"
-                    className="flex-1 border-primary/10 text-primary rounded-none py-10 uppercase tracking-[0.2em] text-xs font-bold"
-                  >
-                    {t("estimator.result.reset")}
-                  </Button>
-                </div>
-              </motion.div>
-            )}
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="bg-slate-50 border border-black/5 p-5 text-center rounded-xl">
+                      <p className="text-[8px] text-primary/40 uppercase tracking-widest mb-2 font-normal">Taux d'occupation</p>
+                      <p className="text-xl font-light text-primary">{results.avgOcc}%</p>
+                    </div>
+                    <div className="bg-slate-50 border border-black/5 p-5 text-center rounded-xl">
+                      <p className="text-[8px] text-primary/40 uppercase tracking-widest mb-2 font-normal">Tarif moyen nuit</p>
+                      <p className="text-xl font-light text-primary">{results.adr}€</p>
+                    </div>
+                    <div className="bg-orange-50 border border-orange-100 p-5 text-center rounded-xl">
+                      <p className="text-[8px] text-orange-400 uppercase tracking-widest mb-2 font-bold">Net mensuel moy.</p>
+                      <p className="text-xl font-light text-orange-600">{formatCurrency(results.net / 12)}</p>
+                    </div>
+                  </div>
+
+                  <div className="bg-slate-50 border border-black/5 p-8 rounded-xl">
+                    <div className="flex justify-between items-center mb-10">
+                      <p className="text-[10px] uppercase tracking-widest font-normal text-primary/40 flex items-center gap-2">
+                        <BarChart3 size={14} /> {language === 'fr' ? 'Saisonnalité des revenus' : 'Revenue seasonality'}
+                      </p>
+                    </div>
+                    <div className="flex items-end gap-1 h-32">
+                      {results.monthly.map((m, i) => {
+                        const maxRev = Math.max(...results.monthly.map(x => x.rev));
+                        const height = (m.rev / maxRev) * 100;
+                        return (
+                          <div key={i} className="flex-1 group relative">
+                            <motion.div 
+                              initial={{ height: 0 }}
+                              animate={{ height: `${height}%` }}
+                              className={cn(
+                                "w-full transition-colors rounded-t-sm",
+                                height > 80 ? "bg-accent" : height > 55 ? "bg-primary/40" : "bg-primary/10"
+                              )}
+                            />
+                            <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[8px] text-primary/30 uppercase font-light">
+                              {months[i]}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between pt-10">
+                    <Button variant="outline" onClick={() => setStep(3)} className="border-primary/20 text-primary hover:bg-primary/5 font-light tracking-widest uppercase text-[10px]">
+                      <ChevronLeft className="mr-2 w-4 h-4" /> {language === 'fr' ? 'Modifier' : 'Edit'}
+                    </Button>
+                    <Button onClick={reset} className="bg-primary text-white hover:bg-black px-8 transition-all font-light tracking-widest uppercase text-[10px]">
+                      {language === 'fr' ? 'Nouvelle estimation' : 'New Estimate'}
+                    </Button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </div>
-
-      {/* Methodology Modal */}
-      <AnimatePresence>
-        {isInfoOpen && (
-          <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 md:p-6">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsInfoOpen(false)}
-              className="absolute inset-0 bg-primary/80 backdrop-blur-md"
-            />
-            
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative bg-white w-full max-w-2xl shadow-2xl p-8 md:p-12 overflow-y-auto max-h-[90vh]"
-            >
-              <button 
-                onClick={() => setIsInfoOpen(false)}
-                className="absolute top-6 right-6 text-primary/40 hover:text-primary transition-colors"
-              >
-                <X className="w-6 h-6" />
-              </button>
-
-              <div className="space-y-10">
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto mb-6 p-3">
-                    <Logo className="w-full" light={false} />
-                  </div>
-                  <h3 className="text-3xl font-serif text-primary mb-4">{t("method.title")}</h3>
-                  <p className="text-primary/60 text-sm leading-relaxed max-w-md mx-auto">
-                    {t("method.desc")}
-                  </p>
-                </div>
-
-                <div className="grid gap-8">
-                  {[
-                    {
-                      title: t("method.geo.title"),
-                      text: t("method.geo.desc")
-                    },
-                    {
-                      title: t("method.standing.title"),
-                      text: t("method.standing.desc")
-                    },
-                    {
-                      title: t("method.amenities.title"),
-                      text: t("method.amenities.desc")
-                    },
-                    {
-                      title: t("method.shost.title"),
-                      text: t("method.shost.desc")
-                    }
-                  ].map((item, i) => (
-                    <div key={i} className="flex gap-6">
-                      <span className="text-accent font-serif text-2xl opacity-50">0{i+1}</span>
-                      <div>
-                        <h4 className="text-xs font-bold uppercase tracking-widest text-primary mb-2">{item.title}</h4>
-                        <p className="text-primary/60 text-sm leading-relaxed">{item.text}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="bg-secondary/50 p-6 border border-primary/5 text-center">
-                  <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-primary/40 mb-2">{t("method.note")}</p>
-                  <p className="text-xs text-primary/70 italic">
-                    {t("method.note.desc")}
-                  </p>
-                </div>
-
-                <Button 
-                  onClick={() => setIsInfoOpen(false)}
-                  className="w-full bg-primary text-white rounded-none py-6 uppercase tracking-[0.2em] text-xs font-bold"
-                >
-                  {t("method.close")}
-                </Button>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
     </section>
   );
 }

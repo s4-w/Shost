@@ -13,10 +13,11 @@ export default function Navbar() {
   const { language, setLanguage, t } = useLanguage();
 
   const navLinks = [
-    { name: t("nav.home"), href: "#" },
+    { name: t("nav.home"), href: "#home" },
     { name: t("nav.services"), href: "#services" },
     { name: t("nav.fees"), href: "#honoraires" },
     { name: t("nav.estimate"), href: "#estimateur" },
+    { name: t("nav.process"), href: "#processus" },
     { name: t("nav.faq"), href: "#faq" },
     { name: t("nav.about"), href: "#a-propos" },
   ];
@@ -39,39 +40,43 @@ export default function Navbar() {
     >
       <div className="container mx-auto px-6 flex items-center">
         {/* Logo - Left Side */}
-        <a href="#" className="flex items-center group min-w-[80px] max-w-[100px] md:max-w-[120px] lg:max-w-[160px] flex-shrink-0">
-          <Logo className="w-full" light={!isScrolled} />
-        </a>
+        <div className="flex-1 flex justify-start">
+          <a href="#" className="flex items-center group min-w-[100px] max-w-[120px] md:max-w-[140px] lg:max-w-[160px]">
+            <Logo className="w-full" light={!isScrolled} />
+          </a>
+        </div>
 
-        {/* Desktop Links - Left Aligned */}
-        <div className="hidden md:flex items-center gap-2 lg:gap-10 ml-2 lg:ml-12 flex-grow overflow-hidden">
+        {/* Desktop Links - Centered */}
+        <div className="hidden md:flex items-center justify-center gap-4 lg:gap-8 flex-none px-4">
           {navLinks.map((link) => (
-            <a
+            <motion.a
               key={link.name}
               href={link.href}
-              className={`text-[8px] lg:text-[11px] font-semibold transition-colors uppercase tracking-[0.1em] lg:tracking-[0.2em] whitespace-nowrap ${
-                isScrolled ? "text-primary hover:text-accent" : "text-white/80 hover:text-white"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className={`text-[10px] lg:text-[11px] font-semibold transition-colors uppercase tracking-[0.2em] whitespace-nowrap ${
+                isScrolled ? "text-primary hover:text-accent" : "text-white hover:text-accent"
               }`}
             >
               {link.name}
-            </a>
+            </motion.a>
           ))}
         </div>
 
         {/* Actions - Right Side */}
-        <div className="hidden md:flex items-center justify-end gap-2 lg:gap-10 flex-shrink-0 ml-auto">
+        <div className="hidden md:flex items-center justify-end gap-4 lg:gap-8 flex-1">
           {/* Language Switcher */}
-          <div className={`flex items-center gap-1 lg:gap-3 border-l h-6 pl-2 lg:pl-10 ${isScrolled ? "border-primary/10" : "border-white/10"}`}>
+          <div className={`flex items-center gap-2 lg:gap-3 border-l h-6 pl-4 lg:pl-10 ${isScrolled ? "border-primary/10" : "border-white/20"}`}>
             <button 
               onClick={() => setLanguage('fr')}
-              className={`text-[8px] lg:text-[10px] font-bold tracking-widest transition-colors ${language === 'fr' ? 'text-accent' : (isScrolled ? 'text-primary/40 hover:text-primary' : 'text-white/40 hover:text-white')}`}
+              className={`text-[10px] font-bold tracking-widest transition-colors ${language === 'fr' ? 'text-accent' : (isScrolled ? 'text-primary/40 hover:text-primary' : 'text-white/60 hover:text-white')}`}
             >
               FR
             </button>
-            <span className={`text-[8px] lg:text-[10px] ${isScrolled ? "text-primary/10" : "text-white/10"}`}>|</span>
+            <span className={`text-[10px] ${isScrolled ? "text-primary/10" : "text-white/20"}`}>|</span>
             <button 
               onClick={() => setLanguage('en')}
-              className={`text-[8px] lg:text-[10px] font-bold tracking-widest transition-colors ${language === 'en' ? 'text-accent' : (isScrolled ? 'text-primary/40 hover:text-primary' : 'text-white/40 hover:text-white')}`}
+              className={`text-[10px] font-bold tracking-widest transition-colors ${language === 'en' ? 'text-accent' : (isScrolled ? 'text-primary/40 hover:text-primary' : 'text-white/60 hover:text-white')}`}
             >
               EN
             </button>
@@ -79,8 +84,10 @@ export default function Navbar() {
 
           <Button 
             onClick={() => setIsContactOpen(true)}
-            className={`bg-primary hover:bg-accent text-white rounded-none px-3 lg:px-10 py-2 lg:py-6 uppercase tracking-[0.1em] lg:tracking-[0.2em] text-[8px] lg:text-[10px] transition-all flex-shrink-0 ${
-              !isScrolled && "bg-white text-primary hover:bg-black hover:text-white border-none"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className={`bg-primary hover:bg-accent text-white rounded-none px-6 lg:px-10 py-4 lg:py-6 uppercase tracking-[0.2em] text-[10px] transition-all flex-shrink-0 ${
+              !isScrolled ? "bg-white text-primary hover:bg-black hover:text-white border-none" : ""
             }`}
           >
             {t("nav.contact")}
@@ -115,13 +122,14 @@ export default function Navbar() {
                 <nav className="flex-1 overflow-y-auto py-16 px-10">
                   <div className="flex flex-col gap-10 items-center text-center">
                     {navLinks.map((link) => (
-                      <a
+                      <motion.a
                         key={link.name}
                         href={link.href}
-                        className="text-4xl font-serif text-primary hover:text-accent transition-all duration-300"
+                        whileHover={{ x: 10, color: '#D4AF37' }}
+                        className="text-4xl font-serif text-primary transition-all duration-300"
                       >
                         {link.name}
-                      </a>
+                      </motion.a>
                     ))}
                   </div>
                 </nav>

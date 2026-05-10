@@ -1,9 +1,10 @@
 import { motion, AnimatePresence } from "motion/react";
 import { X, CheckCircle2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import Logo from "@/components/Logo";
 import { useState } from "react";
 import { useLanguage } from "@/src/context/LanguageContext";
+import { cn } from "@/lib/utils";
 
 interface ServiceModalProps {
   isOpen: boolean;
@@ -81,15 +82,18 @@ export default function ServiceModal({ isOpen, onClose, service }: ServiceModalP
                 </ul>
               </div>
 
-              <Button 
-                onClick={() => {
-                  onClose();
-                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="bg-primary hover:bg-accent text-white rounded-none px-10 py-6 uppercase tracking-[0.2em] text-[10px] transition-all"
+              <motion.a 
+                href="#contact"
+                onClick={onClose}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className={cn(
+                  buttonVariants({ variant: "default" }),
+                  "bg-primary hover:bg-accent text-white rounded-none px-10 py-6 uppercase tracking-[0.2em] text-[10px] transition-all h-auto"
+                )}
               >
                 {language === 'fr' ? 'En savoir plus' : 'Learn more'}
-              </Button>
+              </motion.a>
             </div>
 
             {/* Visual Side */}

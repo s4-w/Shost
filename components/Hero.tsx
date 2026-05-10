@@ -1,18 +1,19 @@
 import { motion } from "motion/react";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useLanguage } from "@/src/context/LanguageContext";
+import { cn } from "@/lib/utils";
 
 export default function Hero() {
   const { t, language } = useLanguage();
 
   return (
-    <section className="relative h-screen flex items-center overflow-hidden bg-surface">
+    <section id="home" className="relative h-screen flex items-center overflow-hidden bg-surface">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <img
           src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1974&auto=format&fit=crop"
-          alt="Prestigious Luxury Interior"
+          alt="Prestigious luxury apartment interior managed by SHOST Conciergerie"
           className="w-full h-full object-cover"
           referrerPolicy="no-referrer"
         />
@@ -37,20 +38,29 @@ export default function Hero() {
               {t("hero.subtitle")}
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Button 
-                onClick={() => document.getElementById('estimateur')?.scrollIntoView({ behavior: 'smooth' })}
-                className="bg-primary hover:bg-accent text-white rounded-none px-12 py-8 text-sm uppercase tracking-[0.2em] transition-all shadow-xl hover:shadow-accent/20"
+              <motion.a 
+                href="#estimateur"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                className={cn(
+                  buttonVariants({ variant: "default" }),
+                  "bg-primary hover:bg-accent text-white rounded-none px-12 py-8 text-sm uppercase tracking-[0.2em] transition-all shadow-xl hover:shadow-accent/20 h-auto"
+                )}
               >
                 {t("hero.cta.estimate")}
                 <ArrowRight className="ml-3 w-5 h-5" />
-              </Button>
-              <Button 
-                variant="outline" 
-                onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
-                className="border-primary/20 text-primary hover:bg-primary hover:text-white rounded-none px-12 py-8 text-sm uppercase tracking-[0.2em] transition-all"
+              </motion.a>
+              <motion.a 
+                href="#services"
+                whileHover={{ scale: 1.05, y: -2, backgroundColor: "rgba(0,0,0,1)", color: "white" }}
+                whileTap={{ scale: 0.95 }}
+                className={cn(
+                  buttonVariants({ variant: "outline" }),
+                  "border-primary/20 text-primary hover:bg-primary hover:text-white rounded-none px-12 py-8 text-sm uppercase tracking-[0.2em] transition-all h-auto"
+                )}
               >
                 {t("nav.services")}
-              </Button>
+              </motion.a>
             </div>
           </motion.div>
         </div>
