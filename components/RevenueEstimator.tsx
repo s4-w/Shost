@@ -7,6 +7,7 @@ import {
   Waves, Droplets, TreePine, Wind, Car
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Logo from "./Logo";
 import { useLanguage } from "@/src/context/LanguageContext";
 import { cn } from "@/lib/utils";
 
@@ -34,7 +35,7 @@ export default function RevenueEstimator() {
   const [step, setStep] = useState<Step>(1);
   
   // Selection State
-  const [zone, setZone] = useState<keyof typeof ZONES_DATA>("centre");
+  const [zone, setZone] = useState<keyof typeof ZONES_DATA | null>(null);
   const [propertyType, setPropertyType] = useState<keyof typeof TYPE_MULT>("appartement");
   const [bedrooms, setBedrooms] = useState(2);
   const [maxGuests, setMaxGuests] = useState(4);
@@ -48,6 +49,8 @@ export default function RevenueEstimator() {
   };
 
   const results = useMemo(() => {
+    if (!zone) return { gross: 0, net: 0, platform: 0, shost: 0, adr: 0, avgOcc: 0, monthly: [] };
+    
     const z = ZONES_DATA[zone];
     const adr = z.adr * TYPE_MULT[propertyType] * (1 + (bedrooms - 1) * 0.22) * STANDING_MULT[standing];
     const occBase = Math.min(z.occ + STANDING_OCC_BOOST[standing], 0.95);
@@ -90,7 +93,7 @@ export default function RevenueEstimator() {
 
   const reset = () => {
     setStep(1);
-    setZone("centre");
+    setZone(null);
     setPropertyType("appartement");
     setBedrooms(2);
     setMaxGuests(4);
@@ -151,15 +154,17 @@ export default function RevenueEstimator() {
             </div>
 
             <div className="relative z-10">
-              <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-accent/30 bg-accent/10 mb-10">
-                <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                <span className="text-[10px] font-bold uppercase tracking-widest text-accent">Estimation Grenoble</span>
+              <div className="mb-12">
+                <Logo light className="w-56" />
               </div>
               
-              <h2 className="text-4xl font-serif italic mb-6 leading-tight text-white">
-                S<em>HOST</em> <br />
-                <span className="text-white/40 text-2xl not-italic font-sans font-light">Estimation Propriétaire</span>
-              </h2>
+              <div className="mb-12">
+                <h2 className="text-3xl font-serif italic mb-4 text-white leading-tight">
+                  {language === 'fr' ? 'Estimez votre' : 'Estimate your'} <br />
+                  <span className="not-italic text-accent font-sans font-bold uppercase tracking-tighter text-4xl">Revenu</span>
+                </h2>
+                <div className="h-1 w-12 bg-accent/30" />
+              </div>
               
               <div className="space-y-8 mt-16 font-light">
                 {[1, 2, 3, 4].map((s) => (
@@ -211,61 +216,74 @@ export default function RevenueEstimator() {
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {Object.entries(ZONES_DATA).map(([key, data]) => (
-                      <motion.button
-                        key={key}
-                        whileHover={{ y: -8, boxShadow: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)" }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => setZone(key as any)}
-                        className={cn(
-                          "flex flex-col border transition-all duration-300 rounded-xl overflow-hidden group relative",
-                          zone === key ? "border-accent ring-2 ring-accent/20" : "bg-white border-black/5 hover:border-black/10 shadow-sm"
-                        )}
-                      >
-                        <div className="h-32 w-full relative overflow-hidden">
-                          <img 
-                            src={data.img} 
-                            alt={key} 
-                            className={cn(
-                              "w-full h-full object-cover transition-transform duration-700",
-                              zone === key ? "scale-110" : "scale-100 group-hover:scale-110"
-                            )}
-                          />
-                          <div className={cn(
-                            "absolute inset-0 bg-primary/20 group-hover:bg-primary/10 transition-colors",
-                            zone === key ? "bg-primary/0" : ""
-                          )} />
-                          <span className="absolute top-2 right-2 text-2xl drop-shadow-md">{data.icon}</span>
-                          
-                          {zone === key && (
-                            <div className="absolute top-2 left-2 bg-accent text-primary p-1 rounded-full shadow-lg">
-                              <Check className="w-3 h-3" />
-                            </div>
+                        <motion.button
+                          key={key}
+                          whileHover={{ y: -12, boxShadow: "0 25px 50px -12px rgb(0 0 0 / 0.15)" }}
+                          whileTap={{ scale: 0.98 }}
+                          onClick={() => setZone(key as any)}
+                          className={cn(
+                            "flex flex-col border-2 transition-all duration-500 rounded-3xl overflow-hidden group relative",
+                            zone === key 
+                              ? "border-accent shadow-[0_30px_60px_-15px_rgba(212,175,55,0.4)] scale-[1.05] z-20 ring-8 ring-accent/10" 
+                              : "bg-white border-black/5 hover:border-black/10 shadow-lg hover:shadow-2xl"
                           )}
-                        </div>
-                        <div className={cn(
-                          "p-4 transition-colors",
-                          zone === key ? "bg-accent text-primary" : "bg-white text-primary"
-                        )}>
-                          <span className="text-[10px] font-bold uppercase tracking-widest block mb-1">
-                            {key === 'centre' ? (language === 'fr' ? 'Grenoble Centre' : 'Grenoble City Center') : 
-                             key === 'montagne' ? (language === 'fr' ? 'Massifs Alpins' : 'Alpine Mountains') : 
-                             (language === 'fr' ? 'Périphérie / Sud' : 'Grand Grenoble')}
-                          </span>
-                          <span className={cn(
-                            "text-[8px] block opacity-60 uppercase tracking-widest transition-colors font-light",
-                            zone === key ? "text-primary/70" : "text-primary/40"
+                        >
+                          <div className="h-40 w-full relative overflow-hidden">
+                            <img 
+                              src={data.img} 
+                              alt={key} 
+                              className={cn(
+                                "w-full h-full object-cover transition-transform duration-1000",
+                                zone === key ? "scale-120" : "scale-100 group-hover:scale-110"
+                              )}
+                            />
+                            <div className={cn(
+                              "absolute inset-0 bg-primary/20 group-hover:bg-primary/5 transition-colors",
+                              zone === key ? "bg-primary/0" : ""
+                            )} />
+                            <span className={cn(
+                              "absolute top-4 right-4 text-3xl drop-shadow-2xl transition-transform duration-500",
+                              zone === key ? "scale-125" : "scale-100"
+                            )}>
+                              {data.icon}
+                            </span>
+                            
+                            {zone === key && (
+                              <motion.div 
+                                initial={{ scale: 0, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                className="absolute top-4 left-4 bg-accent text-primary p-2 rounded-full shadow-2xl z-30"
+                              >
+                                <Check className="w-4 h-4 stroke-[3px]" />
+                              </motion.div>
+                            )}
+                          </div>
+                          <div className={cn(
+                            "p-8 transition-all duration-500 border-t",
+                            zone === key ? "bg-accent text-primary border-accent/20" : "bg-white text-primary border-black/5"
                           )}>
-                            {key === 'centre' ? (language === 'fr' ? 'Secteur Historique & Tourités' : 'Historical & Business') : 
-                             key === 'montagne' ? (language === 'fr' ? 'Vercors / Belledonne / Chartreuse' : 'Mountain Resorts') : 
-                             (language === 'fr' ? 'Agglomération & Grésivaudan' : 'Quiet Residential')}
-                          </span>
-                        </div>
-                      </motion.button>
+                            <span className={cn(
+                              "text-sm font-bold uppercase tracking-[0.25em] block text-center transition-all",
+                              zone === key ? "scale-110" : ""
+                            )}>
+                              {key === 'centre' ? (language === 'fr' ? 'Grenoble Centre' : 'Grenoble City Center') : 
+                               key === 'montagne' ? (language === 'fr' ? 'Massifs Alpins' : 'Alpine Mountains') : 
+                               (language === 'fr' ? 'Périphérie / Sud' : 'Grand Grenoble')}
+                            </span>
+                          </div>
+                        </motion.button>
                     ))}
                   </div>
 
                   <div className="flex justify-end pt-10">
-                    <Button onClick={() => setStep(2)} className="bg-primary text-white hover:bg-black px-12 transition-all font-light tracking-widest uppercase text-[10px]">
+                    <Button 
+                      disabled={!zone}
+                      onClick={() => setStep(2)} 
+                      className={cn(
+                        "transition-all font-light tracking-widest uppercase text-[10px] px-12",
+                        !zone ? "bg-primary/10 text-primary/30 cursor-not-allowed" : "bg-primary text-white hover:bg-black"
+                      )}
+                    >
                       {language === 'fr' ? 'Suivant' : 'Next'} <ChevronRight className="ml-2 w-4 h-4" />
                     </Button>
                   </div>
@@ -305,28 +323,38 @@ export default function RevenueEstimator() {
                       ))}
                     </div>
 
-                    <div className="space-y-6">
-                      <div className="flex justify-between items-center text-xs uppercase tracking-widest font-normal">
-                        <span className="text-primary/40">{language === 'fr' ? 'Chambres' : 'Bedrooms'}</span>
-                        <span className="text-accent">{bedrooms}</span>
+                    <div className="space-y-10 bg-slate-50/50 p-8 rounded-2xl border border-black/5 shadow-sm">
+                      <div className="space-y-6">
+                        <div className="flex justify-between items-center text-xs uppercase tracking-widest font-bold">
+                          <span className="text-primary">{language === 'fr' ? 'Nombre de Chambres' : 'Number of Bedrooms'}</span>
+                          <span className="bg-primary text-white w-10 h-10 flex items-center justify-center rounded-xl text-sm shadow-lg font-bold">{bedrooms}</span>
+                        </div>
+                        <input 
+                          type="range" min="1" max="6" value={bedrooms} step="1"
+                          onChange={(e) => setBedrooms(parseInt(e.target.value))}
+                          className="w-full h-2 bg-black/10 rounded-full appearance-none cursor-pointer accent-primary"
+                        />
+                        <div className="flex justify-between text-[10px] text-primary/30 uppercase font-bold px-1">
+                          <span>1</span>
+                          <span>6</span>
+                        </div>
                       </div>
-                      <input 
-                        type="range" min="1" max="6" value={bedrooms} step="1"
-                        onChange={(e) => setBedrooms(parseInt(e.target.value))}
-                        className="w-full accent-accent h-1 bg-black/5 rounded-full appearance-none cursor-pointer"
-                      />
-                    </div>
 
-                    <div className="space-y-6">
-                      <div className="flex justify-between items-center text-xs uppercase tracking-widest font-normal">
-                        <span className="text-primary/40">{language === 'fr' ? 'Voyageurs max' : 'Max guests'}</span>
-                        <span className="text-accent">{maxGuests}</span>
+                      <div className="space-y-6">
+                        <div className="flex justify-between items-center text-xs uppercase tracking-widest font-bold">
+                          <span className="text-primary">{language === 'fr' ? 'Capacité voyageurs' : 'Guest Capacity'}</span>
+                          <span className="bg-primary text-white w-10 h-10 flex items-center justify-center rounded-xl text-sm shadow-lg font-bold">{maxGuests}</span>
+                        </div>
+                        <input 
+                          type="range" min="1" max="12" value={maxGuests} step="1"
+                          onChange={(e) => setMaxGuests(parseInt(e.target.value))}
+                          className="w-full h-2 bg-black/10 rounded-full appearance-none cursor-pointer accent-primary"
+                        />
+                        <div className="flex justify-between text-[10px] text-primary/30 uppercase font-bold px-1">
+                          <span>1</span>
+                          <span>12</span>
+                        </div>
                       </div>
-                      <input 
-                        type="range" min="1" max="12" value={maxGuests} step="1"
-                        onChange={(e) => setMaxGuests(parseInt(e.target.value))}
-                        className="w-full accent-accent h-1 bg-black/5 rounded-full appearance-none cursor-pointer"
-                      />
                     </div>
                   </div>
 
@@ -368,9 +396,6 @@ export default function RevenueEstimator() {
                         <span className="text-sm font-bold uppercase tracking-widest">
                           {s === 'luxe' ? 'Ultra-Luxe' : s === 'premium' ? 'Premium' : 'Standard'}
                         </span>
-                        <span className={cn("text-[8px] uppercase tracking-[0.2em] font-light", standing === s ? "text-primary/60" : "text-primary/30")}>
-                          {s === 'luxe' ? '+48% de revenus' : s === 'premium' ? '+22% de revenus' : 'Confort essentiel'}
-                        </span>
                       </motion.button>
                     ))}
                   </div>
@@ -393,7 +418,6 @@ export default function RevenueEstimator() {
                             <span className="text-[10px] font-bold uppercase tracking-widest block">
                               {id === 'ski_storage' ? (language === 'fr' ? 'Ski/Vélo' : 'Ski Storage') : id.charAt(0).toUpperCase() + id.slice(1)}
                             </span>
-                            <span className={cn("text-[8px] transition-colors font-light", amenities.includes(id) ? "text-white/70" : "text-primary/40")}>+{bonus}€/an</span>
                           </div>
                         </motion.button>
                       );
