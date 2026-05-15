@@ -102,14 +102,14 @@ export default function Fees() {
                     {language === 'fr' ? "Commission de Gestion" : "Management Commission"}
                   </span>
                   <div className="flex-grow mx-4 border-b border-dashed border-white/10"></div>
-                  <span className="text-sm font-bold text-accent">24% TTC</span>
+                  <span className="text-sm font-bold text-accent">20% TTC</span>
                 </div>
                 <div className="flex justify-between items-center group">
                   <span className="text-sm text-white/60 group-hover:text-white transition-colors">
                     {language === 'fr' ? "Frais de démarrage" : "Starting fees"}
                   </span>
                   <div className="flex-grow mx-4 border-b border-dashed border-white/10"></div>
-                  <span className="text-sm font-bold text-accent">100€</span>
+                  <span className="text-sm font-bold text-accent">49,99€</span>
                 </div>
               </div>
             </motion.div>
@@ -166,16 +166,16 @@ export default function Fees() {
                     <div className="relative group/price">
                       <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-accent mb-4">Commission</p>
                       <div className="text-7xl md:text-8xl font-serif text-white relative inline-block transition-transform duration-500 group-hover/price:scale-110">
-                        24<span className="text-2xl font-sans font-light text-accent ml-1">%</span>
+                        20<span className="text-2xl font-sans font-light text-accent ml-1">%</span>
                       </div>
                     </div>
                     
                     <div className="h-[1px] md:h-20 w-20 md:w-[1px] bg-white/10 mx-auto md:mx-0"></div>
-
+ 
                     <div className="relative group/price">
                       <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-accent mb-4">{language === 'fr' ? 'Frais de démarrage' : 'Startup fee'}</p>
-                      <div className="text-7xl md:text-8xl font-serif text-white relative inline-block transition-transform duration-500 group-hover/price:scale-110">
-                        100<span className="text-2xl font-sans font-light text-accent ml-1">€</span>
+                      <div className="text-6xl md:text-7xl font-serif text-white relative inline-block transition-transform duration-500 group-hover/price:scale-110">
+                        49,99<span className="text-2xl font-sans font-light text-accent ml-1">€</span>
                       </div>
                     </div>
                   </div>
