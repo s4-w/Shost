@@ -64,24 +64,7 @@ export default function Navbar() {
         </div>
 
         {/* Actions - Right Side */}
-        <div className="hidden md:flex items-center justify-end gap-4 lg:gap-8 flex-1">
-          {/* Language Switcher */}
-          <div className={`flex items-center gap-2 lg:gap-3 border-l h-6 pl-4 lg:pl-10 ${isScrolled ? "border-primary/10" : "border-white/20"}`}>
-            <button 
-              onClick={() => setLanguage('fr')}
-              className={`text-[10px] font-bold tracking-widest transition-colors ${language === 'fr' ? 'text-accent' : (isScrolled ? 'text-primary/40 hover:text-primary' : 'text-white/60 hover:text-white')}`}
-            >
-              FR
-            </button>
-            <span className={`text-[10px] ${isScrolled ? "text-primary/10" : "text-white/20"}`}>|</span>
-            <button 
-              onClick={() => setLanguage('en')}
-              className={`text-[10px] font-bold tracking-widest transition-colors ${language === 'en' ? 'text-accent' : (isScrolled ? 'text-primary/40 hover:text-primary' : 'text-white/60 hover:text-white')}`}
-            >
-              EN
-            </button>
-          </div>
-
+        <div className="hidden md:flex items-center justify-end flex-1">
           <Button 
             onClick={() => setIsContactOpen(true)}
             whileHover={{ scale: 1.02 }}
@@ -136,22 +119,6 @@ export default function Navbar() {
 
                 {/* Footer/Bottom part */}
                 <div className="p-10 bg-white border-t border-primary/5 space-y-12 pb-16">
-                  {/* Language Selector */}
-                  <div className="flex items-center justify-center gap-10">
-                    <button 
-                      onClick={() => setLanguage('fr')}
-                      className={`text-[12px] font-bold tracking-[0.3em] transition-all pb-2 border-b-2 ${language === 'fr' ? 'text-accent border-accent' : 'text-primary/20 border-transparent hover:text-primary'}`}
-                    >
-                      FRANÇAIS
-                    </button>
-                    <button 
-                      onClick={() => setLanguage('en')}
-                      className={`text-[12px] font-bold tracking-[0.3em] transition-all pb-2 border-b-2 ${language === 'en' ? 'text-accent border-accent' : 'text-primary/20 border-transparent hover:text-primary'}`}
-                    >
-                      ENGLISH
-                    </button>
-                  </div>
-
                   <Button 
                     onClick={() => {
                       setIsContactOpen(true);

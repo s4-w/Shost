@@ -114,7 +114,7 @@ export default function RevenueEstimator() {
 
   return (
     <section id="estimateur" className="py-32 bg-[#F8F9FA] text-primary overflow-hidden relative">
-      {/* Background Decorative Elements */}
+      {/* Éléments décoratifs d'arrière-plan */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-50">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-accent/10 blur-[120px]" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-accent/5 blur-[120px]" />
@@ -141,13 +141,13 @@ export default function RevenueEstimator() {
 
         <div className="max-w-6xl mx-auto bg-white border-2 border-primary/10 shadow-2xl flex flex-col lg:flex-row min-h-[750px] rounded-2xl overflow-hidden font-light">
           
-          {/* Left Side: Progress & Info (DARK) */}
+          {/* Côté gauche : Progression & Info */}
           <div className="lg:w-1/3 bg-primary p-12 flex flex-col justify-between relative overflow-hidden text-white">
-            {/* Modern Alpine Architecture Background */}
+            {/* Arrière-plan architecture alpine moderne */}
             <div className="absolute inset-0 z-0 opacity-35 transition-transform duration-[10s] hover:scale-110 font-light">
               <img 
                 src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1000" 
-                alt="Modern Property" 
+                alt="Propriété moderne" 
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/30 to-primary/90" />
@@ -198,7 +198,7 @@ export default function RevenueEstimator() {
             </div>
           </div>
 
-          {/* Right Side: Interactive Steps (LIGHT) */}
+          {/* Côté droit : Étapes interactives */}
           <div className="flex-1 p-8 lg:p-16 flex flex-col justify-center relative bg-white text-primary">
             <AnimatePresence mode="wait">
               {step === 1 && (
@@ -231,7 +231,7 @@ export default function RevenueEstimator() {
                           <div className="h-40 w-full relative overflow-hidden">
                             <img 
                               src={data.img} 
-                              alt={key} 
+                              alt={`Secteur ${key === 'centre' ? 'Grenoble Centre' : key === 'montagne' ? 'Massifs Alpins' : 'Périphérie'}`} 
                               className={cn(
                                 "w-full h-full object-cover transition-transform duration-1000",
                                 zone === key ? "scale-120" : "scale-100 group-hover:scale-110"

@@ -15,7 +15,7 @@ export default function About() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 src="https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?q=80&w=2070&auto=format&fit=crop" 
-                alt="Équipe de conciergerie professionnelle SHERPA s'occupant de la gestion d'un bien immobilier" 
+                alt="Équipe de conciergerie professionnelle SHOST s'occupant de la gestion d'un bien immobilier" 
                 className="w-full max-w-md h-[500px] object-cover grayscale"
                 referrerPolicy="no-referrer"
               />

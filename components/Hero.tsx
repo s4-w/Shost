@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { buttonVariants } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Instagram } from "lucide-react";
 import { useLanguage } from "@/src/context/LanguageContext";
 import { cn } from "@/lib/utils";
 
@@ -13,7 +13,7 @@ export default function Hero() {
       <div className="absolute inset-0 z-0">
         <img
           src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1974&auto=format&fit=crop"
-          alt="Prestigious luxury apartment interior managed by SHOST Conciergerie"
+          alt="Intérieur d'appartement de luxe prestigieux géré par SHOST Conciergerie"
           className="w-full h-full object-cover"
           referrerPolicy="no-referrer"
         />
@@ -60,6 +60,16 @@ export default function Hero() {
                 )}
               >
                 {t("nav.services")}
+              </motion.a>
+              <motion.a
+                href="https://www.instagram.com/shost.services/"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.1, color: "#c5a059" }}
+                className="flex items-center justify-center p-4 text-primary transition-colors"
+                title="Suivez-nous sur Instagram"
+              >
+                <Instagram className="w-6 h-6" />
               </motion.a>
             </div>
           </motion.div>

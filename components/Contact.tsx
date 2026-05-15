@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "motion/react";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, Instagram } from "lucide-react";
 import { useLanguage } from "@/src/context/LanguageContext";
 
 export default function Contact() {
@@ -33,22 +33,22 @@ export default function Contact() {
 
             {/* Info Section */}
             <div className="md:w-1/2 p-12 md:p-16 bg-surface flex flex-col justify-center">
-              <div className="space-y-10">
+              <div className="space-y-6">
                 <motion.div 
                   initial="initial"
                   whileHover="hover"
                   className="flex items-center gap-6 group cursor-pointer"
                 >
-                  <div className="w-14 h-14 bg-white border border-primary/10 flex items-center justify-center rounded-none shadow-sm group-hover:bg-black transition-all duration-300">
+                  <div className="w-12 h-12 bg-white border border-primary/10 flex items-center justify-center rounded-none shadow-sm group-hover:bg-black transition-all duration-300">
                     <motion.div variants={iconVariants}>
-                      <Phone className="text-primary group-hover:text-accent w-6 h-6 transition-colors" />
+                      <Phone className="text-primary group-hover:text-accent w-5 h-5 transition-colors" />
                     </motion.div>
                   </div>
                   <div className="text-left">
                     <p className="text-[10px] uppercase tracking-[0.3em] text-primary/40 mb-1 font-bold">
                       {language === 'fr' ? 'Téléphone' : 'Phone'}
                     </p>
-                    <p className="text-xl font-medium text-primary tracking-wide transition-colors group-hover:text-black">06 26 29 06 49</p>
+                    <p className="text-lg font-medium text-primary tracking-wide transition-colors group-hover:text-black">06 26 29 06 49</p>
                   </div>
                 </motion.div>
 
@@ -57,32 +57,51 @@ export default function Contact() {
                   whileHover="hover"
                   className="flex items-center gap-6 group cursor-pointer"
                 >
-                  <div className="w-14 h-14 bg-white border border-primary/10 flex items-center justify-center rounded-none shadow-sm group-hover:bg-black transition-all duration-300">
+                  <div className="w-12 h-12 bg-white border border-primary/10 flex items-center justify-center rounded-none shadow-sm group-hover:bg-black transition-all duration-300">
                     <motion.div variants={iconVariants}>
-                      <Mail className="text-primary group-hover:text-accent w-6 h-6 transition-colors" />
+                      <Mail className="text-primary group-hover:text-accent w-5 h-5 transition-colors" />
                     </motion.div>
                   </div>
                   <div className="text-left">
                     <p className="text-[10px] uppercase tracking-[0.3em] text-primary/40 mb-1 font-bold">Email</p>
-                    <p className="text-xl font-medium text-primary transition-colors group-hover:text-black">shost.services@gmail.com</p>
+                    <p className="text-lg font-medium text-primary transition-colors group-hover:text-black">shost.services@gmail.com</p>
                   </div>
                 </motion.div>
+
+                <motion.a 
+                  href="https://www.instagram.com/shost.services/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial="initial"
+                  whileHover="hover"
+                  className="flex items-center gap-6 group cursor-pointer"
+                >
+                  <div className="w-12 h-12 bg-white border border-primary/10 flex items-center justify-center rounded-none shadow-sm group-hover:bg-black transition-all duration-300">
+                    <motion.div variants={iconVariants}>
+                      <Instagram className="text-primary group-hover:text-accent w-5 h-5 transition-colors" />
+                    </motion.div>
+                  </div>
+                  <div className="text-left">
+                    <p className="text-[10px] uppercase tracking-[0.3em] text-primary/40 mb-1 font-bold">Instagram</p>
+                    <p className="text-lg font-medium text-primary transition-colors group-hover:text-black">@shost.services</p>
+                  </div>
+                </motion.a>
 
                 <motion.div 
                   initial="initial"
                   whileHover="hover"
                   className="flex items-center gap-6 group cursor-pointer"
                 >
-                  <div className="w-14 h-14 bg-white border border-primary/10 flex items-center justify-center rounded-none shadow-sm group-hover:bg-black transition-all duration-300">
+                  <div className="w-12 h-12 bg-white border border-primary/10 flex items-center justify-center rounded-none shadow-sm group-hover:bg-black transition-all duration-300">
                     <motion.div variants={iconVariants}>
-                      <MapPin className="text-primary group-hover:text-accent w-6 h-6 transition-colors" />
+                      <MapPin className="text-primary group-hover:text-accent w-5 h-5 transition-colors" />
                     </motion.div>
                   </div>
                   <div className="text-left">
                     <p className="text-[10px] uppercase tracking-[0.3em] text-primary/40 mb-1 font-bold">
                       {language === 'fr' ? 'Adresse' : 'Address'}
                     </p>
-                    <p className="text-xl font-medium text-primary uppercase tracking-wider transition-colors group-hover:text-black">
+                    <p className="text-lg font-medium text-primary uppercase tracking-wider transition-colors group-hover:text-black">
                       Grenoble
                     </p>
                   </div>
