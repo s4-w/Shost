@@ -136,6 +136,31 @@ export default function RevenueEstimator() {
                 ? 'Découvrez le potentiel locatif de votre bien grâce à notre algorithme basé sur les données réelles du marché grenoblois.' 
                 : 'Discover your property\'s rental potential with our algorithm based on real Grenoble market data.'}
             </p>
+            <motion.div 
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="mt-8 p-6 md:p-8 bg-[#FAF5EC]/70 border border-accent/40 rounded-2xl max-w-2xl mx-auto flex flex-col md:flex-row items-center md:justify-between text-left gap-6 shadow-md"
+            >
+              <div className="space-y-2 flex-grow">
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-accent flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-accent shrink-0" />
+                  {language === 'fr' ? "PROJECTION AUTOMATISÉE VS RÉALITÉ DE TERRAIN" : "AUTOMATED ESTIMATION VS REAL MARKET DATA"}
+                </p>
+                <p className="text-sm font-light text-primary leading-relaxed">
+                  {language === 'fr'
+                    ? "Bien que performant, notre simulateur en ligne n'égale pas l'analyse sur-mesure d'un expert local. Pour obtenir un rapport de revenus 100% fiable, précis et adapté aux particularités de votre bien, contactez un conseiller."
+                    : "While highly useful, our online tool cannot replace a custom expert evaluation of your property. For a 100% accurate projection tailored to your asset's finest details, get in touch with an advisor."}
+                </p>
+              </div>
+              <a 
+                href="#contact" 
+                className="bg-primary hover:bg-accent text-white hover:text-primary border border-primary/20 hover:border-accent font-bold px-6 py-4.5 text-[10px] uppercase tracking-widest transition-all duration-300 rounded-lg shrink-0 w-full md:w-auto text-center"
+              >
+                {language === 'fr' ? "Contacter un conseiller" : "Contact an advisor"}
+              </a>
+            </motion.div>
           </motion.div>
         </div>
 
@@ -211,7 +236,29 @@ export default function RevenueEstimator() {
                 >
                   <div>
                     <h3 className="text-3xl font-serif mb-4 italic text-primary">{language === 'fr' ? 'Secteur géographique' : 'Geographic Sector'}</h3>
-                    <p className="text-primary/50 text-sm font-light">{language === 'fr' ? "Grenoble et sa métropole offrent des dynamiques de loyers variées selon la zone." : "Grenoble and its metropolitan area offer varied rent dynamics depending on the zone."}</p>
+                    <p className="text-primary/50 text-sm font-light mb-6">{language === 'fr' ? "Grenoble et sa métropole offrent des dynamiques de loyers variées selon la zone." : "Grenoble and its metropolitan area offer varied rent dynamics depending on the zone."}</p>
+                    
+                    <div className="bg-[#FAF5EC]/50 border border-accent/20 p-5 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                      <div className="flex gap-3 items-start text-left">
+                        <Sparkles className="w-5 h-5 text-accent shrink-0 mt-0.5" />
+                        <div className="space-y-1">
+                          <p className="text-xs font-bold uppercase tracking-wider text-primary">
+                            {language === 'fr' ? "Vous préférez un accompagnement humain d'exception ?" : "Prefer exceptional service and support?"}
+                          </p>
+                          <p className="text-xs text-primary/60 font-light leading-relaxed">
+                            {language === 'fr' 
+                              ? "Évitez les estimations algorithmiques standards. Obtenez une étude de revenus approfondie et gratuite par un conseiller local."
+                              : "Skip standard algorithm guesswork. Secure an in-depth, complimentary study by our local property expert."}
+                          </p>
+                        </div>
+                      </div>
+                      <a 
+                        href="#contact" 
+                        className="text-xs font-bold text-accent hover:text-primary transition-colors uppercase tracking-widest inline-flex items-center gap-1.5 self-center sm:self-auto shrink-0"
+                      >
+                        {language === 'fr' ? "Discuter avec nous" : "Speak with us"} <ChevronRight className="w-3.5 h-3.5" />
+                      </a>
+                    </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -507,6 +554,28 @@ export default function RevenueEstimator() {
                           </div>
                         );
                       })}
+                    </div>
+                  </div>
+
+                  <div className="bg-primary/[0.02] border border-primary/5 p-6 rounded-xl flex gap-4 items-start">
+                    <Info className="w-5 h-5 text-accent shrink-0 mt-0.5" />
+                    <div className="space-y-1">
+                      <p className="text-xs font-bold uppercase tracking-wider text-primary">
+                        {language === 'fr' ? "Faire estimer réellement par nos experts" : "Get a real-world expert estimate"}
+                      </p>
+                      <p className="text-xs text-primary/60 leading-relaxed font-light text-left">
+                        {language === 'fr' 
+                          ? "Cet outil fournit une projection algorithmique générale. Pour obtenir une étude personnalisée, beaucoup plus poussée, réaliste et adaptée à l'état précis, à l'orientation et au cachet de votre bien, nous vous conseillons vivement de faire réaliser une estimation physique ou sur dossier par notre équipe."
+                          : "This tool provides a general algorithmic projection. To obtain a highly advanced, realistic study specific to your property's precise condition, orientation, and unique charm, we strongly advise request a customized valuation by our expert team."}
+                      </p>
+                      <div className="pt-2 text-left">
+                        <a 
+                          href="#contact" 
+                          className="text-xs font-bold text-accent hover:text-black transition-colors uppercase tracking-widest inline-flex items-center gap-1.5"
+                        >
+                          {language === 'fr' ? "Demander mon estimation gratuite" : "Request my free estimate"} <ChevronRight className="w-3 h-3" />
+                        </a>
+                      </div>
                     </div>
                   </div>
 

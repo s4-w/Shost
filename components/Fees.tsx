@@ -104,50 +104,24 @@ export default function Fees() {
                   <div className="flex-grow mx-4 border-b border-dashed border-white/10"></div>
                   <span className="text-sm font-bold text-accent">20% TTC</span>
                 </div>
-                <div className="flex justify-between items-center group">
-                  <span className="text-sm text-white/60 group-hover:text-white transition-colors">
-                    {language === 'fr' ? "Frais de démarrage" : "Starting fees"}
+                <div className="flex flex-col gap-2 group">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-white/60 group-hover:text-white transition-colors">
+                      {language === 'fr' ? "Frais de mise en place" : "Setup fees"}
+                    </span>
+                    <div className="flex-grow mx-4 border-b border-dashed border-white/10"></div>
+                    <span className="text-sm font-bold text-accent">120€</span>
+                  </div>
+                  <span className="text-xs text-white/40 font-light pl-1">
+                    {language === 'fr' 
+                      ? "Inclus : Kit de consommables initial, Logistique de départ, Shooting photo professionnel" 
+                      : "Included: Initial consumables kit, setup logistics, professional photoshoot"}
                   </span>
-                  <div className="flex-grow mx-4 border-b border-dashed border-white/10"></div>
-                  <span className="text-sm font-bold text-accent">49,99€</span>
                 </div>
               </div>
             </motion.div>
 
-            {/* Optional Services */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="border-t border-white/10 pt-12"
-            >
-              <h4 className="text-[10px] uppercase tracking-[0.4em] font-bold text-accent mb-8 opacity-60">
-                {language === 'fr' ? "Options d'achats" : "Purchase Options"}
-              </h4>
-              <div className="space-y-6">
-                <div className="flex justify-between items-center group">
-                  <span className="text-sm text-white/40 group-hover:text-white/60 transition-colors">
-                    {language === 'fr' ? "Boîte à clés & Installation" : "Key box & Installation"}
-                  </span>
-                  <div className="flex-grow mx-4 border-b border-dashed border-white/5"></div>
-                  <span className="text-sm font-bold text-accent/60">45€</span>
-                </div>
-                <div className="flex justify-between items-center group">
-                  <span className="text-sm text-white/40 group-hover:text-white/60 transition-colors">
-                    {language === 'fr' ? "Shooting Photo Professionnel" : "Professional Photo Shoot"}
-                  </span>
-                  <div className="flex-grow mx-4 border-b border-dashed border-white/5"></div>
-                  <span className="text-sm font-bold text-accent/60">{language === 'fr' ? "dès 90€" : "from 90€"}</span>
-                </div>
-                <div className="flex justify-between items-center group">
-                  <span className="text-sm text-white/40 group-hover:text-white/60 transition-colors">
-                    {language === 'fr' ? "Solutions accès intelligent (Digicode connecté, serrure connectée...)" : "Smart access solutions (Smart keypad, smart lock...)"}
-                  </span>
-                  <div className="flex-grow mx-4 border-b border-dashed border-white/5"></div>
-                  <span className="text-sm font-bold text-accent/60">{language === 'fr' ? "Sur devis" : "On quote"}</span>
-                </div>
-              </div>
-            </motion.div>
+
           </div>
 
           <div className="lg:w-1/2 w-full">
@@ -162,7 +136,7 @@ export default function Fees() {
                 <div className="flex flex-col items-center text-center">
                   <div className="w-20 h-[1px] bg-accent/50 mb-10"></div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center mb-12 w-full">
+                  <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-8 md:gap-16 items-center mb-12 w-full">
                     <div className="relative group/price">
                       <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-accent mb-4">Commission</p>
                       <div className="text-7xl md:text-8xl font-serif text-white relative inline-block transition-transform duration-500 group-hover/price:scale-110">
@@ -170,13 +144,18 @@ export default function Fees() {
                       </div>
                     </div>
                     
-                    <div className="h-[1px] md:h-20 w-20 md:w-[1px] bg-white/10 mx-auto md:mx-0"></div>
+                    <div className="h-[1px] md:h-20 w-20 md:w-[1px] bg-white/10 mx-auto"></div>
  
                     <div className="relative group/price">
-                      <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-accent mb-4">{language === 'fr' ? 'Frais de démarrage' : 'Startup fee'}</p>
+                      <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-accent mb-4">{language === 'fr' ? 'Frais de mise en place' : 'Setup fee'}</p>
                       <div className="text-6xl md:text-7xl font-serif text-white relative inline-block transition-transform duration-500 group-hover/price:scale-110">
-                        49,99<span className="text-2xl font-sans font-light text-accent ml-1">€</span>
+                        120<span className="text-2xl font-sans font-light text-accent ml-1">€</span>
                       </div>
+                      <p className="text-[11px] text-white/50 mt-4 max-w-[240px] mx-auto font-light leading-normal">
+                        {language === 'fr' 
+                          ? "Inclus : Kit de consommables initial, Logistique de départ, Shooting photo professionnel" 
+                          : "Included: Initial consumables kit, setup logistics, professional photoshoot"}
+                      </p>
                     </div>
                   </div>
 
