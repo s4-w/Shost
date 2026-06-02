@@ -1,9 +1,11 @@
-import { motion } from "motion/react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import { useLanguage } from "@/src/context/LanguageContext";
-import { Check, Shield, TrendingUp, Zap } from "lucide-react";
+import { Check, Shield, TrendingUp, Zap, Info } from "lucide-react";
 
 export default function Fees() {
   const { language } = useLanguage();
+  const [showSetupDetails, setShowSetupDetails] = useState(false);
 
   const benefits = [
     {
@@ -104,20 +106,76 @@ export default function Fees() {
                   <div className="flex-grow mx-4 border-b border-dashed border-white/10"></div>
                   <span className="text-sm font-bold text-accent">20% TTC</span>
                 </div>
-                <div className="flex flex-col gap-2 group">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-white/60 group-hover:text-white transition-colors">
-                      {language === 'fr' ? "Frais de mise en place" : "Setup fees"}
-                    </span>
-                    <div className="flex-grow mx-4 border-b border-dashed border-white/10"></div>
-                    <span className="text-sm font-bold text-accent">120€</span>
-                  </div>
-                  <span className="text-xs text-white/40 font-light pl-1">
-                    {language === 'fr' 
-                      ? "Inclus : Kit de consommables initial, Logistique de départ, Shooting photo professionnel" 
-                      : "Included: Initial consumables kit, setup logistics, professional photoshoot"}
-                  </span>
-                </div>
+                 <div className="flex flex-col gap-2 relative">
+                   <div className="flex justify-between items-center group">
+                     <span className="text-sm text-white/60 group-hover:text-white transition-colors flex items-center gap-2">
+                       {language === 'fr' ? "Frais de mise en place" : "Setup fees"}
+                       <button
+                         type="button"
+                         onClick={() => setShowSetupDetails(!showSetupDetails)}
+                         className={`inline-flex items-center justify-center w-5 h-5 rounded-full border text-[11px] font-serif font-extrabold italic transition-all cursor-pointer select-none focus:outline-none ${
+                           showSetupDetails 
+                             ? "bg-accent text-primary border-accent shadow-lg shadow-accent/35 scale-110" 
+                             : "bg-accent/15 border-accent/40 text-accent hover:bg-accent hover:text-primary hover:border-accent hover:scale-115"
+                         }`}
+                         title={language === 'fr' ? "Plus d'infos (Cliquez ici)" : "More info (Click here)"}
+                       >
+                         i
+                       </button>
+                     </span>
+                     <div className="flex-grow mx-4 border-b border-dashed border-white/10"></div>
+                     <button
+                       type="button"
+                       onClick={() => setShowSetupDetails(!showSetupDetails)}
+                       className="text-sm font-bold text-accent hover:opacity-80 flex items-center gap-1.5 cursor-pointer focus:outline-none group/info-btn"
+                     >
+                       <span>{language === 'fr' ? "Dès 120€" : "From 120€"}</span>
+                       <span className={`inline-flex items-center justify-center w-4 h-4 rounded-full border text-[9px] font-serif font-extrabold italic transition-all ${
+                         showSetupDetails
+                           ? "bg-accent text-primary border-accent"
+                           : "bg-accent/15 border-accent/30 text-accent group-hover/info-btn:bg-accent group-hover/info-btn:text-primary group-hover/info-btn:border-accent"
+                       }`}>
+                         i
+                       </span>
+                     </button>
+                   </div>
+                   <span className="text-xs text-white/40 font-light pl-1">
+                     {language === 'fr' 
+                       ? "Inclus : Kit de consommables initial, Logistique de départ, Shooting photo professionnel" 
+                       : "Included: Initial consumables kit, setup logistics, professional photoshoot"}
+                   </span>
+
+                   <AnimatePresence>
+                     {showSetupDetails && (
+                       <motion.div
+                         initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                         animate={{ opacity: 1, height: "auto", marginTop: 8 }}
+                         exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                         transition={{ duration: 0.3 }}
+                         className="overflow-hidden"
+                       >
+                         <div className="bg-white/[0.04] border border-accent/20 p-4 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                           <div className="flex gap-2 text-left items-start">
+                             <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-accent/25 border border-accent/40 text-accent text-[10px] font-serif font-extrabold italic select-none shrink-0 mt-0.5">i</span>
+                             <p className="text-xs text-white/85 leading-relaxed font-light">
+                               {language === 'fr' 
+                                 ? "Besoin de précisions ? Réservez un appel découverte avec notre équipe." 
+                                 : "Need details? Book a discovery call with our team."}
+                             </p>
+                           </div>
+                           <a 
+                             href="https://calendly.com/shost-manage/30min" 
+                             target="_blank" 
+                             rel="noopener noreferrer" 
+                             className="bg-accent hover:bg-white text-primary text-[10px] font-bold uppercase tracking-wider px-3.5 py-2 rounded transition-all duration-300 text-center shrink-0"
+                           >
+                             {language === 'fr' ? "Prendre RDV" : "Book custom call"}
+                           </a>
+                         </div>
+                       </motion.div>
+                     )}
+                   </AnimatePresence>
+                 </div>
               </div>
             </motion.div>
 
@@ -146,12 +204,18 @@ export default function Fees() {
                     
                     <div className="h-[1px] md:h-20 w-20 md:w-[1px] bg-white/10 mx-auto"></div>
  
-                    <div className="relative group/price">
-                      <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-accent mb-4">{language === 'fr' ? 'Frais de mise en place' : 'Setup fee'}</p>
+                    <div className="relative group/price p-6 md:p-8 rounded-2xl bg-white/[0.04] border border-accent/30 shadow-2xl transition-all duration-300 hover:border-accent">
+                      <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-primary text-[8px] font-bold tracking-[0.2em] uppercase px-3.5 py-1 rounded shadow">
+                        {language === 'fr' ? 'Tout Inclus' : 'All-Inclusive'}
+                      </div>
+                      <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-accent mb-4 mt-2">{language === 'fr' ? 'Frais de mise en place' : 'Setup fee'}</p>
                       <div className="text-6xl md:text-7xl font-serif text-white relative inline-block transition-transform duration-500 group-hover/price:scale-110">
+                        <span className="text-xs font-sans font-light text-white/40 block -mb-2">
+                          {language === 'fr' ? "dès" : "from"}
+                        </span>
                         120<span className="text-2xl font-sans font-light text-accent ml-1">€</span>
                       </div>
-                      <p className="text-[11px] text-white/50 mt-4 max-w-[240px] mx-auto font-light leading-normal">
+                      <p className="text-[11px] text-white/50 mt-4 max-w-[220px] mx-auto font-light leading-normal">
                         {language === 'fr' 
                           ? "Inclus : Kit de consommables initial, Logistique de départ, Shooting photo professionnel" 
                           : "Included: Initial consumables kit, setup logistics, professional photoshoot"}

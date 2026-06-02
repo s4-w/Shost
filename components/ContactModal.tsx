@@ -1,6 +1,6 @@
 import React from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { X, Mail, Phone, MapPin } from "lucide-react";
+import { X, Mail, Phone, MapPin, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface ContactModalProps {
@@ -49,14 +49,14 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
             {/* Left Side - Accent */}
             <div className="w-full md:w-1/3 bg-primary p-12 text-white flex flex-col justify-center items-center text-center">
               <div className="w-16 h-16 border border-white/10 flex items-center justify-center rounded-full mb-6">
-                <Mail className="text-accent w-8 h-8" />
+                <Calendar className="text-accent w-8 h-8" />
               </div>
               <h3 className="text-2xl font-serif text-white">Contact</h3>
             </div>
 
             {/* Right Side - Info */}
             <div className="flex-1 p-10 md:p-16 bg-surface flex flex-col justify-center text-left">
-              <div className="space-y-10">
+              <div className="space-y-6">
                 <motion.div 
                   initial="initial"
                   whileHover="hover"
@@ -89,6 +89,25 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   </div>
                 </motion.div>
 
+                <motion.a 
+                  href="https://calendly.com/shost-manage/10min"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial="initial"
+                  whileHover="hover"
+                  className="flex items-center gap-6 group cursor-pointer"
+                >
+                  <div className="w-12 h-12 bg-white border border-primary/10 flex items-center justify-center rounded-none shadow-sm group-hover:bg-black transition-all">
+                    <motion.div variants={iconVariants}>
+                      <Calendar className="text-primary group-hover:text-accent w-5 h-5 transition-colors" />
+                    </motion.div>
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-accent mb-1">Calendly</p>
+                    <p className="font-medium text-lg text-primary transition-colors group-hover:text-black hover:text-accent">Réserver un créneau</p>
+                  </div>
+                </motion.a>
+
                 <motion.div 
                   initial="initial"
                   whileHover="hover"
@@ -110,7 +129,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 onClick={onClose}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="mt-12 w-full bg-primary hover:bg-black text-white rounded-none py-8 uppercase tracking-[0.2em] text-[10px] font-bold transition-all shadow-lg"
+                className="mt-8 w-full bg-primary hover:bg-black text-white rounded-none py-8 uppercase tracking-[0.2em] text-[10px] font-bold transition-all shadow-lg"
               >
                 Fermer
               </Button>
