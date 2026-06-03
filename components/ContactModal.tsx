@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { X, Mail, Phone, MapPin, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,6 +10,18 @@ interface ContactModalProps {
 }
 
 export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
+  // Lock body scroll when open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   const iconVariants = {
     hover: { 
       scale: 1.1,
@@ -17,24 +30,27 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
     }
   };
 
-  return (
+  if (typeof document === "undefined") return null;
+
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
+        <div className="fixed inset-0 z-[9999] overflow-y-auto flex items-center justify-center">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-primary/40 backdrop-blur-md"
+            className="fixed inset-0 bg-primary/40 backdrop-blur-md"
           />
           
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="relative bg-white w-full max-w-2xl shadow-2xl overflow-hidden border border-primary/5 flex flex-col md:flex-row"
-          >
+          <div className="flex min-h-full w-full items-center justify-center p-4 sm:p-6 md:p-10 pointer-events-none">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 30 }}
+              className="relative bg-white w-full max-w-2xl shadow-2xl rounded-xl md:rounded-none overflow-hidden border border-primary/5 flex flex-col md:flex-row z-[10000] pointer-events-auto"
+            >
             <button 
               onClick={(e) => {
                 e.stopPropagation();
@@ -90,7 +106,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 </motion.div>
 
                 <motion.a 
-                  href="https://calendly.com/shost-manage/10min"
+                  href="https://calendly.com/shost-manage/30min"
                   target="_blank"
                   rel="noopener noreferrer"
                   initial="initial"
@@ -104,7 +120,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   </div>
                   <div>
                     <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-accent mb-1">Calendly</p>
-                    <p className="font-medium text-lg text-primary transition-colors group-hover:text-black hover:text-accent">Réserver un créneau</p>
+                    <p className="font-medium text-lg text-primary transition-colors group-hover:text-black hover:text-accent">Réserver un appel</p>
                   </div>
                 </motion.a>
 
@@ -135,8 +151,10 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
               </Button>
             </div>
           </motion.div>
+          </div>
         </div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }

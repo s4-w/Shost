@@ -32,7 +32,7 @@ export default function Contact() {
                 </p>
               </div>
               <motion.a 
-                href="https://calendly.com/shost-manage/10min"
+                href="https://calendly.com/shost-manage/30min"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.02, backgroundColor: "#c5a059", color: "#112233" }}
@@ -41,7 +41,7 @@ export default function Contact() {
               >
                 <Calendar className="w-4 h-4 shrink-0" />
                 <span>
-                  {language === 'fr' ? 'Réserver un appel (10 min)' : 'Book a 10-min call'}
+                  {language === 'fr' ? 'Réserver un appel' : 'Book a call'}
                 </span>
               </motion.a>
             </div>
@@ -84,7 +84,7 @@ export default function Contact() {
                 </motion.div>
 
                 <motion.a 
-                  href="https://calendly.com/shost-manage/10min"
+                  href="https://calendly.com/shost-manage/30min"
                   target="_blank"
                   rel="noopener noreferrer"
                   initial="initial"

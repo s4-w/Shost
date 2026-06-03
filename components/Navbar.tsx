@@ -10,6 +10,7 @@ import { useLanguage } from "@/src/context/LanguageContext";
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
 
   const navLinks = [
@@ -34,7 +35,9 @@ export default function Navbar() {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`fixed top-0 left-0 right-0 transition-all duration-500 ${
+        isContactOpen ? "z-[155]" : "z-50"
+      } ${
         isScrolled ? "glass py-2 shadow-sm" : "bg-transparent py-6"
       }`}
     >
@@ -85,7 +88,7 @@ export default function Navbar() {
 
         {/* Mobile Nav */}
         <div className="md:hidden">
-          <Sheet>
+          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger
               render={
                 <Button variant="ghost" size="icon" className={`transition-colors ${isScrolled ? 'text-primary' : 'text-white'}`}>
@@ -108,6 +111,7 @@ export default function Navbar() {
                       <motion.a
                         key={link.name}
                         href={link.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
                         whileHover={{ x: 10, color: '#D4AF37' }}
                         className="text-4xl font-serif text-primary transition-all duration-300"
                       >
@@ -121,6 +125,7 @@ export default function Navbar() {
                 <div className="p-10 bg-white border-t border-primary/5 space-y-12 pb-16">
                   <Button 
                     onClick={() => {
+                      setIsMobileMenuOpen(false);
                       setIsContactOpen(true);
                     }}
                     className="bg-primary hover:bg-black text-white rounded-none w-full py-10 uppercase tracking-[0.3em] text-[12px] font-bold transition-all shadow-xl"
