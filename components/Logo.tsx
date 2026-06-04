@@ -7,7 +7,7 @@ interface LogoProps {
 }
 
 export default function Logo({ className = "", light = false }: LogoProps) {
-  const logoUrl = "https://i.postimg.cc/W1jN70Wd/Logo-sans-fond.png";
+  const logoUrl = "/Logo-sans-fond.png";
 
   return (
     <div className={`flex items-center justify-center ${className}`}>
