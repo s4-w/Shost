@@ -42,22 +42,44 @@ export default function About() {
                 ? <>L'art de l'hospitalité, <br />la rigueur de la gestion</>
                 : <>The art of hospitality, <br />the rigor of management</>}
             </motion.h2>
-            <div className="space-y-6 text-primary text-lg leading-relaxed">
-              <p>
-                {language === 'fr' 
-                  ? "SHOST est née de notre propre expérience en tant que voyageurs réguliers sur Airbnb. À force de parcourir le monde et de séjourner dans divers logements, nous avons compris que l'excellence d'un séjour réside dans les détails et la réactivité. C'est de ce vécu qu'est née l'idée de mettre notre exigence au service des propriétaires pour une gestion irréprochable."
-                  : "SHOST was born from our own experience as regular Airbnb travelers. By traveling the world and staying in various accommodations, we understood that the excellence of a stay lies in the details and responsiveness. It is from this experience that the idea was born to put our high standards at the service of owners for impeccable management."}
-              </p>
-              <p>
-                {language === 'fr'
-                  ? "Notre mission est de redonner de la valeur à votre patrimoine tout en offrant aux voyageurs une expérience authentique et mémorable. Nous combinons technologie de pointe et savoir-faire traditionnel pour garantir des résultats exceptionnels."
-                  : "Our mission is to restore value to your heritage while offering travelers an authentic and memorable experience. We combine cutting-edge technology and traditional know-how to guarantee exceptional results."}
-              </p>
-              <p className="font-serif italic text-primary">
-                {language === 'fr'
-                  ? '"Nous traitons chaque appartement comme s\'il était le nôtre."'
-                  : '"We treat every apartment as if it were our own."'}
-              </p>
+            <div className="space-y-6 text-primary text-base md:text-lg leading-relaxed font-sans text-justify">
+              {language === 'fr' ? (
+                <>
+                  <p>
+                    Vous possédez un appartement à Grenoble ou dans la métropole alpine et vous manquez de temps pour optimiser son potentiel sur les plateformes de réservation ? SHOST est votre <strong className="font-bold text-black border-b border-primary/20">conciergerie airbnb grenoble</strong> de confiance, dédiée à transformer votre bien immobilier en une véritable source de revenus passifs, en toute simplicité et sérénité.
+                  </p>
+                  <p>
+                    En tant que spécialiste de la <strong className="font-bold text-black border-b border-primary/20">gestion locative courte durée</strong> en Isère, nous prenons en charge l’intégralité de l'expérience de location. De la création et l’optimisation de votre annonce professionnelle (avec photos de qualité et tarification dynamique en temps réel) à la communication chaleureuse 24h/24 et 7j/7 avec les voyageurs, notre équipe est à l'écoute de chaque détail. Nous assurons un accueil irréprochable avec remise de clés intelligente et un ménage hôtelier méticuleux accompagné de la blanchisserie professionnelle pour que chaque séjour soit exceptionnel.
+                  </p>
+                  <p>
+                    Faire appel à un <strong className="font-bold text-black border-b border-primary/20">gestionnaire airbnb isère</strong> d'expérience comme SHOST, c'est s’assurer d'un taux d'occupation optimisé et d’évaluations 5 étoiles régulières, tout en conservant une liberté totale sur votre calendrier d’occupation. Que ce soit pour un studio chaleureux au centre-ville de Grenoble, un appartement contemporain près de la presqu’île, ou un bien idéalement situé au pied du massif du Vercors ou de Belledonne, nous mettons notre rigueur et notre art de l'hospitalité au service de votre sérénité logistique et financière.
+                  </p>
+                  <p>
+                    Libérez-vous des contraintes quotidiennes de la location de courte durée. Ensemble, redonnons de la valeur à votre patrimoine immobilier alpin et offrons à vos voyageurs une expérience mémorable.
+                  </p>
+                  <p className="font-serif italic text-primary text-center pt-4">
+                    "Nous traitons chaque appartement comme s'il était le nôtre."
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p>
+                    Do you own an apartment in Grenoble or the Alpine metropolis and lack the time to optimize its potential on booking platforms? SHOST is your trusted <strong className="font-bold text-black border-b border-primary/20">airbnb concierge in grenoble</strong>, dedicated to transforming your property into a steady source of passive income, with complete ease and peace of mind.
+                  </p>
+                  <p>
+                    As specialists in <strong className="font-bold text-black border-b border-primary/20">short-term rental management</strong> in Isère, we handle the entire rental experience. From the creation and optimization of your professional listing (with high-quality photos and real-time dynamic pricing) to warm 24/7 guest communication, our team is attentive to every detail. We ensure an impeccable welcome with smart key exchange and meticulous, hotel-standard cleaning along with professional laundry so that each stay is exceptional.
+                  </p>
+                  <p>
+                    Hiring an experienced <strong className="font-bold text-black border-b border-primary/20">airbnb property manager in isère</strong> like SHOST means securing an optimized occupancy rate and consistent 5-star reviews, while maintaining total freedom over your booking calendar. Whether it is for a cozy studio in Grenoble's city center, a contemporary apartment near the Presqu'île, or a property ideally located at the foot of the Vercors or Belledonne mountain ranges, we leverage our rigor and hospitality to serve your peace of mind and financial success.
+                  </p>
+                  <p>
+                    Free yourself from the daily constraints of short-term renting. Together, let us enhance the value of your Alpine real estate assets and offer your guests a memorable experience.
+                  </p>
+                  <p className="font-serif italic text-primary text-center pt-4">
+                    "We treat every apartment as if it were our own."
+                  </p>
+                </>
+              )}
             </div>
           </div>
         </div>
