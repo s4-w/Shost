@@ -22,22 +22,35 @@ export default function Hero() {
 
       <div className="container mx-auto px-6 relative z-10 pt-20">
         <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-          >
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl text-primary font-serif leading-[1.1] mb-8 tracking-tighter">
+          <div>
+            <motion.h1 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl text-primary font-serif leading-[1.1] mb-8 tracking-tighter"
+            >
               {language === 'fr' ? (
                 <>Maximisez vos <br /><span className="italic text-accent">revenus</span> à Grenoble</>
               ) : (
                 <>Maximize your <br /><span className="italic text-accent">income</span> in Grenoble</>
               )}
-            </h1>
-            <p className="text-primary text-lg md:text-xl mb-12 max-w-lg mx-auto leading-relaxed font-medium">
+            </motion.h1>
+            
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+              className="text-primary text-lg md:text-xl mb-12 max-w-lg mx-auto leading-relaxed font-medium"
+            >
               {t("hero.subtitle")}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            </motion.p>
+            
+            <motion.div 
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+              className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+            >
               <motion.a 
                 href="#estimateur"
                 whileHover={{ scale: 1.05, y: -2 }}
@@ -71,8 +84,8 @@ export default function Hero() {
               >
                 <Instagram className="w-6 h-6" />
               </motion.a>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </div>
       </div>
 
