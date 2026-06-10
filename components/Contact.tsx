@@ -5,6 +5,12 @@ import { useLanguage } from "@/src/context/LanguageContext";
 
 export default function Contact() {
   const { language } = useLanguage();
+  const [nom, setNom] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [telephone, setTelephone] = React.useState("");
+  const [message, setMessage] = React.useState("");
+  const [status, setStatus] = React.useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = React.useState("");
 
   const iconVariants = {
     hover: { 
@@ -14,13 +20,52 @@ export default function Contact() {
     }
   };
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!nom.trim() || !email.trim() || !message.trim()) return;
+
+    setStatus("loading");
+    setErrorMessage("");
+
+    try {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbzLbRq_Eoi46Y20SRmXXYTaELfW1_vx6KHZTkdrqIK2wzZaoKA9UUMKE2j6qPQF-tsI-Q/exec", {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "text/plain",
+        },
+        body: JSON.stringify({ nom, email, telephone, message }),
+      });
+
+      // Google Apps Script can redirect (status 302) or return an opaque response in 'no-cors' mode.
+      // If the response is opaque or status is 0 or 200/ok, we treat it as successfully sent.
+      if (response.type === 'opaque' || response.status === 0 || response.ok || response.status === 200) {
+        setStatus("success");
+        setNom("");
+        setEmail("");
+        setTelephone("");
+        setMessage("");
+      } else {
+        throw new Error("HTTP error " + response.status);
+      }
+    } catch (err) {
+      console.error("Error submitting contact form", err);
+      setStatus("error");
+      setErrorMessage(
+        language === "fr"
+          ? "Une erreur est survenue lors de l'envoi. Veuillez réessayer."
+          : "An error occurred while sending. Please try again."
+      );
+    }
+  };
+
   return (
     <section id="contact" className="py-24 bg-secondary rounded-t-[2.5rem] md:rounded-t-[4rem] -mt-10 md:-mt-16 relative z-10">
       <div className="container mx-auto px-6">
         <div className="max-w-4xl mx-auto bg-white shadow-[0_30px_70px_rgba(17,34,51,0.25)] overflow-hidden rounded-3xl border border-primary/10">
           <div className="flex flex-col md:flex-row">
-            {/* Header / Intro */}
-            <div className="md:w-1/2 bg-primary text-white p-12 md:p-16 flex flex-col justify-between min-h-[450px]">
+            {/* Header / Intro & Info Section */}
+            <div className="md:w-1/2 bg-primary text-white p-12 md:p-16 flex flex-col justify-between min-h-[500px]">
               <div>
                 <h2 className="text-4xl md:text-5xl font-serif mb-6 leading-tight text-white text-left">
                   {language === 'fr' ? 'Contactez-nous' : 'Contact Us'}
@@ -30,14 +75,37 @@ export default function Contact() {
                     ? "Vous souhaitez déléguer la gestion de votre bien ou obtenir une estimation ? Notre équipe dédiée est à votre entière disposition."
                     : "Would you like to delegate the management of your property or get an estimate? Our dedicated team is at your full disposal."}
                 </p>
+
+                {/* Compact Info List */}
+                <div className="space-y-5.5 my-8 text-left text-lg md:text-[19px] font-medium text-white/90">
+                  <div className="flex items-center gap-4 hover:text-accent transition-colors">
+                    <Phone className="w-5 h-5 text-accent shrink-0" />
+                    <a href="tel:0626290649" className="hover:underline">06 26 29 06 49</a>
+                  </div>
+                  <div className="flex items-center gap-4 hover:text-accent transition-colors">
+                    <Mail className="w-5 h-5 text-accent shrink-0" />
+                    <a href="mailto:shost.services@gmail.com" className="hover:underline">shost.services@gmail.com</a>
+                  </div>
+                  <div className="flex items-center gap-4 hover:text-accent transition-colors">
+                    <Instagram className="w-5 h-5 text-accent shrink-0" />
+                    <a href="https://www.instagram.com/shost.services/" target="_blank" rel="noopener noreferrer" className="hover:text-accent hover:underline transition-colors">
+                      @shost.services
+                    </a>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <MapPin className="w-5 h-5 text-accent shrink-0" />
+                    <span>Grenoble</span>
+                  </div>
+                </div>
               </div>
+
               <motion.a 
                 href="https://calendly.com/shost-manage/30min"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.02, backgroundColor: "#c5a059", color: "#112233" }}
                 whileTap={{ scale: 0.98 }}
-                className="inline-flex items-center justify-center gap-3 w-full bg-white text-primary border border-white/10 py-4.5 px-6 rounded-xl text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 shadow-xl"
+                className="inline-flex items-center justify-center gap-3 w-full bg-white text-primary border border-white/10 py-4.5 px-6 rounded-xl text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 shadow-xl mb-6 md:mb-10"
               >
                 <Calendar className="w-4 h-4 shrink-0" />
                 <span>
@@ -46,103 +114,106 @@ export default function Contact() {
               </motion.a>
             </div>
 
-            {/* Info Section */}
-            <div className="md:w-1/2 p-12 md:p-16 bg-surface flex flex-col justify-center">
-              <div className="space-y-5">
-                <motion.div 
-                  initial="initial"
-                  whileHover="hover"
-                  className="flex items-center gap-6 group cursor-pointer"
-                >
-                  <div className="w-12 h-12 bg-white border border-primary/10 flex items-center justify-center rounded-xl shadow-sm group-hover:bg-black transition-all duration-300">
-                    <motion.div variants={iconVariants}>
-                      <Phone className="text-primary group-hover:text-accent w-5 h-5 transition-colors" />
-                    </motion.div>
-                  </div>
-                  <div className="text-left">
-                    <p className="text-[10px] uppercase tracking-[0.3em] text-primary/40 mb-1 font-bold">
-                      {language === 'fr' ? 'Téléphone' : 'Phone'}
-                    </p>
-                    <p className="text-lg font-medium text-primary tracking-wide transition-colors group-hover:text-black">06 26 29 06 49</p>
-                  </div>
-                </motion.div>
+            {/* Interactive Form Section */}
+            <div className="md:w-1/2 p-12 md:p-16 bg-surface flex flex-col justify-center text-left">
+              <h3 className="text-2xl font-serif text-primary mb-6">
+                {language === 'fr' ? 'Parlons de votre projet' : "Let's discuss your project"}
+              </h3>
+              
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label htmlFor="form-nom" className="block text-[10px] uppercase tracking-[0.2em] font-bold text-primary/60 mb-2">
+                    {language === 'fr' ? 'Nom' : 'Name'}
+                  </label>
+                  <input
+                    id="form-nom"
+                    type="text"
+                    required
+                    value={nom}
+                    onChange={(e) => setNom(e.target.value)}
+                    placeholder={language === 'fr' ? 'Votre nom complet' : 'Your full name'}
+                    className="w-full bg-white border border-primary/10 focus:border-accent text-primary focus:outline-none rounded-xl py-3.5 px-4 text-sm transition-all shadow-sm"
+                  />
+                </div>
 
-                <motion.div 
-                  initial="initial"
-                  whileHover="hover"
-                  className="flex items-center gap-6 group cursor-pointer"
-                >
-                  <div className="w-12 h-12 bg-white border border-primary/10 flex items-center justify-center rounded-xl shadow-sm group-hover:bg-black transition-all duration-300">
-                    <motion.div variants={iconVariants}>
-                      <Mail className="text-primary group-hover:text-accent w-5 h-5 transition-colors" />
-                    </motion.div>
-                  </div>
-                  <div className="text-left">
-                    <p className="text-[10px] uppercase tracking-[0.3em] text-primary/40 mb-1 font-bold">Email</p>
-                    <p className="text-lg font-medium text-primary transition-colors group-hover:text-black">shost.services@gmail.com</p>
-                  </div>
-                </motion.div>
+                <div>
+                  <label htmlFor="form-email" className="block text-[10px] uppercase tracking-[0.2em] font-bold text-primary/60 mb-2">
+                    {language === 'fr' ? 'Email' : 'Email'}
+                  </label>
+                  <input
+                    id="form-email"
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder={language === 'fr' ? 'votre@email.com' : 'your@email.com'}
+                    className="w-full bg-white border border-primary/10 focus:border-accent text-primary focus:outline-none rounded-xl py-3.5 px-4 text-sm transition-all shadow-sm"
+                  />
+                </div>
 
-                <motion.a 
-                  href="https://calendly.com/shost-manage/30min"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  initial="initial"
-                  whileHover="hover"
-                  className="flex items-center gap-6 group cursor-pointer"
-                >
-                  <div className="w-12 h-12 bg-white border border-primary/10 flex items-center justify-center rounded-xl shadow-sm group-hover:bg-black transition-all duration-300">
-                    <motion.div variants={iconVariants}>
-                      <Calendar className="text-primary group-hover:text-accent w-5 h-5 transition-colors" />
-                    </motion.div>
-                  </div>
-                  <div className="text-left">
-                    <p className="text-[10px] uppercase tracking-[0.3em] text-accent font-bold mb-1">Calendly</p>
-                    <p className="text-lg font-medium text-primary transition-colors group-hover:text-black">
-                      {language === 'fr' ? "Prendre RDV en ligne" : "Book an online appointment"}
-                    </p>
-                  </div>
-                </motion.a>
+                <div>
+                  <label htmlFor="form-telephone" className="block text-[10px] uppercase tracking-[0.2em] font-bold text-primary/60 mb-2">
+                    {language === 'fr' ? 'Téléphone' : 'Phone Number'}
+                  </label>
+                  <input
+                    id="form-telephone"
+                    type="tel"
+                    value={telephone}
+                    onChange={(e) => setTelephone(e.target.value)}
+                    placeholder={language === 'fr' ? 'Ex: 06 12 34 56 78' : 'e.g. +33 6 12 34 56 78'}
+                    className="w-full bg-white border border-primary/10 focus:border-accent text-primary focus:outline-none rounded-xl py-3.5 px-4 text-sm transition-all shadow-sm"
+                  />
+                </div>
 
-                <motion.a 
-                  href="https://www.instagram.com/shost.services/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  initial="initial"
-                  whileHover="hover"
-                  className="flex items-center gap-6 group cursor-pointer"
-                >
-                  <div className="w-12 h-12 bg-white border border-primary/10 flex items-center justify-center rounded-xl shadow-sm group-hover:bg-black transition-all duration-300">
-                    <motion.div variants={iconVariants}>
-                      <Instagram className="text-primary group-hover:text-accent w-5 h-5 transition-colors" />
-                    </motion.div>
-                  </div>
-                  <div className="text-left">
-                    <p className="text-[10px] uppercase tracking-[0.3em] text-primary/40 mb-1 font-bold">Instagram</p>
-                    <p className="text-lg font-medium text-primary transition-colors group-hover:text-black">@shost.services</p>
-                  </div>
-                </motion.a>
+                <div>
+                  <label htmlFor="form-message" className="block text-[10px] uppercase tracking-[0.2em] font-bold text-primary/60 mb-2">
+                    {language === 'fr' ? 'Message' : 'Message'}
+                  </label>
+                  <textarea
+                    id="form-message"
+                    required
+                    rows={4}
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder={language === 'fr' ? 'Comment pouvons-nous vous aider ?' : 'How can we help you?'}
+                    className="w-full bg-white border border-primary/10 focus:border-accent text-primary focus:outline-none rounded-xl py-3.5 px-4 text-sm resize-none transition-all shadow-sm"
+                  />
+                </div>
 
-                <motion.div 
-                  initial="initial"
-                  whileHover="hover"
-                  className="flex items-center gap-6 group cursor-pointer"
+                {status === "success" && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="p-4 bg-emerald-50 text-emerald-800 border border-emerald-100 rounded-xl text-sm font-medium"
+                  >
+                    {language === 'fr' ? 'Votre message a bien été envoyé !' : 'Your message has been successfully sent!'}
+                  </motion.div>
+                )}
+
+                {status === "error" && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="p-4 bg-rose-50 text-rose-800 border border-rose-100 rounded-xl text-sm font-medium"
+                  >
+                    {errorMessage}
+                  </motion.div>
+                )}
+
+                <motion.button
+                  type="submit"
+                  disabled={status === "loading"}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full bg-primary hover:bg-black text-white py-4 px-6 rounded-xl text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 shadow-lg disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <div className="w-12 h-12 bg-white border border-primary/10 flex items-center justify-center rounded-xl shadow-sm group-hover:bg-black transition-all duration-300">
-                    <motion.div variants={iconVariants}>
-                      <MapPin className="text-primary group-hover:text-accent w-5 h-5 transition-colors" />
-                    </motion.div>
-                  </div>
-                  <div className="text-left">
-                    <p className="text-[10px] uppercase tracking-[0.3em] text-primary/40 mb-1 font-bold">
-                      {language === 'fr' ? 'Adresse' : 'Address'}
-                    </p>
-                    <p className="text-lg font-medium text-primary uppercase tracking-wider transition-colors group-hover:text-black">
-                      Grenoble
-                    </p>
-                  </div>
-                </motion.div>
-              </div>
+                  {status === "loading" ? (
+                    <span>{language === 'fr' ? 'Envoi...' : 'Sending...'}</span>
+                  ) : (
+                    <span>{language === 'fr' ? 'Envoyer' : 'Send'}</span>
+                  )}
+                </motion.button>
+              </form>
             </div>
           </div>
         </div>
