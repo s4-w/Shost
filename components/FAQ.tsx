@@ -46,7 +46,7 @@ export default function FAQ() {
   ];
 
   return (
-    <section id="faq" className="py-24 bg-surface">
+    <section id="faq" className="py-24 bg-secondary rounded-t-[2.5rem] md:rounded-t-[4rem] -mt-10 md:-mt-16 relative z-10">
       <div className="container mx-auto px-6">
         <div className="flex flex-col lg:flex-row gap-20">
           <div className="lg:w-1/3">
@@ -84,7 +84,10 @@ export default function FAQ() {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <AccordionItem value={`item-${index}`} className="border border-primary/5 bg-white px-6">
+                  <AccordionItem 
+                    value={`item-${index}`} 
+                    className="border-2 border-primary/20 bg-[#f8f6f1]/90 hover:bg-[#faf9f4] px-6 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_40px_rgba(197,160,89,0.22)] hover:border-accent/80 transition-all duration-300 overflow-hidden"
+                  >
                     <AccordionTrigger className="text-left font-serif text-xl py-6 hover:text-accent hover:no-underline transition-colors">
                       {faq.question}
                     </AccordionTrigger>

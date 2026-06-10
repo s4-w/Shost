@@ -15,9 +15,9 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-24 bg-secondary">
+    <section id="contact" className="py-24 bg-secondary rounded-t-[2.5rem] md:rounded-t-[4rem] -mt-10 md:-mt-16 relative z-10">
       <div className="container mx-auto px-6">
-        <div className="max-w-4xl mx-auto bg-white shadow-2xl overflow-hidden border border-primary/5">
+        <div className="max-w-4xl mx-auto bg-white shadow-[0_30px_70px_rgba(17,34,51,0.25)] overflow-hidden rounded-3xl border border-primary/10">
           <div className="flex flex-col md:flex-row">
             {/* Header / Intro */}
             <div className="md:w-1/2 bg-primary text-white p-12 md:p-16 flex flex-col justify-between min-h-[450px]">
@@ -37,7 +37,7 @@ export default function Contact() {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.02, backgroundColor: "#c5a059", color: "#112233" }}
                 whileTap={{ scale: 0.98 }}
-                className="inline-flex items-center justify-center gap-3 w-full bg-white text-primary border border-white/10 py-4.5 px-6 rounded-none text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 shadow-xl"
+                className="inline-flex items-center justify-center gap-3 w-full bg-white text-primary border border-white/10 py-4.5 px-6 rounded-xl text-xs font-bold uppercase tracking-[0.2em] transition-all duration-300 shadow-xl"
               >
                 <Calendar className="w-4 h-4 shrink-0" />
                 <span>
@@ -54,7 +54,7 @@ export default function Contact() {
                   whileHover="hover"
                   className="flex items-center gap-6 group cursor-pointer"
                 >
-                  <div className="w-12 h-12 bg-white border border-primary/10 flex items-center justify-center rounded-none shadow-sm group-hover:bg-black transition-all duration-300">
+                  <div className="w-12 h-12 bg-white border border-primary/10 flex items-center justify-center rounded-xl shadow-sm group-hover:bg-black transition-all duration-300">
                     <motion.div variants={iconVariants}>
                       <Phone className="text-primary group-hover:text-accent w-5 h-5 transition-colors" />
                     </motion.div>
@@ -72,7 +72,7 @@ export default function Contact() {
                   whileHover="hover"
                   className="flex items-center gap-6 group cursor-pointer"
                 >
-                  <div className="w-12 h-12 bg-white border border-primary/10 flex items-center justify-center rounded-none shadow-sm group-hover:bg-black transition-all duration-300">
+                  <div className="w-12 h-12 bg-white border border-primary/10 flex items-center justify-center rounded-xl shadow-sm group-hover:bg-black transition-all duration-300">
                     <motion.div variants={iconVariants}>
                       <Mail className="text-primary group-hover:text-accent w-5 h-5 transition-colors" />
                     </motion.div>
@@ -91,7 +91,7 @@ export default function Contact() {
                   whileHover="hover"
                   className="flex items-center gap-6 group cursor-pointer"
                 >
-                  <div className="w-12 h-12 bg-white border border-primary/10 flex items-center justify-center rounded-none shadow-sm group-hover:bg-black transition-all duration-300">
+                  <div className="w-12 h-12 bg-white border border-primary/10 flex items-center justify-center rounded-xl shadow-sm group-hover:bg-black transition-all duration-300">
                     <motion.div variants={iconVariants}>
                       <Calendar className="text-primary group-hover:text-accent w-5 h-5 transition-colors" />
                     </motion.div>
@@ -112,7 +112,7 @@ export default function Contact() {
                   whileHover="hover"
                   className="flex items-center gap-6 group cursor-pointer"
                 >
-                  <div className="w-12 h-12 bg-white border border-primary/10 flex items-center justify-center rounded-none shadow-sm group-hover:bg-black transition-all duration-300">
+                  <div className="w-12 h-12 bg-white border border-primary/10 flex items-center justify-center rounded-xl shadow-sm group-hover:bg-black transition-all duration-300">
                     <motion.div variants={iconVariants}>
                       <Instagram className="text-primary group-hover:text-accent w-5 h-5 transition-colors" />
                     </motion.div>
@@ -128,7 +128,7 @@ export default function Contact() {
                   whileHover="hover"
                   className="flex items-center gap-6 group cursor-pointer"
                 >
-                  <div className="w-12 h-12 bg-white border border-primary/10 flex items-center justify-center rounded-none shadow-sm group-hover:bg-black transition-all duration-300">
+                  <div className="w-12 h-12 bg-white border border-primary/10 flex items-center justify-center rounded-xl shadow-sm group-hover:bg-black transition-all duration-300">
                     <motion.div variants={iconVariants}>
                       <MapPin className="text-primary group-hover:text-accent w-5 h-5 transition-colors" />
                     </motion.div>

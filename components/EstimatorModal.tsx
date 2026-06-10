@@ -81,7 +81,7 @@ export default function EstimatorModal({ isOpen, onClose }: EstimatorModalProps)
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative bg-white w-full max-w-4xl shadow-[0_32px_64px_-12px_rgba(0,0,0,0.3)] overflow-hidden border border-primary/5 flex flex-col md:flex-row min-h-[600px]"
+            className="relative bg-white w-full max-w-4xl shadow-[0_35px_80px_rgba(0,0,0,0.4)] overflow-hidden border border-primary/10 rounded-3xl flex flex-col md:flex-row min-h-[600px]"
           >
             <button 
               onClick={onClose}
@@ -152,7 +152,7 @@ export default function EstimatorModal({ isOpen, onClose }: EstimatorModalProps)
                             value={city}
                             onChange={(e) => setCity(e.target.value)}
                             placeholder="Ex: Grenoble, Meylan, Saint-Ismier..." 
-                            className="rounded-none border-primary/10 focus:border-accent py-8 text-lg px-6 shadow-sm"
+                            className="rounded-xl border-primary/10 focus:border-accent py-8 text-lg px-6 shadow-sm"
                           />
                         </div>
 
@@ -165,7 +165,7 @@ export default function EstimatorModal({ isOpen, onClose }: EstimatorModalProps)
                               <button
                                 key={type}
                                 onClick={() => setPropertyType(type)}
-                                className={`py-6 border flex flex-col items-center gap-2 transition-all ${
+                                className={`py-6 border flex flex-col items-center gap-2 transition-all rounded-xl ${
                                   propertyType === type ? "bg-primary text-white border-primary shadow-lg" : "bg-white border-primary/5 text-primary/60 hover:border-accent"
                                 }`}
                               >
@@ -180,7 +180,7 @@ export default function EstimatorModal({ isOpen, onClose }: EstimatorModalProps)
                         <Button 
                           disabled={!city}
                           onClick={() => setStep(2)}
-                          className="w-full bg-primary hover:bg-accent text-white rounded-none py-8 uppercase tracking-[0.2em] text-xs font-bold transition-all group"
+                          className="w-full bg-primary hover:bg-accent text-white rounded-xl py-8 uppercase tracking-[0.2em] text-xs font-bold transition-all group"
                         >
                           Continuer
                           <ChevronRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -205,7 +205,7 @@ export default function EstimatorModal({ isOpen, onClose }: EstimatorModalProps)
                               <button
                                 key={s}
                                 onClick={() => setStanding(s)}
-                                className={`w-full p-5 border flex items-center justify-between transition-all ${
+                                className={`w-full p-5 border flex items-center justify-between transition-all rounded-xl ${
                                   standing === s ? "bg-primary text-white border-primary shadow-md" : "bg-white border-primary/5 text-primary/60 hover:border-accent"
                                 }`}
                               >
@@ -232,7 +232,7 @@ export default function EstimatorModal({ isOpen, onClose }: EstimatorModalProps)
                               <button
                                 key={num}
                                 onClick={() => setRooms(typeof num === 'number' ? num : 5)}
-                                className={`flex-1 py-4 border transition-all text-sm font-bold ${
+                                className={`flex-1 py-4 border transition-all text-sm font-bold rounded-xl ${
                                   (typeof num === 'number' ? rooms === num : rooms >= 5)
                                     ? "bg-primary text-white border-primary"
                                     : "bg-white border-primary/5 text-primary/60 hover:border-accent"
@@ -248,13 +248,13 @@ export default function EstimatorModal({ isOpen, onClose }: EstimatorModalProps)
                           <Button 
                             variant="outline"
                             onClick={() => setStep(1)}
-                            className="flex-1 border-primary/10 text-primary rounded-none py-8 uppercase tracking-[0.2em] text-xs font-bold"
+                            className="flex-1 border-primary/10 text-primary rounded-xl py-8 uppercase tracking-[0.2em] text-xs font-bold"
                           >
                             <ChevronLeft className="mr-2 w-4 h-4" /> Retour
                           </Button>
                           <Button 
                             onClick={() => setStep(3)}
-                            className="flex-1 bg-primary hover:bg-accent text-white rounded-none py-8 uppercase tracking-[0.2em] text-xs font-bold transition-all"
+                            className="flex-1 bg-primary hover:bg-accent text-white rounded-xl py-8 uppercase tracking-[0.2em] text-xs font-bold transition-all"
                           >
                             Suivant
                           </Button>
@@ -279,7 +279,7 @@ export default function EstimatorModal({ isOpen, onClose }: EstimatorModalProps)
                               <button
                                 key={item.id}
                                 onClick={() => toggleAmenity(item.id)}
-                                className={`p-4 border flex items-center gap-3 transition-all ${
+                                className={`p-4 border flex items-center gap-3 transition-all rounded-xl ${
                                   amenities.includes(item.id) ? "bg-primary text-white border-primary shadow-sm" : "bg-white border-primary/5 text-primary/60 hover:border-accent"
                                 }`}
                               >
@@ -294,14 +294,14 @@ export default function EstimatorModal({ isOpen, onClose }: EstimatorModalProps)
                           <Button 
                             variant="outline"
                             onClick={() => setStep(2)}
-                            className="flex-1 border-primary/10 text-primary rounded-none py-8 uppercase tracking-[0.2em] text-xs font-bold"
+                            className="flex-1 border-primary/10 text-primary rounded-xl py-8 uppercase tracking-[0.2em] text-xs font-bold"
                           >
                             <ChevronLeft className="mr-2 w-4 h-4" /> Retour
                           </Button>
                           <Button 
                             onClick={calculateRevenue}
                             disabled={isCalculating}
-                            className="flex-1 bg-accent hover:bg-primary text-white rounded-none py-8 uppercase tracking-[0.2em] text-xs font-bold transition-all shadow-xl shadow-accent/20"
+                            className="flex-1 bg-accent hover:bg-primary text-white rounded-xl py-8 uppercase tracking-[0.2em] text-xs font-bold transition-all shadow-xl shadow-accent/20"
                           >
                             {isCalculating ? "Analyse..." : "Voir l'estimation"}
                           </Button>
@@ -331,7 +331,7 @@ export default function EstimatorModal({ isOpen, onClose }: EstimatorModalProps)
                     </p>
                   </div>
 
-                  <div className="bg-secondary/50 p-8 mb-10 border border-primary/5">
+                  <div className="bg-secondary/50 p-8 mb-10 border border-primary/5 rounded-2xl">
                     <p className="text-sm text-primary/70 leading-relaxed italic">
                       "Cette estimation est basée sur les données du marché à {city} pour un bien de standing {standing === "luxury" ? "Ultra Luxe" : standing === "premium" ? "Premium" : "Standard"}."
                     </p>
@@ -343,7 +343,7 @@ export default function EstimatorModal({ isOpen, onClose }: EstimatorModalProps)
                         onClose();
                         document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
                       }}
-                      className="w-full bg-primary hover:bg-accent text-white rounded-none py-8 uppercase tracking-[0.2em] text-xs font-bold transition-all"
+                      className="w-full bg-primary hover:bg-accent text-white rounded-xl py-8 uppercase tracking-[0.2em] text-xs font-bold transition-all"
                     >
                       Recevoir l'étude complète
                     </Button>

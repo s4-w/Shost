@@ -29,7 +29,7 @@ export default function Process() {
   ];
 
   return (
-    <section id="processus" className="py-24 bg-white">
+    <section id="processus" className="py-24 bg-white rounded-t-[2.5rem] md:rounded-t-[4rem] -mt-10 md:-mt-16 relative z-10">
       <div className="container mx-auto px-6">
         <div className="text-center max-w-3xl mx-auto mb-20">
           <motion.span 

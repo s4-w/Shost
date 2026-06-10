@@ -5,7 +5,7 @@ export default function About() {
   const { language } = useLanguage();
 
   return (
-    <section id="a-propos" className="py-24 bg-surface">
+    <section id="a-propos" className="py-24 bg-surface rounded-t-[2.5rem] md:rounded-t-[4rem] -mt-10 md:-mt-16 relative z-10">
       <div className="container mx-auto px-6">
         <div className="flex flex-col lg:flex-row items-center gap-20">
           <div className="lg:w-1/2 order-2 lg:order-1">

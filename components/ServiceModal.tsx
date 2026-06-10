@@ -38,7 +38,7 @@ export default function ServiceModal({ isOpen, onClose, service }: ServiceModalP
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative bg-white w-full max-w-3xl shadow-2xl overflow-hidden border border-primary/5 flex flex-col md:flex-row"
+            className="relative bg-white w-full max-w-3xl shadow-[0_30px_80px_rgba(0,0,0,0.35)] rounded-3xl overflow-hidden border border-primary/10 flex flex-col md:flex-row"
           >
             <button 
               onClick={(e) => {
@@ -89,7 +89,7 @@ export default function ServiceModal({ isOpen, onClose, service }: ServiceModalP
                 whileTap={{ scale: 0.95 }}
                 className={cn(
                   buttonVariants({ variant: "default" }),
-                  "bg-primary hover:bg-accent text-white rounded-none px-10 py-6 uppercase tracking-[0.2em] text-[10px] transition-all h-auto"
+                  "bg-primary hover:bg-accent text-white rounded-xl px-10 py-6 uppercase tracking-[0.2em] text-[10px] transition-all h-auto"
                 )}
               >
                 {language === 'fr' ? 'En savoir plus' : 'Learn more'}

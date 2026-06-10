@@ -6,7 +6,7 @@ import { useLanguage } from "@/src/context/LanguageContext";
 export default function Footer() {
   const { t, language } = useLanguage();
   return (
-    <footer className="bg-primary text-white pt-24 pb-12">
+    <footer className="bg-primary text-white pt-24 pb-12 rounded-t-[2.5rem] md:rounded-t-[4rem] -mt-10 md:-mt-16 relative z-10">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-16 mb-24 text-center md:text-left">
           <div className="space-y-8 flex flex-col items-center md:items-start">

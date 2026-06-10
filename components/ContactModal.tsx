@@ -49,7 +49,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
               initial={{ opacity: 0, scale: 0.95, y: 30 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 30 }}
-              className="relative bg-white w-full max-w-2xl shadow-2xl rounded-xl md:rounded-none overflow-hidden border border-primary/5 flex flex-col md:flex-row z-[10000] pointer-events-auto"
+              className="relative bg-white w-full max-w-2xl shadow-[0_30px_80px_rgba(0,0,0,0.35)] rounded-3xl overflow-hidden border border-primary/10 flex flex-col md:flex-row z-[10000] pointer-events-auto"
             >
             <button 
               onClick={(e) => {
@@ -78,7 +78,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   whileHover="hover"
                   className="flex items-center gap-6 group cursor-pointer"
                 >
-                  <div className="w-12 h-12 bg-white border border-primary/10 flex items-center justify-center rounded-none shadow-sm group-hover:bg-black transition-all">
+                  <div className="w-12 h-12 bg-white border border-primary/10 flex items-center justify-center rounded-xl shadow-sm group-hover:bg-black transition-all">
                     <motion.div variants={iconVariants}>
                       <Phone className="text-primary group-hover:text-accent w-5 h-5 transition-colors" />
                     </motion.div>
@@ -94,7 +94,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   whileHover="hover"
                   className="flex items-center gap-6 group cursor-pointer"
                 >
-                  <div className="w-12 h-12 bg-white border border-primary/10 flex items-center justify-center rounded-none shadow-sm group-hover:bg-black transition-all">
+                  <div className="w-12 h-12 bg-white border border-primary/10 flex items-center justify-center rounded-xl shadow-sm group-hover:bg-black transition-all">
                     <motion.div variants={iconVariants}>
                       <Mail className="text-primary group-hover:text-accent w-5 h-5 transition-colors" />
                     </motion.div>
@@ -113,7 +113,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   whileHover="hover"
                   className="flex items-center gap-6 group cursor-pointer"
                 >
-                  <div className="w-12 h-12 bg-white border border-primary/10 flex items-center justify-center rounded-none shadow-sm group-hover:bg-black transition-all">
+                  <div className="w-12 h-12 bg-white border border-primary/10 flex items-center justify-center rounded-xl shadow-sm group-hover:bg-black transition-all">
                     <motion.div variants={iconVariants}>
                       <Calendar className="text-primary group-hover:text-accent w-5 h-5 transition-colors" />
                     </motion.div>
@@ -129,7 +129,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   whileHover="hover"
                   className="flex items-center gap-6 group cursor-pointer"
                 >
-                  <div className="w-12 h-12 bg-white border border-primary/10 flex items-center justify-center rounded-none shadow-sm group-hover:bg-black transition-all">
+                  <div className="w-12 h-12 bg-white border border-primary/10 flex items-center justify-center rounded-xl shadow-sm group-hover:bg-black transition-all">
                     <motion.div variants={iconVariants}>
                       <MapPin className="text-primary group-hover:text-accent w-5 h-5 transition-colors" />
                     </motion.div>
@@ -145,7 +145,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 onClick={onClose}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="mt-8 w-full bg-primary hover:bg-black text-white rounded-none py-8 uppercase tracking-[0.2em] text-[10px] font-bold transition-all shadow-lg"
+                className="mt-8 w-full bg-primary hover:bg-black text-white rounded-xl py-8 uppercase tracking-[0.2em] text-[10px] font-bold transition-all shadow-lg"
               >
                 Fermer
               </Button>

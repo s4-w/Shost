@@ -26,7 +26,7 @@ export default function Fees() {
   ];
 
   return (
-    <section id="honoraires" className="py-32 bg-primary text-white overflow-hidden relative">
+    <section id="honoraires" className="py-32 bg-primary text-white overflow-hidden relative rounded-t-[2.5rem] md:rounded-t-[4rem] -mt-10 md:-mt-16 z-10">
       {/* Background Decorative Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-accent rounded-full blur-[150px] -mr-64 -mt-64"></div>

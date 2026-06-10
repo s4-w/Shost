@@ -116,7 +116,7 @@ export default function Services() {
   ];
 
   return (
-    <section id="services" className="py-24 bg-secondary">
+    <section id="services" className="py-24 bg-secondary rounded-t-[2.5rem] md:rounded-t-[4rem] -mt-10 md:-mt-16 relative z-10">
       <div className="container mx-auto px-6">
         <div className="text-center max-w-2xl mx-auto mb-20">
           <motion.span 
@@ -157,9 +157,9 @@ export default function Services() {
               onClick={() => setSelectedService(service)}
               className="cursor-pointer"
             >
-              <Card className="border border-primary/5 shadow-sm bg-surface hover:bg-white hover:shadow-2xl transition-all duration-500 group h-full rounded-none">
+              <Card className="border border-primary/10 shadow-[0_4px_20px_rgba(0,0,0,0.02)] bg-surface hover:bg-white hover:shadow-[0_20px_50px_rgba(197,160,89,0.12)] hover:border-accent/40 transition-all duration-500 group h-full rounded-3xl overflow-hidden">
                 <CardContent className="p-10">
-                  <div className="w-16 h-16 bg-secondary border border-primary/5 flex items-center justify-center mb-8 group-hover:bg-primary transition-colors">
+                  <div className="w-16 h-16 bg-secondary border border-primary/5 flex items-center justify-center mb-8 rounded-2xl group-hover:bg-primary transition-colors">
                     <motion.div
                       variants={{
                         hover: { 

@@ -113,7 +113,7 @@ export default function RevenueEstimator() {
   const months = language === 'fr' ? MONTHS_FR : MONTHS_EN;
 
   return (
-    <section id="estimateur" className="py-32 bg-[#F8F9FA] text-primary overflow-hidden relative">
+    <section id="estimateur" className="py-32 bg-[#F8F9FA] text-primary overflow-hidden relative rounded-t-[2.5rem] md:rounded-t-[4rem] -mt-10 md:-mt-16 z-10">
       {/* Éléments décoratifs d'arrière-plan */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-50">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-accent/10 blur-[120px]" />
