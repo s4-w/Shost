@@ -20,14 +20,14 @@ export default function Hero() {
         <div className="absolute inset-0 bg-white/20 backdrop-blur-[2px]" />
       </div>
 
-      <div className="container mx-auto px-6 relative z-10 pt-20">
+      <div className="container mx-auto px-6 relative z-10 pt-32 sm:pt-20">
         <div className="max-w-4xl mx-auto text-center">
           <div>
             <motion.h1 
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl text-primary font-serif leading-[1.1] mb-8 tracking-tighter"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-primary font-serif leading-[1.1] mb-8 tracking-tighter"
             >
               {language === 'fr' ? (
                 <>Maximisez vos <br /><span className="italic text-accent">revenus</span> à Grenoble</>
