@@ -24,7 +24,7 @@ const translations = {
     // Hero
     "hero.tagline": "Conciergerie de Luxe & Gestion Locative",
     "hero.title": "L'excellence au service de votre patrimoine à Grenoble",
-    "hero.subtitle": "Maximisez les revenus de vos appartements à Grenoble et dans la métropole d'Isère grâce à notre gestion immobilière courte durée haut de gamme et clé en main.",
+    "hero.subtitle": "Maximisez vos revenus locatifs à Grenoble grâce à notre gestion clé en main haut de gamme.",
     "hero.cta.estimate": "Estimer mes revenus",
     "hero.cta.contact": "Nous contacter",
     
@@ -105,7 +105,7 @@ const translations = {
     // Hero
     "hero.tagline": "Luxury Concierge & Rental Management",
     "hero.title": "Excellence serving your property in Grenoble",
-    "hero.subtitle": "Maximize your rental income in Grenoble and the Isère valley with our premium, turnkey short-term property management.",
+    "hero.subtitle": "Maximize your rental income in Grenoble with our premium turnkey management.",
     "hero.cta.estimate": "Estimate my income",
     "hero.cta.contact": "Contact us",
     
