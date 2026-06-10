@@ -12,6 +12,14 @@ export default function FAQ() {
 
   const faqs = [
     {
+      question: language === 'fr' ? "Quelle est la réglementation pour la location courte durée à Grenoble ?" : "What is the regulation for short-term rentals in Grenoble?",
+      answer: language === 'fr' ? "La ville de Grenoble (Isère) dispose de règles d'enregistrement spécifiques pour les meublés de tourisme. Les résidences principales peuvent être louées jusqu'à 120 jours par an après déclaration simple en mairie et obtention d'un numéro d'enregistrement obligatoire à figurer sur votre annonce Airbnb. Pour les résidences secondaires, des formalités de changement d'usage avec compensation peuvent s'appliquer selon les secteurs. Notre équipe SHOST conciergerie grenoble vous accompagne pas à pas pour assurer la parfaite conformité légale de votre annonce." : "The city of Grenoble (Isère) has specific registration rules for tourist accommodation. Primary residences can be rented for up to 120 days per year after a simple municipal declaration to obtain a mandatory registration number. For secondary residences, change-of-use policies may apply depending on the sector. Our SHOST concierge team in Grenoble guides you step-by-step to keep your listings fully compliant."
+    },
+    {
+      question: language === 'fr' ? "Dans quelles zones ou communes autour de Grenoble intervenez-vous ?" : "In which sectors or towns around Grenoble do you operate?",
+      answer: language === 'fr' ? "Nous couvrons l'ensemble des quartiers de Grenoble (Hyper-centre, Championnet, Europole, Île Verte, Presqu'île...) ainsi que les principales communes de l'agglomération et de la vallée du Grésivaudan, notamment Meylan, Saint-Ismier, Corenc, Montbonnot-Saint-Martin, Biviers, Gières, Saint-Martin-d'Hères, Échirolles, Fontaine, Voiron et Vizille. N'hésitez pas à nous solliciter pour une estimation gratuite de votre potentiel locatif courte durée." : "We cover all neighborhoods in Grenoble (City Center, Championnet, Europole, Île Verte, Presqu'île...) as well as major metropolitan municipalities and the Grésivaudan valley, including Meylan, Saint-Ismier, Corenc, Montbonnot-Saint-Martin, Biviers, Gières, Saint-Martin-d’Hères, Échirolles, Fontaine, Voiron, and Vizille. Get in touch for a custom free short-term rent projection."
+    },
+    {
       question: language === 'fr' ? "Comment sont gérées les cautions ?" : "How are security deposits managed?",
       answer: language === 'fr' ? "Nous utilisons des solutions partenaires intégrées aux plateformes (comme AirCover sur Airbnb) ou des services tiers de pré-autorisation bancaire. Cela garantit une protection optimale de votre bien sans impacter la trésorerie du voyageur." : "We use partner solutions integrated into platforms (like AirCover on Airbnb) or third-party bank pre-authorization services. This ensures optimal protection of your property without impacting the guest's cash flow."
     },

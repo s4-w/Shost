@@ -8,15 +8,15 @@ export default function Footer() {
   return (
     <footer className="bg-primary text-white pt-24 pb-12">
       <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mb-24 text-center lg:text-left">
-          <div className="space-y-8 flex flex-col items-center lg:items-start">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 mb-24 text-center md:text-left">
+          <div className="space-y-8 flex flex-col items-center md:items-start">
             <a href="#" className="flex items-center group max-w-[160px]">
               <Logo className="w-full" light={true} />
             </a>
             <p className="text-white/40 leading-relaxed text-sm">
               {language === 'fr' 
-                ? "Votre partenaire de confiance pour une gestion Airbnb d'exception. Excellence, transparence et sérénité pour votre patrimoine."
-                : "Your trusted partner for exceptional Airbnb management. Excellence, transparency, and peace of mind for your heritage."}
+                ? "Votre partenaire de confiance pour une gestion Airbnb d'exception à Grenoble. Excellence, transparence et sérénité pour votre patrimoine immobilier."
+                : "Your trusted partner for exceptional Airbnb management in Grenoble. Excellence, transparency, and peace of mind for your real estate heritage."}
             </p>
             <div className="flex gap-4">
               <motion.a 
@@ -48,9 +48,30 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="flex flex-col items-center lg:items-end">
+          {/* Secteurs d'intervention - Local SEO Sector Matrix */}
+          <div className="flex flex-col items-center md:items-start space-y-4">
+            <h4 className="text-xs uppercase tracking-[0.3em] font-bold mb-4 text-accent">
+              {language === 'fr' ? "Zones d'Intervention Isère" : "Service Areas Isère"}
+            </h4>
+            <div className="text-xs text-white/55 space-y-3 max-w-xs leading-relaxed text-center md:text-left">
+              <p>
+                <strong className="text-white font-semibold flex items-center justify-center md:justify-start gap-1">📍 Grenoble Hyper-centre :</strong>
+                <span>Championnet, Île Verte, Europole, Presqu'île, Grands Boulevards, Saint-Bruno, Chavant.</span>
+              </p>
+              <p>
+                <strong className="text-white font-semibold flex items-center justify-center md:justify-start gap-1">🏔️ Grésivaudan & Alpes :</strong>
+                <span>Meylan, Saint-Ismier, Corenc, Montbonnot-Saint-Martin, Biviers, Gières, Bernin, Crolles.</span>
+              </p>
+              <p>
+                <strong className="text-white font-semibold flex items-center justify-center md:justify-start gap-1">🏡 Métropole Grenobloise :</strong>
+                <span>Saint-Martin-d’Hères, Échirolles, Fontaine, Seyssinet-Pariset, Voiron, Vizille, Sassenage.</span>
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-col items-center md:items-end">
             <h4 className="text-xs uppercase tracking-[0.3em] font-bold mb-10 text-white/20">Navigation</h4>
-            <ul className="space-y-5 text-sm font-medium flex flex-col items-center lg:items-end">
+            <ul className="space-y-5 text-sm font-medium flex flex-col items-center md:items-end">
               <li><a href="#home" className="hover:text-accent transition-colors">{t("nav.home")}</a></li>
               <li><a href="#services" className="hover:text-accent transition-colors">{t("nav.services")}</a></li>
               <li><a href="#honoraires" className="hover:text-accent transition-colors">{t("nav.fees")}</a></li>

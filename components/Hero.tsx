@@ -27,11 +27,11 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
-            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-9xl text-primary font-serif leading-[0.9] mb-8 tracking-tighter">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl text-primary font-serif leading-[1.1] mb-8 tracking-tighter">
               {language === 'fr' ? (
-                <>Maximisez vos <br /><span className="italic text-accent">revenus</span></>
+                <>Maximisez vos <br /><span className="italic text-accent">revenus</span> à Grenoble</>
               ) : (
-                <>Maximize your <br /><span className="italic text-accent">income</span></>
+                <>Maximize your <br /><span className="italic text-accent">income</span> in Grenoble</>
               )}
             </h1>
             <p className="text-primary text-lg md:text-xl mb-12 max-w-lg mx-auto leading-relaxed font-medium">

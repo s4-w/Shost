@@ -23,14 +23,14 @@ const translations = {
     
     // Hero
     "hero.tagline": "Conciergerie de Luxe & Gestion Locative",
-    "hero.title": "L'excellence au service de votre patrimoine",
-    "hero.subtitle": "Maximisez vos revenus locatifs avec une gestion clé en main, transparente et haut de gamme.",
+    "hero.title": "L'excellence au service de votre patrimoine à Grenoble",
+    "hero.subtitle": "Maximisez les revenus de vos appartements à Grenoble et dans la métropole d'Isère grâce à notre gestion immobilière courte durée haut de gamme et clé en main.",
     "hero.cta.estimate": "Estimer mes revenus",
     "hero.cta.contact": "Nous contacter",
     
     // Services
     "services.tagline": "Nos Services",
-    "services.title": "Une gestion 360° sans compromis",
+    "services.title": "Une gestion 360° à Grenoble sans compromis",
     "services.marketing.title": "Marketing & Diffusion",
     "services.marketing.desc": "Photos professionnelles et diffusion sur les plateformes les plus prestigieuses.",
     "services.concierge.title": "Conciergerie 24/7",
@@ -104,14 +104,14 @@ const translations = {
     
     // Hero
     "hero.tagline": "Luxury Concierge & Rental Management",
-    "hero.title": "Excellence at the service of your heritage",
-    "hero.subtitle": "Maximize your rental income with turnkey, transparent, and high-end management.",
+    "hero.title": "Excellence serving your property in Grenoble",
+    "hero.subtitle": "Maximize your rental income in Grenoble and the Isère valley with our premium, turnkey short-term property management.",
     "hero.cta.estimate": "Estimate my income",
     "hero.cta.contact": "Contact us",
     
     // Services
     "services.tagline": "Our Services",
-    "services.title": "360° management without compromise",
+    "services.title": "360° management in Grenoble without compromise",
     "services.marketing.title": "Marketing & Distribution",
     "services.marketing.desc": "Professional photography and distribution on the most prestigious platforms.",
     "services.concierge.title": "24/7 Concierge",
