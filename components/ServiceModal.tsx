@@ -102,7 +102,7 @@ export default function ServiceModal({ isOpen, onClose, service }: ServiceModalP
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-accent to-transparent" />
               </div>
               <div className="h-full flex items-center justify-center p-12 relative z-10">
-                <Logo className="w-32 opacity-20" light={false} />
+                <Logo className="w-24 opacity-20" light={false} />
               </div>
             </div>
           </motion.div>

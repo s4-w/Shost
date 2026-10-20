@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import ServiceModal from "./ServiceModal";
+import SectionFooterNav from "./SectionFooterNav";
 import { useLanguage } from "@/src/context/LanguageContext";
 
 export default function Services() {
@@ -116,14 +117,18 @@ export default function Services() {
   ];
 
   return (
-    <section id="services" className="py-24 bg-secondary rounded-t-[2.5rem] md:rounded-t-[4rem] -mt-10 md:-mt-16 relative z-10">
+    <section
+      id="services"
+      data-header-theme="light"
+      className="py-24 bg-secondary rounded-t-[2.5rem] md:rounded-t-[4rem] -mt-10 md:-mt-16 relative z-10 scroll-mt-24 md:scroll-mt-28"
+    >
       <div className="container mx-auto px-6">
         <div className="text-center max-w-2xl mx-auto mb-20">
           <motion.span 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-primary uppercase tracking-[0.4em] text-xs font-bold mb-4 block"
+            className="text-[#111] uppercase tracking-[0.4em] text-xs font-bold mb-4 block"
           >
             {language === 'fr' ? 'Notre Expertise' : 'Our Expertise'}
           </motion.span>
@@ -132,7 +137,7 @@ export default function Services() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-serif mb-6"
+            className="text-4xl md:text-5xl font-serif mb-6 text-[#111]"
           >
             {language === 'fr' ? 'Une gestion complète pour votre sérénité' : 'Complete management for your peace of mind'}
           </motion.h2>
@@ -157,9 +162,9 @@ export default function Services() {
               onClick={() => setSelectedService(service)}
               className="cursor-pointer"
             >
-              <Card className="border border-primary/10 shadow-[0_4px_20px_rgba(0,0,0,0.02)] bg-surface hover:bg-white hover:shadow-[0_20px_50px_rgba(197,160,89,0.12)] hover:border-accent/40 transition-all duration-500 group h-full rounded-3xl overflow-hidden">
+              <Card className="border border-black/10 shadow-[0_4px_20px_rgba(0,0,0,0.04)] bg-surface hover:bg-white hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)] hover:border-black/20 transition-all duration-500 group h-full rounded-3xl overflow-hidden">
                 <CardContent className="p-10">
-                  <div className="w-16 h-16 bg-secondary border border-primary/5 flex items-center justify-center mb-8 rounded-2xl group-hover:bg-primary transition-colors">
+                  <div className="w-16 h-16 bg-secondary border border-black/5 flex items-center justify-center mb-8 rounded-2xl group-hover:bg-[#111] transition-colors">
                     <motion.div
                       variants={{
                         hover: { 
@@ -170,11 +175,11 @@ export default function Services() {
                       }}
                       transition={{ type: "spring", stiffness: 400, damping: 10 }}
                     >
-                      <service.icon className="text-primary group-hover:text-white transition-colors w-7 h-7" />
+                      <service.icon className="text-[#111] group-hover:text-white transition-colors w-7 h-7" />
                     </motion.div>
                   </div>
-                  <h3 className="text-2xl font-serif mb-4">{service.title}</h3>
-                  <p className="text-primary leading-relaxed text-sm">
+                  <h3 className="text-2xl font-serif mb-4 text-[#111]">{service.title}</h3>
+                  <p className="text-[#111] leading-relaxed text-sm font-normal">
                     {service.description}
                   </p>
                   <div className="mt-8 flex items-center gap-2 text-accent text-[10px] uppercase tracking-[0.2em] font-bold opacity-0 group-hover:opacity-100 transition-opacity">
@@ -185,6 +190,14 @@ export default function Services() {
             </motion.div>
           ))}
         </div>
+
+        <SectionFooterNav
+          prevId="home"
+          prevLabel="Accueil"
+          nextId="honoraires"
+          nextLabel="Tarifs & Honoraires"
+          theme="light"
+        />
       </div>
 
       <ServiceModal 

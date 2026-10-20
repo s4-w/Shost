@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from "motion/react";
 
 interface LogoProps {
   className?: string;
@@ -21,22 +20,19 @@ export default function Logo({ className = "", light = false }: LogoProps) {
   }
 
   return (
-    <div className={`flex items-center justify-center ${className}`}>
+    <div className={`flex items-center justify-start ${className}`}>
       <img 
         src={imgSrc} 
-        alt="SHOST Logo" 
-        className="w-full h-auto object-contain transition-all duration-300"
+        alt="SHOST – Conciergerie Airbnb Grenoble" 
+        className="w-auto h-full max-h-full object-contain object-left transition-all duration-300"
         style={{
-          // Since it's a transparent PNG, we handle color contrast based on light state.
-          filter: light ? 'none' : 'brightness(0)',
+          filter: light ? 'brightness(0) invert(1) drop-shadow(0 2px 4px rgba(0,0,0,0.3))' : 'brightness(0)',
         }}
         referrerPolicy="no-referrer"
         onError={() => {
           if (imgSrc === "/Logo-sans-fond.png") {
-            // First fallback to postimg
             setImgSrc("https://i.postimg.cc/W1jN70Wd/Logo-sans-fond.png");
           } else {
-            // In case both fail, fallback to a beautiful text logo
             setHasError(true);
           }
         }}

@@ -1,0 +1,6 @@
+# robots.txt for SHOST Conciergerie (https://shost-services.com)
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://shost-services.com/sitemap.xml

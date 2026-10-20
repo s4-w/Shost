@@ -1,106 +1,196 @@
-import { Instagram, Facebook, Linkedin } from "lucide-react";
-import { motion } from "motion/react";
+import React from "react";
+import { Instagram, Phone, Mail, MapPin, ShieldCheck, Heart } from "lucide-react";
 import Logo from "@/components/Logo";
-import { useLanguage } from "@/src/context/LanguageContext";
+import { useCookies } from "@/src/context/CookieContext";
 
 export default function Footer() {
-  const { t, language } = useLanguage();
+  const { openPreferencesModal } = useCookies();
+
   return (
-    <footer className="bg-primary text-white pt-24 pb-12 rounded-t-[2.5rem] md:rounded-t-[4rem] -mt-10 md:-mt-16 relative z-10">
+    <footer
+      data-header-theme="dark"
+      className="bg-primary text-white pt-20 pb-16 rounded-t-[2.5rem] md:rounded-t-[4rem] -mt-10 md:-mt-16 relative z-10"
+    >
       <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 mb-24 text-center md:text-left">
-          <div className="space-y-8 flex flex-col items-center md:items-start">
-            <a href="#" className="flex items-center group max-w-[160px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 text-left">
+          {/* Col 1: Identity & Contact */}
+          <div className="space-y-6">
+            <a href="/" className="inline-block max-w-[125px]" aria-label="SHOST Conciergerie">
               <Logo className="w-full" light={true} />
             </a>
-            <p className="text-white/40 leading-relaxed text-sm">
-              {language === 'fr' 
-                ? "Votre partenaire de confiance pour une gestion Airbnb d'exception à Grenoble. Excellence, transparence et sérénité pour votre patrimoine immobilier."
-                : "Your trusted partner for exceptional Airbnb management in Grenoble. Excellence, transparency, and peace of mind for your real estate heritage."}
+            <p className="text-white/90 leading-relaxed text-xs font-light">
+              Votre partenaire de référence pour la gestion locative courte durée à Grenoble et en Isère. Prestations hôtelières haut de gamme, rentabilité optimisée et sérénité absolue pour propriétaires exigeants.
             </p>
-            <div className="flex gap-4">
-              <motion.a 
-                href="https://www.instagram.com/shost.services/" 
+
+            <div className="space-y-2.5 text-xs text-white/95">
+              <div className="flex items-center gap-2.5 hover:text-accent transition-colors">
+                <Phone className="w-4 h-4 text-accent shrink-0" />
+                <a href="tel:0626290649" className="hover:underline font-semibold">
+                  06 26 29 06 49
+                </a>
+              </div>
+              <div className="flex items-center gap-2.5 hover:text-accent transition-colors">
+                <Mail className="w-4 h-4 text-accent shrink-0" />
+                <a href="mailto:shost.services@gmail.com" className="hover:underline">
+                  shost.services@gmail.com
+                </a>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <MapPin className="w-4 h-4 text-accent shrink-0" />
+                <span>Grenoble & Agglomération Iséroise</span>
+              </div>
+            </div>
+
+            <div className="pt-2">
+              <a
+                href="https://www.instagram.com/shost.services/"
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Suivez SHOST Conciergerie sur Instagram"
-                whileHover={{ y: -5, backgroundColor: '#c5a059', color: '#000' }}
-                className="w-12 h-12 border border-white/10 flex items-center justify-center transition-all rounded-full"
+                className="inline-flex items-center gap-2 text-xs text-white/90 hover:text-accent transition-colors border border-white/20 px-3.5 py-2 rounded-xl"
               >
-                <Instagram className="w-5 h-5" />
-              </motion.a>
-              <motion.a 
-                href="#" 
-                title="Suivez SHOST Conciergerie sur Facebook"
-                whileHover={{ y: -5, backgroundColor: '#c5a059', color: '#000' }}
-                className="w-12 h-12 border border-white/10 flex items-center justify-center transition-all rounded-full"
-              >
-                <Facebook className="w-5 h-5" />
-              </motion.a>
-              <motion.a 
-                href="#" 
-                title="Suivez SHOST Conciergerie sur LinkedIn"
-                whileHover={{ y: -5, backgroundColor: '#c5a059', color: '#000' }}
-                className="w-12 h-12 border border-white/10 flex items-center justify-center transition-all rounded-full"
-              >
-                <Linkedin className="w-5 h-5" />
-              </motion.a>
+                <Instagram className="w-4 h-4 text-accent" />
+                <span>@shost.services</span>
+              </a>
             </div>
           </div>
 
-          {/* Secteurs d'intervention - Local SEO Sector Matrix */}
-          <div className="flex flex-col items-center md:items-start space-y-4">
-            <h4 className="text-xs uppercase tracking-[0.3em] font-bold mb-4 text-accent">
-              {language === 'fr' ? "Zones d'Intervention Isère" : "Service Areas Isère"}
+          {/* Col 2: Navigation & Services */}
+          <div>
+            <h4 className="text-xs uppercase tracking-[0.25em] font-bold mb-5 text-accent">
+              Services & Navigation
             </h4>
-            <div className="text-xs text-white/55 space-y-3 max-w-xs leading-relaxed text-center md:text-left">
-              <p>
-                <strong className="text-white font-semibold flex items-center justify-center md:justify-start gap-1">📍 Grenoble Hyper-centre :</strong>
-                <span>Championnet, Île Verte, Europole, Presqu'île, Grands Boulevards, Saint-Bruno, Chavant.</span>
-              </p>
-              <p>
-                <strong className="text-white font-semibold flex items-center justify-center md:justify-start gap-1">🏔️ Grésivaudan & Alpes :</strong>
-                <span>Meylan, Saint-Ismier, Corenc, Montbonnot-Saint-Martin, Biviers, Gières, Bernin, Crolles.</span>
-              </p>
-              <p>
-                <strong className="text-white font-semibold flex items-center justify-center md:justify-start gap-1">🏡 Métropole Grenobloise :</strong>
-                <span>Saint-Martin-d’Hères, Échirolles, Fontaine, Seyssinet-Pariset, Voiron, Vizille, Sassenage.</span>
-              </p>
-            </div>
+            <ul className="space-y-3 text-xs text-white/85 font-light">
+              <li>
+                <a href="/" className="hover:text-accent transition-colors">Accueil</a>
+              </li>
+              <li>
+                <a href="/services" className="hover:text-accent transition-colors">Nos Services</a>
+              </li>
+              <li>
+                <a href="/tarifs" className="hover:text-accent transition-colors">Tarifs & Commission (20%)</a>
+              </li>
+              <li>
+                <a href="/#estimateur" className="hover:text-accent transition-colors">Simulateur de Revenus</a>
+              </li>
+              <li>
+                <a href="/qui-sommes-nous" className="hover:text-accent transition-colors">Qui Sommes-Nous</a>
+              </li>
+              <li>
+                <a href="/blog" className="hover:text-accent transition-colors">Blog & Guides Locatifs</a>
+              </li>
+              <li>
+                <a href="/#faq" className="hover:text-accent transition-colors">FAQ Propriétaires</a>
+              </li>
+              <li>
+                <a href="/#contact" className="hover:text-accent transition-colors">Contact & Devis Gratuit</a>
+              </li>
+            </ul>
           </div>
 
-          <div className="flex flex-col items-center md:items-end">
-            <h4 className="text-xs uppercase tracking-[0.3em] font-bold mb-10 text-white/20">Navigation</h4>
-            <ul className="space-y-5 text-sm font-medium flex flex-col items-center md:items-end">
-              <li><a href="#home" className="hover:text-accent transition-colors">{t("nav.home")}</a></li>
-              <li><a href="#services" className="hover:text-accent transition-colors">{t("nav.services")}</a></li>
-              <li><a href="#honoraires" className="hover:text-accent transition-colors">{t("nav.fees")}</a></li>
-              <li><a href="#processus" className="hover:text-accent transition-colors">{t("nav.process")}</a></li>
-              <li><a href="#faq" className="hover:text-accent transition-colors">FAQ</a></li>
+          {/* Col 3: Secteurs d'intervention Isère */}
+          <div>
+            <h4 className="text-xs uppercase tracking-[0.25em] font-bold mb-5 text-accent">
+              Secteurs d'Intervention
+            </h4>
+            <ul className="space-y-3 text-xs text-white/85 font-light">
+              <li>
+                <a href="/conciergerie-airbnb-grenoble" className="hover:text-accent transition-colors">
+                  Grenoble Hyper-Centre (38000)
+                </a>
+              </li>
+              <li>
+                <a href="/secteur-voiron" className="hover:text-accent transition-colors">
+                  Voiron & Pays Voironnais (38500)
+                </a>
+              </li>
+              <li>
+                <a href="/secteur-meylan" className="hover:text-accent transition-colors">
+                  Meylan & Inovallée (38240)
+                </a>
+              </li>
+              <li>
+                <a href="/secteur-echirolles" className="hover:text-accent transition-colors">
+                  Échirolles & Agglo Sud (38130)
+                </a>
+              </li>
+              <li>
+                <a href="/secteur-saint-martin-d-heres" className="hover:text-accent transition-colors">
+                  Saint-Martin-d'Hères Campus (38400)
+                </a>
+              </li>
+              <li>
+                <a href="/secteur-gresivaudan" className="hover:text-accent transition-colors">
+                  Vallée du Grésivaudan (38330)
+                </a>
+              </li>
             </ul>
+          </div>
+
+          {/* Col 4: Blog Récent & Engagements */}
+          <div>
+            <h4 className="text-xs uppercase tracking-[0.25em] font-bold mb-5 text-accent">
+              Derniers Articles
+            </h4>
+            <div className="space-y-3.5 text-xs text-white/85 font-light">
+              <div>
+                <a
+                  href="/blog/combien-rapporte-un-airbnb-a-grenoble"
+                  className="hover:text-accent transition-colors font-medium text-white block leading-snug"
+                >
+                  Combien rapporte un Airbnb à Grenoble en 2026 ?
+                </a>
+                <span className="text-[10px] text-white/70">Analyse de rentabilité réelle</span>
+              </div>
+              <div>
+                <a
+                  href="/blog/reglementation-location-saisonniere-isere"
+                  className="hover:text-accent transition-colors font-medium text-white block leading-snug"
+                >
+                  Réglementation de la location saisonnière en Isère
+                </a>
+                <span className="text-[10px] text-white/70">120 jours, numéro d'enregistrement</span>
+              </div>
+              <div>
+                <a
+                  href="/blog/conciergerie-ou-gestion-solo"
+                  className="hover:text-accent transition-colors font-medium text-white block leading-snug"
+                >
+                  Conciergerie ou gestion solo ? Le comparatif
+                </a>
+                <span className="text-[10px] text-white/70">Temps, revenus nets et avis</span>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="border-t border-white/5 pt-12 flex flex-col md:flex-row justify-between items-center gap-6 text-white/20 text-[10px] uppercase tracking-[0.2em] font-bold">
-          <p>© 2026 SHOST Conciergerie. {language === 'fr' ? 'Tous droits réservés.' : 'All rights reserved.'}</p>
-            <div className="flex gap-8">
-              <motion.a 
-                href="https://www.instagram.com/shost.services/" 
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ color: '#c5a059' }}
-                className="transition-colors"
-              >
-                Instagram
-              </motion.a>
-              <motion.a 
-                href="#" 
-                whileHover={{ color: '#c5a059' }}
-                className="transition-colors"
-              >
-                LinkedIn
-              </motion.a>
-            </div>
+        {/* Legal & Cookie Policy row */}
+        <div className="border-t border-white/20 pt-8 mt-12 flex flex-col md:flex-row justify-between items-center gap-4 text-white/80 text-[11px]">
+          <div>
+            © 2026 SHOST Conciergerie. Tous droits réservés. Gestion locative touristique en Isère.
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+            <a href="/mentions-legales" className="hover:text-accent transition-colors">
+              Mentions légales
+            </a>
+            <a href="/politique-de-confidentialite" className="hover:text-accent transition-colors">
+              Politique de confidentialité (RGPD)
+            </a>
+            <a href="/politique-cookies" className="hover:text-accent transition-colors">
+              Politique cookies
+            </a>
+            <a href="/cgv" className="hover:text-accent transition-colors">
+              CGV
+            </a>
+            <button
+              type="button"
+              onClick={openPreferencesModal}
+              className="hover:text-accent underline transition-colors cursor-pointer"
+            >
+              Gestion des cookies
+            </button>
+          </div>
         </div>
       </div>
     </footer>

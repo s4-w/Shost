@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { useLanguage } from "@/src/context/LanguageContext";
 import { Check, Shield, TrendingUp, Zap, Info } from "lucide-react";
+import SectionFooterNav from "./SectionFooterNav";
 
 export default function Fees() {
   const { language } = useLanguage();
@@ -26,9 +27,13 @@ export default function Fees() {
   ];
 
   return (
-    <section id="honoraires" className="py-32 bg-primary text-white overflow-hidden relative rounded-t-[2.5rem] md:rounded-t-[4rem] -mt-10 md:-mt-16 z-10">
+    <section
+      id="honoraires"
+      data-header-theme="dark"
+      className="py-32 bg-primary text-white relative rounded-t-[2.5rem] md:rounded-t-[4rem] -mt-10 md:-mt-16 z-10 scroll-mt-24 md:scroll-mt-28"
+    >
       {/* Background Decorative Pattern */}
-      <div className="absolute inset-0 opacity-5">
+      <div className="absolute inset-0 opacity-5 overflow-hidden pointer-events-none">
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-accent rounded-full blur-[150px] -mr-64 -mt-64"></div>
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-accent rounded-full blur-[120px] -ml-40 -mb-40"></div>
       </div>
@@ -60,7 +65,7 @@ export default function Fees() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="text-white/60 text-lg md:text-xl max-w-xl leading-relaxed mb-12"
+              className="text-white/90 text-lg md:text-xl max-w-xl leading-relaxed mb-12 font-normal"
             >
               {language === 'fr'
                 ? "Chez SHOST, nous alignons nos intérêts sur les vôtres. Notre succès dépend directement de la rentabilité de votre bien."
@@ -77,12 +82,12 @@ export default function Fees() {
                   transition={{ delay: 0.3 + index * 0.1 }}
                   className="flex gap-4"
                 >
-                  <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center shrink-0">
                     <benefit.icon className="w-5 h-5 text-accent" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-sm uppercase tracking-wider mb-2">{benefit.title}</h4>
-                    <p className="text-white/40 text-xs leading-relaxed">{benefit.desc}</p>
+                    <h4 className="font-bold text-sm uppercase tracking-wider mb-2 text-white">{benefit.title}</h4>
+                    <p className="text-white/80 text-xs leading-relaxed font-normal">{benefit.desc}</p>
                   </div>
                 </motion.div>
               ))}
@@ -93,22 +98,22 @@ export default function Fees() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="border-t border-white/10 pt-12 mb-12"
+              className="border-t border-white/15 pt-12 mb-12"
             >
               <h4 className="text-[10px] uppercase tracking-[0.4em] font-bold text-accent mb-8">
                 {language === 'fr' ? "Frais Classiques" : "Classic Fees"}
               </h4>
               <div className="space-y-6">
                 <div className="flex justify-between items-center group">
-                  <span className="text-sm text-white/60 group-hover:text-white transition-colors">
+                  <span className="text-sm text-white/90 group-hover:text-white transition-colors font-medium">
                     {language === 'fr' ? "Commission de Gestion" : "Management Commission"}
                   </span>
-                  <div className="flex-grow mx-4 border-b border-dashed border-white/10"></div>
+                  <div className="flex-grow mx-4 border-b border-dashed border-white/20"></div>
                   <span className="text-sm font-bold text-accent">20% TTC</span>
                 </div>
                  <div className="flex flex-col gap-2 relative">
                    <div className="flex justify-between items-center group">
-                     <span className="text-sm text-white/60 group-hover:text-white transition-colors flex items-center gap-2">
+                     <span className="text-sm text-white/90 group-hover:text-white transition-colors flex items-center gap-2 font-medium">
                        {language === 'fr' ? "Frais de mise en place" : "Setup fees"}
                        <button
                          type="button"
@@ -123,7 +128,7 @@ export default function Fees() {
                          i
                        </button>
                      </span>
-                     <div className="flex-grow mx-4 border-b border-dashed border-white/10"></div>
+                     <div className="flex-grow mx-4 border-b border-dashed border-white/20"></div>
                      <button
                        type="button"
                        onClick={() => setShowSetupDetails(!showSetupDetails)}
@@ -139,7 +144,7 @@ export default function Fees() {
                        </span>
                      </button>
                    </div>
-                   <span className="text-xs text-white/40 font-light pl-1">
+                   <span className="text-xs text-white/80 font-normal pl-1">
                      {language === 'fr' 
                        ? "Inclus : Kit de consommables initial, Logistique de départ, Shooting photo professionnel" 
                        : "Included: Initial consumables kit, setup logistics, professional photoshoot"}
@@ -210,12 +215,12 @@ export default function Fees() {
                       </div>
                       <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-accent mb-4 mt-2">{language === 'fr' ? 'Frais de mise en place' : 'Setup fee'}</p>
                       <div className="text-6xl md:text-7xl font-serif text-white relative inline-block transition-transform duration-500 group-hover/price:scale-110">
-                        <span className="text-xs font-sans font-light text-white/40 block -mb-2">
+                        <span className="text-xs font-sans font-medium text-white/85 block -mb-2">
                           {language === 'fr' ? "dès" : "from"}
                         </span>
                         120<span className="text-2xl font-sans font-light text-accent ml-1">€</span>
                       </div>
-                      <p className="text-[11px] text-white/50 mt-4 max-w-[220px] mx-auto font-light leading-normal">
+                      <p className="text-[11px] text-white/85 mt-4 max-w-[220px] mx-auto font-normal leading-normal">
                         {language === 'fr' 
                           ? "Inclus : Kit de consommables initial, Logistique de départ, Shooting photo professionnel" 
                           : "Included: Initial consumables kit, setup logistics, professional photoshoot"}
@@ -269,6 +274,14 @@ export default function Fees() {
             </motion.div>
           </div>
         </div>
+
+        <SectionFooterNav
+          prevId="services"
+          prevLabel="Nos Services"
+          nextId="estimateur"
+          nextLabel="Simulateur de Revenus"
+          theme="dark"
+        />
       </div>
     </section>
   );

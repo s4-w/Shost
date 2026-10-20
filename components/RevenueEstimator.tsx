@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Logo from "./Logo";
+import SectionFooterNav from "./SectionFooterNav";
 import { useLanguage } from "@/src/context/LanguageContext";
 import { cn } from "@/lib/utils";
 
@@ -113,7 +114,11 @@ export default function RevenueEstimator() {
   const months = language === 'fr' ? MONTHS_FR : MONTHS_EN;
 
   return (
-    <section id="estimateur" className="py-32 bg-[#F8F9FA] text-primary overflow-hidden relative rounded-t-[2.5rem] md:rounded-t-[4rem] -mt-10 md:-mt-16 z-10">
+    <section
+      id="estimateur"
+      data-header-theme="light"
+      className="py-32 bg-[#F8F9FA] text-primary relative rounded-t-[2.5rem] md:rounded-t-[4rem] -mt-10 md:-mt-16 z-10 scroll-mt-24 md:scroll-mt-28"
+    >
       {/* Éléments décoratifs d'arrière-plan */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-50">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-accent/10 blur-[120px]" />
@@ -175,12 +180,13 @@ export default function RevenueEstimator() {
                 alt="Propriété moderne" 
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/30 to-primary/90" />
+              <div className="absolute inset-0 bg-black/60" />
+              <div className="absolute inset-0 bg-gradient-to-b from-primary/95 via-primary/80 to-primary/95" />
             </div>
 
             <div className="relative z-10">
               <div className="mb-12">
-                <Logo light className="w-56" />
+                <Logo light className="w-44" />
               </div>
               
               <div className="mb-12">
@@ -188,7 +194,7 @@ export default function RevenueEstimator() {
                   {language === 'fr' ? 'Estimez votre' : 'Estimate your'} <br />
                   <span className="not-italic text-accent font-sans font-bold uppercase tracking-tighter text-4xl">Revenu</span>
                 </h2>
-                <div className="h-1 w-12 bg-accent/30" />
+                <div className="h-1 w-12 bg-accent/50" />
               </div>
               
               <div className="space-y-8 mt-16 font-light">
@@ -197,14 +203,14 @@ export default function RevenueEstimator() {
                     <div className={cn(
                       "w-10 h-10 rounded-full border flex items-center justify-center text-sm transition-all duration-500",
                       step === s ? "bg-accent border-accent text-primary scale-110 shadow-lg font-bold" : 
-                      step > s ? "bg-white/20 border-white/40 text-white" : "border-white/30 text-white/60"
+                      step > s ? "bg-white/20 border-white/60 text-white" : "border-white/40 text-white/80"
                     )}>
                       {step > s ? <Check className="w-5 h-5" /> : s}
                     </div>
                     <div className="flex-1">
                       <p className={cn(
                         "text-[10px] uppercase tracking-[0.2em] font-normal transition-colors",
-                        step === s ? "text-accent" : "text-white/50"
+                        step === s ? "text-accent font-bold" : "text-white/90"
                       )}>
                         {s === 1 ? (language === 'fr' ? 'Secteur Grenoble' : 'Area') : 
                          s === 2 ? (language === 'fr' ? 'Bien' : 'Property') : 
@@ -217,7 +223,7 @@ export default function RevenueEstimator() {
               </div>
             </div>
 
-            <div className="pt-10 border-t border-white/10 opacity-40 text-[10px] uppercase tracking-widest leading-loose font-normal text-white">
+            <div className="pt-10 border-t border-white/20 opacity-90 text-[10px] uppercase tracking-widest leading-loose font-medium text-white">
               <p>© 2026 SHOST Conciergerie</p>
               <p>Expertise Marché Isérois</p>
             </div>
@@ -235,17 +241,17 @@ export default function RevenueEstimator() {
                   className="space-y-10"
                 >
                   <div>
-                    <h3 className="text-3xl font-serif mb-4 italic text-primary">{language === 'fr' ? 'Secteur géographique' : 'Geographic Sector'}</h3>
-                    <p className="text-primary/50 text-sm font-light mb-6">{language === 'fr' ? "Grenoble et sa métropole offrent des dynamiques de loyers variées selon la zone." : "Grenoble and its metropolitan area offer varied rent dynamics depending on the zone."}</p>
+                    <h3 className="text-3xl font-serif mb-4 italic text-[#111]">{language === 'fr' ? 'Secteur géographique' : 'Geographic Sector'}</h3>
+                    <p className="text-[#111] text-sm font-normal mb-6 leading-relaxed">{language === 'fr' ? "Grenoble et sa métropole offrent des dynamiques de loyers variées selon la zone." : "Grenoble and its metropolitan area offer varied rent dynamics depending on the zone."}</p>
                     
-                    <div className="bg-[#FAF5EC]/50 border border-accent/20 p-5 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div className="bg-[#FAF5EC]/70 border border-accent/30 p-5 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                       <div className="flex gap-3 items-start text-left">
                         <Sparkles className="w-5 h-5 text-accent shrink-0 mt-0.5" />
                         <div className="space-y-1">
-                          <p className="text-xs font-bold uppercase tracking-wider text-primary">
+                          <p className="text-xs font-bold uppercase tracking-wider text-[#111]">
                             {language === 'fr' ? "Vous préférez un accompagnement humain d'exception ?" : "Prefer exceptional service and support?"}
                           </p>
-                          <p className="text-xs text-primary/60 font-light leading-relaxed">
+                          <p className="text-xs text-[#111] font-normal leading-relaxed">
                             {language === 'fr' 
                               ? "Évitez les estimations algorithmiques standards. Obtenez une étude de revenus approfondie et gratuite par un conseiller local."
                               : "Skip standard algorithm guesswork. Secure an in-depth, complimentary study by our local property expert."}
@@ -254,7 +260,7 @@ export default function RevenueEstimator() {
                       </div>
                       <a 
                         href="#contact" 
-                        className="text-xs font-bold text-accent hover:text-primary transition-colors uppercase tracking-widest inline-flex items-center gap-1.5 self-center sm:self-auto shrink-0"
+                        className="text-xs font-bold text-accent hover:text-[#111] transition-colors uppercase tracking-widest inline-flex items-center gap-1.5 self-center sm:self-auto shrink-0"
                       >
                         {language === 'fr' ? "Discuter avec nous" : "Speak with us"} <ChevronRight className="w-3.5 h-3.5" />
                       </a>
@@ -346,8 +352,8 @@ export default function RevenueEstimator() {
                   className="space-y-12"
                 >
                   <div>
-                    <h3 className="text-3xl font-serif mb-4 italic text-primary">{language === 'fr' ? 'Type & Capacité' : 'Type & Capacity'}</h3>
-                    <p className="text-primary/50 text-sm font-light">{language === 'fr' ? "Définissez la configuration de votre bien pour affiner l'estimation." : "Define your property configuration to refine the estimate."}</p>
+                    <h3 className="text-3xl font-serif mb-4 italic text-[#111]">{language === 'fr' ? 'Type & Capacité' : 'Type & Capacity'}</h3>
+                    <p className="text-[#111] text-sm font-normal">{language === 'fr' ? "Définissez la configuration de votre bien pour affiner l'estimation." : "Define your property configuration to refine the estimate."}</p>
                   </div>
 
                   <div className="space-y-8">
@@ -373,7 +379,7 @@ export default function RevenueEstimator() {
                     <div className="space-y-10 bg-slate-50/50 p-8 rounded-2xl border border-black/5 shadow-sm">
                       <div className="space-y-6">
                         <div className="flex justify-between items-center text-xs uppercase tracking-widest font-bold">
-                          <span className="text-primary">{language === 'fr' ? 'Nombre de Chambres' : 'Number of Bedrooms'}</span>
+                          <span className="text-[#111]">{language === 'fr' ? 'Nombre de Chambres' : 'Number of Bedrooms'}</span>
                           <span className="bg-primary text-white w-10 h-10 flex items-center justify-center rounded-xl text-sm shadow-lg font-bold">{bedrooms}</span>
                         </div>
                         <input 
@@ -381,7 +387,7 @@ export default function RevenueEstimator() {
                           onChange={(e) => setBedrooms(parseInt(e.target.value))}
                           className="w-full h-2 bg-black/10 rounded-full appearance-none cursor-pointer accent-primary"
                         />
-                        <div className="flex justify-between text-[10px] text-primary/30 uppercase font-bold px-1">
+                        <div className="flex justify-between text-[10px] text-[#111] uppercase font-bold px-1">
                           <span>1</span>
                           <span>6</span>
                         </div>
@@ -389,7 +395,7 @@ export default function RevenueEstimator() {
 
                       <div className="space-y-6">
                         <div className="flex justify-between items-center text-xs uppercase tracking-widest font-bold">
-                          <span className="text-primary">{language === 'fr' ? 'Capacité voyageurs' : 'Guest Capacity'}</span>
+                          <span className="text-[#111]">{language === 'fr' ? 'Capacité voyageurs' : 'Guest Capacity'}</span>
                           <span className="bg-primary text-white w-10 h-10 flex items-center justify-center rounded-xl text-sm shadow-lg font-bold">{maxGuests}</span>
                         </div>
                         <input 
@@ -397,7 +403,7 @@ export default function RevenueEstimator() {
                           onChange={(e) => setMaxGuests(parseInt(e.target.value))}
                           className="w-full h-2 bg-black/10 rounded-full appearance-none cursor-pointer accent-primary"
                         />
-                        <div className="flex justify-between text-[10px] text-primary/30 uppercase font-bold px-1">
+                        <div className="flex justify-between text-[10px] text-[#111] uppercase font-bold px-1">
                           <span>1</span>
                           <span>12</span>
                         </div>
@@ -406,10 +412,10 @@ export default function RevenueEstimator() {
                   </div>
 
                   <div className="flex justify-between pt-10">
-                    <Button variant="outline" onClick={() => setStep(1)} className="border-primary/20 text-primary hover:bg-primary/5 font-light tracking-widest uppercase text-[10px]">
+                    <Button variant="outline" onClick={() => setStep(1)} className="border-black/20 text-[#111] hover:bg-black/5 font-semibold tracking-widest uppercase text-[10px]">
                       <ChevronLeft className="mr-2 w-4 h-4" /> {language === 'fr' ? 'Précédent' : 'Back'}
                     </Button>
-                    <Button onClick={() => setStep(3)} className="bg-primary text-white hover:bg-black px-12 transition-all font-light tracking-widest uppercase text-[10px]">
+                    <Button onClick={() => setStep(3)} className="bg-primary text-white hover:bg-black px-12 transition-all font-semibold tracking-widest uppercase text-[10px]">
                       {language === 'fr' ? 'Suivant' : 'Next'} <ChevronRight className="ml-2 w-4 h-4" />
                     </Button>
                   </div>
@@ -425,8 +431,8 @@ export default function RevenueEstimator() {
                   className="space-y-12"
                 >
                   <div>
-                    <h3 className="text-3xl font-serif mb-4 italic text-primary">{language === 'fr' ? 'Standing & Équipements' : 'Standing & Amenities'}</h3>
-                    <p className="text-primary/50 text-sm font-light">{language === 'fr' ? "Chaque option valorise votre annonce et booste vos revenus annuels." : "Every option adds value to your listing and boosts your annual revenue."}</p>
+                    <h3 className="text-3xl font-serif mb-4 italic text-[#111]">{language === 'fr' ? 'Standing & Équipements' : 'Standing & Amenities'}</h3>
+                    <p className="text-[#111] text-sm font-normal">{language === 'fr' ? "Chaque option valorise votre annonce et booste vos revenus annuels." : "Every option adds value to your listing and boosts your annual revenue."}</p>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -495,42 +501,42 @@ export default function RevenueEstimator() {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="bg-slate-50 border border-black/5 p-8 rounded-xl">
-                      <div className="flex items-center gap-3 text-primary/40 text-[10px] uppercase tracking-widest mb-4 font-normal">
-                        <TrendingUp size={14} /> {language === 'fr' ? 'Revenu brut estimé' : 'Estimated gross revenue'}
+                    <div className="bg-slate-50 border border-black/10 p-8 rounded-xl">
+                      <div className="flex items-center gap-3 text-[#111] text-[11px] uppercase tracking-widest mb-4 font-bold">
+                        <TrendingUp size={14} className="text-[#111]" /> {language === 'fr' ? 'Revenu brut estimé' : 'Estimated gross revenue'}
                       </div>
-                      <div className="text-4xl font-serif text-primary font-light">{formatCurrency(results.gross)}</div>
-                      <p className="text-[10px] text-primary/20 mt-2 font-light">basé sur 365 jours</p>
+                      <div className="text-4xl font-serif text-[#111] font-bold">{formatCurrency(results.gross)}</div>
+                      <p className="text-xs text-[#111] mt-2 font-medium">basé sur 365 jours</p>
                     </div>
 
                     <div className="bg-accent text-primary p-8 relative overflow-hidden rounded-xl shadow-xl">
-                      <div className="flex items-center gap-3 text-primary/60 text-[10px] uppercase tracking-widest mb-4 font-bold">
+                      <div className="flex items-center gap-3 text-primary text-[11px] uppercase tracking-widest mb-4 font-extrabold">
                         <Coins size={14} /> {language === 'fr' ? 'Net Propriétaire' : 'Owner Net'}
                       </div>
-                      <div className="text-4xl font-serif font-light">{formatCurrency(results.net)}</div>
-                      <p className="text-[10px] text-primary/40 mt-2 font-bold uppercase italic font-light">Après tous frais de gestion</p>
-                      <Sparkles className="absolute -bottom-2 -right-2 w-20 h-20 opacity-10 text-primary" />
+                      <div className="text-4xl font-serif font-bold text-primary">{formatCurrency(results.net)}</div>
+                      <p className="text-xs text-primary mt-2 font-bold uppercase tracking-wider">Après tous frais de gestion</p>
+                      <Sparkles className="absolute -bottom-2 -right-2 w-20 h-20 opacity-15 text-primary" />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-3 gap-4">
-                    <div className="bg-slate-50 border border-black/5 p-5 text-center rounded-xl">
-                      <p className="text-[8px] text-primary/40 uppercase tracking-widest mb-2 font-normal">Taux d'occupation</p>
-                      <p className="text-xl font-light text-primary">{results.avgOcc}%</p>
+                    <div className="bg-slate-50 border border-black/10 p-5 text-center rounded-xl">
+                      <p className="text-[10px] text-[#111] uppercase tracking-widest mb-2 font-bold">Taux d'occupation</p>
+                      <p className="text-xl font-bold text-[#111]">{results.avgOcc}%</p>
                     </div>
-                    <div className="bg-slate-50 border border-black/5 p-5 text-center rounded-xl">
-                      <p className="text-[8px] text-primary/40 uppercase tracking-widest mb-2 font-normal">Tarif moyen nuit</p>
-                      <p className="text-xl font-light text-primary">{results.adr}€</p>
+                    <div className="bg-slate-50 border border-black/10 p-5 text-center rounded-xl">
+                      <p className="text-[10px] text-[#111] uppercase tracking-widest mb-2 font-bold">Tarif moyen nuit</p>
+                      <p className="text-xl font-bold text-[#111]">{results.adr}€</p>
                     </div>
-                    <div className="bg-orange-50 border border-orange-100 p-5 text-center rounded-xl">
-                      <p className="text-[8px] text-orange-400 uppercase tracking-widest mb-2 font-bold">Net mensuel moy.</p>
-                      <p className="text-xl font-light text-orange-600">{formatCurrency(results.net / 12)}</p>
+                    <div className="bg-orange-50 border border-orange-200 p-5 text-center rounded-xl">
+                      <p className="text-[10px] text-orange-950 uppercase tracking-widest mb-2 font-bold">Net mensuel moy.</p>
+                      <p className="text-xl font-bold text-orange-700">{formatCurrency(results.net / 12)}</p>
                     </div>
                   </div>
 
-                  <div className="bg-slate-50 border border-black/5 p-8 rounded-xl">
+                  <div className="bg-slate-50 border border-black/10 p-8 rounded-xl">
                     <div className="flex justify-between items-center mb-10">
-                      <p className="text-[10px] uppercase tracking-widest font-normal text-primary/40 flex items-center gap-2">
+                      <p className="text-xs uppercase tracking-widest font-bold text-[#111] flex items-center gap-2">
                         <BarChart3 size={14} /> {language === 'fr' ? 'Saisonnalité des revenus' : 'Revenue seasonality'}
                       </p>
                     </div>
@@ -545,10 +551,10 @@ export default function RevenueEstimator() {
                               animate={{ height: `${height}%` }}
                               className={cn(
                                 "w-full transition-colors rounded-t-sm",
-                                height > 80 ? "bg-accent" : height > 55 ? "bg-primary/40" : "bg-primary/10"
+                                height > 80 ? "bg-accent" : height > 55 ? "bg-primary/80" : "bg-primary/40"
                               )}
                             />
-                            <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[8px] text-primary/30 uppercase font-light">
+                            <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[9px] text-[#111] uppercase font-bold">
                               {months[i]}
                             </span>
                           </div>
@@ -557,13 +563,13 @@ export default function RevenueEstimator() {
                     </div>
                   </div>
 
-                  <div className="bg-primary/[0.02] border border-primary/5 p-6 rounded-xl flex gap-4 items-start">
+                  <div className="bg-stone-50 border border-black/10 p-6 rounded-xl flex gap-4 items-start">
                     <Info className="w-5 h-5 text-accent shrink-0 mt-0.5" />
                     <div className="space-y-1">
-                      <p className="text-xs font-bold uppercase tracking-wider text-primary">
+                      <p className="text-xs font-bold uppercase tracking-wider text-[#111]">
                         {language === 'fr' ? "Faire estimer réellement par nos experts" : "Get a real-world expert estimate"}
                       </p>
-                      <p className="text-xs text-primary/60 leading-relaxed font-light text-left">
+                      <p className="text-xs text-[#111] leading-relaxed font-normal text-left">
                         {language === 'fr' 
                           ? "Cet outil fournit une projection algorithmique générale. Pour obtenir une étude personnalisée, beaucoup plus poussée, réaliste et adaptée à l'état précis, à l'orientation et au cachet de votre bien, nous vous conseillons vivement de faire réaliser une estimation physique ou sur dossier par notre équipe."
                           : "This tool provides a general algorithmic projection. To obtain a highly advanced, realistic study specific to your property's precise condition, orientation, and unique charm, we strongly advise request a customized valuation by our expert team."}
@@ -592,6 +598,14 @@ export default function RevenueEstimator() {
             </AnimatePresence>
           </div>
         </div>
+
+        <SectionFooterNav
+          prevId="honoraires"
+          prevLabel="Tarifs & Honoraires"
+          nextId="processus"
+          nextLabel="Notre Processus"
+          theme="light"
+        />
       </div>
     </section>
   );

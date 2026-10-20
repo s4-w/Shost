@@ -56,7 +56,11 @@ const features = [
 
 export default function OwnerDashboard() {
   return (
-    <section id="espace-proprietaire" className="py-24 bg-white overflow-hidden">
+    <section
+      id="espace-proprietaire"
+      data-header-theme="light"
+      className="py-24 bg-white overflow-hidden scroll-mt-24 md:scroll-mt-28"
+    >
       <div className="container mx-auto px-6">
         <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
           

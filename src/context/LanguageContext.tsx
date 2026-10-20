@@ -30,7 +30,7 @@ const translations = {
     
     // Services
     "services.tagline": "Nos Services",
-    "services.title": "Une gestion 360° à Grenoble sans compromis",
+    "services.title": "Une gestion complète à Grenoble sans compromis",
     "services.marketing.title": "Marketing & Diffusion",
     "services.marketing.desc": "Photos professionnelles et diffusion sur les plateformes les plus prestigieuses.",
     "services.concierge.title": "Conciergerie 24/7",
@@ -111,7 +111,7 @@ const translations = {
     
     // Services
     "services.tagline": "Our Services",
-    "services.title": "360° management in Grenoble without compromise",
+    "services.title": "Complete management in Grenoble without compromise",
     "services.marketing.title": "Marketing & Distribution",
     "services.marketing.desc": "Professional photography and distribution on the most prestigious platforms.",
     "services.concierge.title": "24/7 Concierge",

@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { Search, Camera, Key, Wallet } from "lucide-react";
 import { useLanguage } from "@/src/context/LanguageContext";
+import SectionFooterNav from "./SectionFooterNav";
 
 export default function Process() {
   const { language } = useLanguage();
@@ -29,14 +30,18 @@ export default function Process() {
   ];
 
   return (
-    <section id="processus" className="py-24 bg-white rounded-t-[2.5rem] md:rounded-t-[4rem] -mt-10 md:-mt-16 relative z-10">
+    <section
+      id="processus"
+      data-header-theme="light"
+      className="py-24 bg-white rounded-t-[2.5rem] md:rounded-t-[4rem] -mt-10 md:-mt-16 relative z-10 scroll-mt-24 md:scroll-mt-28"
+    >
       <div className="container mx-auto px-6">
         <div className="text-center max-w-3xl mx-auto mb-20">
           <motion.span 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-primary uppercase tracking-[0.3em] text-[10px] font-bold mb-4 block"
+            className="text-[#111] uppercase tracking-[0.3em] text-[10px] font-bold mb-4 block"
           >
             {language === 'fr' ? 'Simplicité & Transparence' : 'Simplicity & Transparency'}
           </motion.span>
@@ -45,7 +50,7 @@ export default function Process() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-serif text-primary"
+            className="text-4xl md:text-5xl font-serif text-[#111]"
           >
             {language === 'fr' ? 'Votre projet en 4 étapes' : 'Your project in 4 steps'}
           </motion.h2>
@@ -68,15 +73,23 @@ export default function Process() {
                 <span className="absolute -top-3 -right-3 w-8 h-8 bg-[#c5a059] text-black text-xs font-bold flex items-center justify-center rounded-full z-20 shadow-lg border-2 border-white">
                   {index + 1}
                 </span>
-                <step.icon className="w-8 h-8 text-primary transition-colors duration-500 group-hover:text-white" />
+                <step.icon className="w-8 h-8 text-[#111] transition-colors duration-500 group-hover:text-white" />
               </div>
-              <h3 className="text-xl font-serif mb-4 text-primary">{step.title}</h3>
-              <p className="text-primary/60 text-sm leading-relaxed max-w-[250px]">
+              <h3 className="text-xl font-serif mb-4 text-[#111]">{step.title}</h3>
+              <p className="text-[#111] text-sm leading-relaxed max-w-[250px] font-normal">
                 {step.description}
               </p>
             </motion.div>
           ))}
         </div>
+
+        <SectionFooterNav
+          prevId="estimateur"
+          prevLabel="Simulateur de Revenus"
+          nextId="faq"
+          nextLabel="Foire Aux Questions"
+          theme="light"
+        />
       </div>
     </section>
   );
