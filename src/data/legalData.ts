@@ -12,44 +12,83 @@ export const LEGAL_DATA: Record<string, LegalDocument> = {
   "mentions-legales": {
     slug: "mentions-legales",
     title: "Mentions Légales",
-    lastUpdated: "1er Janvier 2026",
+    lastUpdated: "22 Octobre 2026",
     sections: [
       {
         title: "1. Éditeur de la plateforme et du site internet",
         content: [
-          "Le présent site internet, accessible à l'adresse https://shost-services.com (ci-après le « Site »), est édité par la structure :",
-          "Dénomination commerciale : SHOST Conciergerie",
-          "Forme juridique : [À COMPLÉTER - Ex: Société par Actions Simplifiée (SAS) / SARL / Entreprise Individuelle]",
-          "Capital social : [À COMPLÉTER - Ex: 1 000 €]",
-          "Siège social : [À COMPLÉTER - Ex: 15 rue Félix Poulat, 38000 Grenoble, France]",
-          "Numéro d'immatriculation au RCS : [À COMPLÉTER - Ex: RCS Grenoble B 123 456 789]",
-          "Numéro SIRET : [À COMPLÉTER - Ex: 123 456 789 00012]",
-          "Numéro de TVA intracommunautaire : [À COMPLÉTER - Ex: FR 12 123456789]",
-          "Directeur de la publication : [À COMPLÉTER - Ex: Direction SHOST Conciergerie]",
-          "Contact courriel : shost.services@gmail.com",
-          "Téléphone : 06 26 29 06 49"
+          "Le présent site internet, accessible à l'adresse https://shost-services.com (ci-après le « Site »), est édité conformément aux dispositions de l'article 6 de la Loi n° 2004-575 du 21 juin 2004 pour la Confiance dans l'Économie Numérique (LCEN) par :",
+          "• Statut juridique : Entrepreneur Individuel (micro-entreprise)",
+          "• Exploitant : Salah .M",
+          "• Dénomination commerciale : SHOST Conciergerie (shost-services.com)",
+          "• Secteur d'activité : Location et exploitation de biens immobiliers propres ou loués",
+          "• Code NAF / APE : 68.20B (Location et exploitation de biens immobiliers)",
+          "• Numéro SIRET : 939 776 696 00022",
+          "• Date de création de l'entreprise : 18/01/2025",
+          "• Siège de l'activité : Grenoble et agglomération iséroise, France",
+          "• Adresse de courrier électronique (email) : shost.services@gmail.com",
+          "• Contact téléphonique : +33 (0)6 26 29 06 49"
         ]
       },
       {
-        title: "2. Hébergement du site internet",
+        title: "2. Directeur de la publication",
         content: [
-          "Le Site est hébergé par :",
-          "Hébergeur : [À COMPLÉTER - Ex: Vercel Inc., 340 S Lemon Ave #1142 Walnut, CA 91789, USA / Cloudflare, Inc., 101 Townsend St, San Francisco, CA 94107, USA]",
-          "Site web de l'hébergeur : [À COMPLÉTER - Ex: https://vercel.com / https://cloudflare.com]"
+          "Le Directeur de la publication du Site shost-services.com est :",
+          "• Salah .M, en qualité d'exploitant et responsable éditorial de SHOST Conciergerie.",
+          "Pour toute question relative aux contenus publiés sur le Site, vous pouvez contacter directement la rédaction par email à shost.services@gmail.com."
         ]
       },
       {
-        title: "3. Propriété intellectuelle et droits réservés",
+        title: "3. Hébergement du site internet",
         content: [
-          "L'ensemble des contenus figurant sur ce Site (textes, visuels, photographies, charte graphique, logo, logiciels, icônes) sont la propriété exclusive de SHOST Conciergerie ou de ses partenaires ayant consenti une licence d'utilisation.",
-          "Toute reproduction, distribution, modification, adaptation, retransmission ou publication, même partielle, de ces différents éléments est strictement interdite sans l'accord exprès par écrit de SHOST Conciergerie (articles L.335-2 et suivants du Code de la propriété intellectuelle)."
+          "Le Site shost-services.com est hébergé sur les infrastructures sécurisées de :",
+          "• Hébergeur : Cloudflare, Inc.",
+          "• Adresse du siège social : 101 Townsend Street, San Francisco, CA 94107, États-Unis",
+          "• Téléphone : +1 (888) 993-5273",
+          "• Site internet officiel : https://www.cloudflare.com",
+          "L'infrastructure technique de Cloudflare assure la mise en cache, la distribution mondiale de contenu (CDN) ainsi que la protection anti-DDoS et la sécurité du Site."
         ]
       },
       {
-        title: "4. Responsabilité et liens hypertextes",
+        title: "4. Enregistrement du nom de domaine",
         content: [
-          "SHOST Conciergerie s'efforce de fournir sur son Site des informations aussi précises que possible. Toutefois, les estimations financières issues du simulateur en ligne sont fournies à titre indicatif et ne constituent pas un engagement contractuel ferme de revenus.",
-          "Le Site peut contenir des liens vers des sites internet tiers (ex : profils Instagram, Calendly, Google). SHOST Conciergerie décline toute responsabilité quant au contenu, à l'accessibilité ou aux politiques de confidentialité de ces sites externes."
+          "Le nom de domaine shost-services.com a été réservé et enregistré auprès du bureau d'enregistrement accrédité (registrar) :",
+          "• Registar : Hostinger International Ltd.",
+          "• Adresse : 61 Lordou Vironos Street, 6023 Larnaca, Chypre",
+          "• Site internet officiel : https://www.hostinger.fr"
+        ]
+      },
+      {
+        title: "5. Propriété intellectuelle et droits réservés",
+        content: [
+          "L'ensemble des éléments constituant le Site shost-services.com (notamment, sans que cette liste soit limitative : les marques déposées, la marque SHOST, le logo officiel, les textes, photographies, visuels, charte graphique, architecture éditoriale, icônes, animations, simulateurs et développements logiciels) sont la propriété exclusive de l'exploitant Salah .M / SHOST Conciergerie, ou font l'objet d'une autorisation préalable expresse d'utilisation.",
+          "Ces contenus sont protégés par le droit français et international applicable en matière de droit d'auteur, de propriété intellectuelle et de droit des marques (articles L.111-1 et suivants, et articles L.335-2 et suivants du Code de la propriété intellectuelle).",
+          "Toute reproduction, représentation, diffusion, adaptation, extraction, modification ou exploitation commerciale, totale ou partielle, de l'un quelconque de ces éléments, par quelque procédé que ce soit, sans l'accord préalable écrit et exprès de Salah .M, est strictement interdite et constituerait une contrefaçon sanctionnée par les juridictions civiles et pénales compétentes."
+        ]
+      },
+      {
+        title: "6. Données personnelles et cookies (RGPD)",
+        content: [
+          "Conformément au Règlement Général sur la Protection des Données (RGPD 2016/679) et à la Loi Informatique et Libertés du 6 janvier 1978 modifiée :",
+          "• Droit des personnes : Vous disposez à tout moment d'un droit d'accès, de rectification, de portabilité, de limitation et de suppression de vos données personnelles recueillies lors de l'utilisation des formulaires de contact ou d'estimation en ligne.",
+          "• Modalités d'exercice : Pour exercer vos droits ou pour toute interrogation concernant vos données, il vous suffit d'adresser un message par courrier électronique à shost.services@gmail.com. Une réponse vous sera apportée dans les meilleurs délais légaux (sous 30 jours maximum).",
+          "• Traitement technique par l'hébergeur Cloudflare : Dans le cadre de l'acheminement sécurisé des requêtes et de la performance du Site, Cloudflare, Inc. est susceptible de traiter des données techniques de connexion (notamment l'adresse IP publique, les en-têtes HTTP de sécurité et les empreintes cryptographiques de requête) afin de prévenir les attaques malveillantes (DDoS, bots indésirables) et d'optimiser le routage du trafic.",
+          "• Gestion des cookies : Un bandeau de consentement vous permet d'accepter, de refuser ou de paramétrer le dépôt de traceurs non strictement essentiels. Vous pouvez modifier vos préférences à tout moment via le lien « Gestion des cookies » présent au bas de chaque page du site."
+        ]
+      },
+      {
+        title: "7. Limitation de responsabilité",
+        content: [
+          "• Exactitude des informations : SHOST Conciergerie met en œuvre tous les moyens raisonnables pour s'assurer de l'exactitude et de la mise à jour des informations publiées sur le Site. Toutefois, les données sont fournies à titre indicatif et informatif. Notamment, les simulations de revenus et rentabilités calculées via les outils en ligne ont une valeur estimative indicative et ne sauraient en aucun cas constituer une promesse ferme ou un engagement contractuel de gains.",
+          "• Disponibilité du service : L'éditeur ne saurait être tenu responsable d'éventuelles interruptions temporaires de service dues à des opérations de maintenance technique, à des dysfonctionnements du réseau internet ou à tout cas de force majeure indépendant de sa volonté.",
+          "• Liens hypertextes externes : Le Site peut intégrer des liens hypertextes pointant vers des ressources et sites internet tiers. L'éditeur ne disposant d'aucun contrôle éditorial permanent sur ces sites tiers, sa responsabilité ne saurait être engagée quant à leurs contenus, offres ou politiques de confidentialité."
+        ]
+      },
+      {
+        title: "8. Droit applicable et juridiction compétente",
+        content: [
+          "Le présent Site internet, les présentes Mentions Légales et toutes les relations entre l'éditeur et les utilisateurs sont exclusivement régis par le droit français.",
+          "En cas de différend ou de litige relatif à l'interprétation, la validité ou l'exécution des présentes, les parties s'engagent à rechercher prioritairement une solution amiable. À défaut d'accord amiable, compétence expresse et exclusive est attribuée aux tribunaux français compétents du ressort du tribunal judiciaire territorialement compétent pour l'agglomération de Grenoble."
         ]
       }
     ]
@@ -57,15 +96,16 @@ export const LEGAL_DATA: Record<string, LegalDocument> = {
   "politique-de-confidentialite": {
     slug: "politique-de-confidentialite",
     title: "Politique de Confidentialité & Protection des Données (RGPD)",
-    lastUpdated: "1er Janvier 2026",
+    lastUpdated: "22 Octobre 2026",
     sections: [
       {
         title: "1. Responsable du traitement des données",
         content: [
           "Dans le cadre de l'utilisation du Site et de ses formulaires de contact et d'estimation, des données à caractère personnel sont collectées et traitées conformément au Règlement Général sur la Protection des Données (RGPD 2016/679) et à la loi Informatique et Libertés du 6 janvier 1978 modifiée.",
-          "Responsable du traitement : SHOST Conciergerie",
-          "Adresse : [À COMPLÉTER - Ex: 38000 Grenoble, France]",
-          "Délégué à la Protection des Données (DPO) / Contact référent : shost.services@gmail.com"
+          "• Responsable du traitement : Salah .M (SHOST Conciergerie)",
+          "• Statut : Entrepreneur Individuel (micro-entreprise) - SIRET : 939 776 696 00022",
+          "• Siège d'activité : Grenoble & agglomération iséroise, France",
+          "• Contact référent / DPO : shost.services@gmail.com"
         ]
       },
       {
@@ -73,15 +113,15 @@ export const LEGAL_DATA: Record<string, LegalDocument> = {
         content: [
           "Nous collectons uniquement les données strictement nécessaires aux finalités suivantes :",
           "• Formulaire de contact et d'estimation : Nom, prénom, adresse e-mail, numéro de téléphone, ville et caractéristiques du bien immobilier, message.",
-          "Finalité : Traiter votre demande de renseignements, réaliser une estimation personnalisée du potentiel locatif de votre bien et convenir d'un rendez-vous téléphonique ou sur place.",
-          "Base légale : Consentement préalable de l'utilisateur (case à cocher non précochée) et mesures précontractuelles à la demande de l'utilisateur.",
-          "• Données techniques de navigation : Adresse IP (anonymisée), type de navigateur, horodatage des requêtes pour des motifs de sécurité informatique et prévention des abus (rate-limiting anti-spam)."
+          "• Finalité : Traiter votre demande de renseignements, réaliser une estimation personnalisée du potentiel locatif de votre bien et convenir d'un rendez-vous téléphonique ou sur place.",
+          "• Base légale : Consentement préalable de l'utilisateur (case à cocher non précochée) et mesures précontractuelles à la demande de l'utilisateur.",
+          "• Données techniques de navigation : Adresse IP (anonymisée), type de navigateur, horodatage des requêtes pour des motifs de sécurité informatique et prévention des abus (rate-limiting anti-spam via Cloudflare)."
         ]
       },
       {
         title: "3. Destinataires et absence de revente des données",
         content: [
-          "Vos données personnelles sont strictement confidentielles. Elles sont exclusivement destinées aux collaborateurs habilités de SHOST Conciergerie.",
+          "Vos données personnelles sont strictement confidentielles. Elles sont exclusivement destinées à l'exploitant de SHOST Conciergerie.",
           "SHOST Conciergerie ne commercialise, ne loue et ne cède aucune donnée personnelle à des courtiers ou tiers commerciaux sous quelque forme que ce soit."
         ]
       },
@@ -105,7 +145,7 @@ export const LEGAL_DATA: Record<string, LegalDocument> = {
   "politique-cookies": {
     slug: "politique-cookies",
     title: "Politique de Gestion des Cookies & Traceurs",
-    lastUpdated: "1er Janvier 2026",
+    lastUpdated: "22 Octobre 2026",
     sections: [
       {
         title: "1. Qu'est-ce qu'un cookie ?",
@@ -116,7 +156,7 @@ export const LEGAL_DATA: Record<string, LegalDocument> = {
       {
         title: "2. Les catégories de cookies utilisées sur notre site",
         content: [
-          "• Cookies techniques strictement nécessaires : Ces cookies sont indispensables au bon fonctionnement du site (mémorisation de votre choix de consentement cookies, sécurité contre les attaques de type CSRF). Ils ne nécessitent pas de consentement préalable conformément aux recommandations de la CNIL.",
+          "• Cookies techniques strictement nécessaires : Ces cookies sont indispensables au bon fonctionnement du site (mémorisation de votre choix de consentement cookies, sécurité contre les attaques de type CSRF, routage de performance Cloudflare). Ils ne nécessitent pas de consentement préalable conformément aux recommandations de la CNIL.",
           "• Cookies de mesure d'audience et statistiques (facultatifs) : Permettent de mesurer la fréquentation et d'optimiser l'ergonomie du site de manière anonymisée. Ils ne sont activés qu'après acceptation explicite de votre part.",
           "• Cookies marketing et tiers (facultatifs) : Aucun cookie publicitaire intrusif n'est déposé par défaut sans votre accord préalable."
         ]
@@ -134,12 +174,12 @@ export const LEGAL_DATA: Record<string, LegalDocument> = {
   "cgv": {
     slug: "cgv",
     title: "Conditions Générales de Vente & Prestations de Conciergerie (CGV)",
-    lastUpdated: "1er Janvier 2026",
+    lastUpdated: "22 Octobre 2026",
     sections: [
       {
         title: "1. Champ d'application et objet",
         content: [
-          "Les présentes Conditions Générales de Vente et de Prestations de Services (ci-après les « CGV ») s'appliquent à l'ensemble des prestations d'intendance, d'accueil, de gestion logistique et d'optimisation d'annonces de location meublée de courte durée conclues entre SHOST Conciergerie et tout propriétaire ou mandataire d'un bien immobilier (ci-après le « Client »).",
+          "Les présentes Conditions Générales de Vente et de Prestations de Services (ci-après les « CGV ») s'appliquent à l'ensemble des prestations d'intendance, d'accueil, de gestion logistique et d'optimisation d'annonces de location meublée de courte durée conclues entre SHOST Conciergerie (Salah .M, entrepreneur individuel, SIRET 939 776 696 00022) et tout propriétaire ou mandataire d'un bien immobilier (ci-après le « Client »).",
           "Toute souscription de mandat ou contrat de conciergerie implique l'adhésion pleine et entière du Client aux présentes CGV."
         ]
       },
@@ -181,7 +221,7 @@ export const LEGAL_DATA: Record<string, LegalDocument> = {
       {
         title: "6. Droit applicable et juridiction compétente",
         content: [
-          "Les présentes CGV sont soumises au droit français. En cas de litige non résolu à l'amiable, les tribunaux compétents du ressort du Tribunal de Commerce de Grenoble seront seuls compétents."
+          "Les présentes CGV sont soumises au droit français. En cas de litige non résolu à l'amiable, compétence est attribuée aux tribunaux compétents du ressort du Tribunal de Commerce de Grenoble."
         ]
       }
     ]

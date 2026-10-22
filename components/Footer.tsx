@@ -85,6 +85,9 @@ export default function Footer() {
               <li>
                 <a href="/#contact" className="hover:text-accent transition-colors">Contact & Devis Gratuit</a>
               </li>
+              <li>
+                <a href="/mentions-legales" className="hover:text-accent transition-colors">Mentions Légales</a>
+              </li>
             </ul>
           </div>
 
