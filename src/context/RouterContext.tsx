@@ -92,25 +92,35 @@ export const RouterProvider: React.FC<{ initialPath?: string; children: React.Re
     return () => window.removeEventListener("popstate", handlePopState);
   }, []);
 
-  // Sync document head metadata on path change
+  // Sync document head metadata on path change (title, description, canonical, og:*, twitter:*)
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     const currentMeta = SEO_DATA[path] || SEO_DATA["/404"];
     if (currentMeta) {
+      // 1. Document title
       document.title = currentMeta.title;
 
-      // Update meta description
-      let metaDesc = document.querySelector('meta[name="description"]');
-      if (!metaDesc) {
-        metaDesc = document.createElement("meta");
-        metaDesc.setAttribute("name", "description");
-        document.head.appendChild(metaDesc);
-      }
-      metaDesc.setAttribute("content", currentMeta.description);
+      // Helper to update or create meta tags by multiple possible selectors
+      const setMetaTag = (selectors: string[], defaultAttr: "name" | "property", attrName: string, contentValue: string) => {
+        let el: HTMLMetaElement | null = null;
+        for (const sel of selectors) {
+          el = document.querySelector<HTMLMetaElement>(sel);
+          if (el) break;
+        }
+        if (!el) {
+          el = document.createElement("meta");
+          el.setAttribute(defaultAttr, attrName);
+          document.head.appendChild(el);
+        }
+        el.setAttribute("content", contentValue);
+      };
 
-      // Update canonical link
-      let canonical = document.querySelector('link[rel="canonical"]');
+      // 2. Meta description
+      setMetaTag(['meta[name="description"]'], "name", "description", currentMeta.description);
+
+      // 3. Canonical link
+      let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
       if (!canonical) {
         canonical = document.createElement("link");
         canonical.setAttribute("rel", "canonical");
@@ -118,22 +128,15 @@ export const RouterProvider: React.FC<{ initialPath?: string; children: React.Re
       }
       canonical.setAttribute("href", currentMeta.canonical);
 
-      // Open Graph
-      const ogTitle = document.querySelector('meta[property="og:title"]');
-      if (ogTitle) ogTitle.setAttribute("content", currentMeta.title);
+      // 4. Open Graph tags
+      setMetaTag(['meta[property="og:title"]', 'meta[name="og:title"]'], "property", "og:title", currentMeta.title);
+      setMetaTag(['meta[property="og:description"]', 'meta[name="og:description"]'], "property", "og:description", currentMeta.description);
+      setMetaTag(['meta[property="og:url"]', 'meta[name="og:url"]'], "property", "og:url", currentMeta.canonical);
 
-      const ogDesc = document.querySelector('meta[property="og:description"]');
-      if (ogDesc) ogDesc.setAttribute("content", currentMeta.description);
-
-      const ogUrl = document.querySelector('meta[property="og:url"]');
-      if (ogUrl) ogUrl.setAttribute("content", currentMeta.canonical);
-
-      // Twitter
-      const twTitle = document.querySelector('meta[property="twitter:title"]');
-      if (twTitle) twTitle.setAttribute("content", currentMeta.title);
-
-      const twDesc = document.querySelector('meta[property="twitter:description"]');
-      if (twDesc) twDesc.setAttribute("content", currentMeta.description);
+      // 5. Twitter Card tags
+      setMetaTag(['meta[name="twitter:title"]', 'meta[property="twitter:title"]'], "name", "twitter:title", currentMeta.title);
+      setMetaTag(['meta[name="twitter:description"]', 'meta[property="twitter:description"]'], "name", "twitter:description", currentMeta.description);
+      setMetaTag(['meta[name="twitter:url"]', 'meta[property="twitter:url"]'], "name", "twitter:url", currentMeta.canonical);
     }
   }, [path]);
 

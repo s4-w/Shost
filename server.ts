@@ -3,6 +3,7 @@ import { createServer as createViteServer } from "vite";
 import path from "path";
 import fs from "fs";
 import { Resend } from "resend";
+import { SEO_DATA } from "./src/data/seoData";
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
@@ -190,8 +191,26 @@ async function startServer() {
         return res.sendFile(possibleFile);
       }
 
-      // Fallback to root index.html
-      res.sendFile(path.join(distPath, "index.html"));
+      // Fallback: If route exists in SEO_DATA, inject metadata into root index.html
+      const rootHtmlPath = path.join(distPath, "index.html");
+      const normalizedPath = "/" + cleanUrl;
+      const meta = SEO_DATA[normalizedPath] || SEO_DATA["/404"];
+
+      if (meta && fs.existsSync(rootHtmlPath)) {
+        let html = fs.readFileSync(rootHtmlPath, "utf-8");
+        html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${meta.title}</title>`);
+        html = html.replace(/<meta\s+name="description"\s+content="[\s\S]*?"\s*\/?>/i, `<meta name="description" content="${meta.description}" />`);
+        html = html.replace(/<link\s+rel="canonical"\s+href="[\s\S]*?"\s*\/?>/i, `<link rel="canonical" href="${meta.canonical}" />`);
+        html = html.replace(/<meta\s+property="og:title"\s+content="[\s\S]*?"\s*\/?>/i, `<meta property="og:title" content="${meta.title}" />`);
+        html = html.replace(/<meta\s+property="og:description"\s+content="[\s\S]*?"\s*\/?>/i, `<meta property="og:description" content="${meta.description}" />`);
+        html = html.replace(/<meta\s+property="og:url"\s+content="[\s\S]*?"\s*\/?>/i, `<meta property="og:url" content="${meta.canonical}" />`);
+        html = html.replace(/<meta\s+(?:name|property)="twitter:title"\s+content="[\s\S]*?"\s*\/?>/i, `<meta name="twitter:title" content="${meta.title}" />`);
+        html = html.replace(/<meta\s+(?:name|property)="twitter:description"\s+content="[\s\S]*?"\s*\/?>/i, `<meta name="twitter:description" content="${meta.description}" />`);
+        html = html.replace(/<meta\s+(?:name|property)="twitter:url"\s+content="[\s\S]*?"\s*\/?>/i, `<meta name="twitter:url" content="${meta.canonical}" />`);
+        return res.send(html);
+      }
+
+      res.sendFile(rootHtmlPath);
     });
   }
 

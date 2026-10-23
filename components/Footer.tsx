@@ -57,9 +57,9 @@ export default function Footer() {
 
           {/* Col 2: Navigation & Services */}
           <div>
-            <h4 className="text-xs uppercase tracking-[0.25em] font-bold mb-5 text-accent">
+            <h3 className="text-xs uppercase tracking-[0.25em] font-bold mb-5 text-accent">
               Services & Navigation
-            </h4>
+            </h3>
             <ul className="space-y-3 text-xs text-white/85 font-light">
               <li>
                 <a href="/" className="hover:text-accent transition-colors">Accueil</a>
@@ -93,9 +93,9 @@ export default function Footer() {
 
           {/* Col 3: Secteurs d'intervention Isère */}
           <div>
-            <h4 className="text-xs uppercase tracking-[0.25em] font-bold mb-5 text-accent">
+            <h3 className="text-xs uppercase tracking-[0.25em] font-bold mb-5 text-accent">
               Secteurs d'Intervention
-            </h4>
+            </h3>
             <ul className="space-y-3 text-xs text-white/85 font-light">
               <li>
                 <a href="/conciergerie-airbnb-grenoble" className="hover:text-accent transition-colors">
@@ -132,9 +132,9 @@ export default function Footer() {
 
           {/* Col 4: Blog Récent & Engagements */}
           <div>
-            <h4 className="text-xs uppercase tracking-[0.25em] font-bold mb-5 text-accent">
+            <h3 className="text-xs uppercase tracking-[0.25em] font-bold mb-5 text-accent">
               Derniers Articles
-            </h4>
+            </h3>
             <div className="space-y-3.5 text-xs text-white/85 font-light">
               <div>
                 <a

@@ -23,8 +23,51 @@ export default function BlogPostPage({ slug }: { slug: string }) {
   // Other posts for cross linking
   const otherPosts = Object.values(BLOG_POSTS).filter((p) => p.slug !== post.slug);
 
+  // ISO dates mapping for published blog articles
+  const isoDates: Record<string, string> = {
+    "combien-rapporte-un-airbnb-a-grenoble": "2026-03-12T08:00:00+01:00",
+    "reglementation-location-saisonniere-isere": "2026-02-24T08:00:00+01:00",
+    "conciergerie-ou-gestion-solo": "2026-02-05T08:00:00+01:00",
+  };
+
+  const isoPublishedDate = isoDates[slug] || "2026-03-01T08:00:00+01:00";
+
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": post.title,
+    "description": post.metaDescription || post.excerpt,
+    "image": "https://shost-services.com/og-image-shost-2026.jpg",
+    "datePublished": isoPublishedDate,
+    "dateModified": "2026-10-23T10:00:00+02:00",
+    "author": {
+      "@type": "Organization",
+      "name": "SHOST Conciergerie",
+      "url": "https://shost-services.com/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "SHOST Conciergerie",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://shost-services.com/Logo-sans-fond.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://shost-services.com/blog/${slug}`
+    },
+    "inLanguage": "fr-FR",
+    "articleSection": post.category
+  };
+
   return (
     <div data-header-theme="light" className="pt-28 md:pt-32 pb-16 bg-surface">
+      {/* Schema.org Article Structured Data (JSON-LD) */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       <div className="container mx-auto px-6 max-w-4xl text-left">
         {/* Breadcrumb */}
         <div className="mb-6 flex items-center gap-2 text-xs text-primary/60">

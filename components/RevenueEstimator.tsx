@@ -190,10 +190,10 @@ export default function RevenueEstimator() {
               </div>
               
               <div className="mb-12">
-                <h2 className="text-3xl font-serif italic mb-4 text-white leading-tight">
+                <h3 className="text-3xl font-serif italic mb-4 text-white leading-tight">
                   {language === 'fr' ? 'Estimez votre' : 'Estimate your'} <br />
                   <span className="not-italic text-accent font-sans font-bold uppercase tracking-tighter text-4xl">Revenu</span>
-                </h2>
+                </h3>
                 <div className="h-1 w-12 bg-accent/50" />
               </div>
               

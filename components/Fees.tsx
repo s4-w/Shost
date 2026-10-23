@@ -86,7 +86,7 @@ export default function Fees() {
                     <benefit.icon className="w-5 h-5 text-accent" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-sm uppercase tracking-wider mb-2 text-white">{benefit.title}</h4>
+                    <h3 className="font-bold text-sm uppercase tracking-wider mb-2 text-white">{benefit.title}</h3>
                     <p className="text-white/80 text-xs leading-relaxed font-normal">{benefit.desc}</p>
                   </div>
                 </motion.div>
@@ -100,9 +100,9 @@ export default function Fees() {
               viewport={{ once: true }}
               className="border-t border-white/15 pt-12 mb-12"
             >
-              <h4 className="text-[10px] uppercase tracking-[0.4em] font-bold text-accent mb-8">
+              <h3 className="text-[10px] uppercase tracking-[0.4em] font-bold text-accent mb-8">
                 {language === 'fr' ? "Frais Classiques" : "Classic Fees"}
-              </h4>
+              </h3>
               <div className="space-y-6">
                 <div className="flex justify-between items-center group">
                   <span className="text-sm text-white/90 group-hover:text-white transition-colors font-medium">

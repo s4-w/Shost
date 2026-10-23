@@ -52,12 +52,30 @@ export default function FAQ({ isStandalonePage = false }: { isStandalonePage?: b
     }
   ];
 
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map((faq) => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  };
+
   return (
     <section
       id="faq"
       data-header-theme="light"
       className="py-24 bg-secondary rounded-t-[2.5rem] md:rounded-t-[4rem] -mt-10 md:-mt-16 relative z-10 scroll-mt-24 md:scroll-mt-28"
     >
+      {/* Schema.org FAQPage JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       <div className="container mx-auto px-6">
         <div className="flex flex-col lg:flex-row gap-16 lg:gap-20">
           {/* Left Column */}

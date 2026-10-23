@@ -14,9 +14,9 @@ export const SEO_DATA: Record<string, SeoPageMeta> = {
   "/": {
     path: "/",
     title: "Conciergerie Airbnb Grenoble | SHOST Gestion Locative",
-    description: "Conciergerie Airbnb à Grenoble & Isère. Gestion locative complète : ménage, clés, voyageurs, tarification dynamique. Estimez vos revenus gratuitement.",
+    description: "Conciergerie Airbnb Grenoble : gestion complète de votre logement, ménage hôtelier et accueil 24/7. Estimez vos revenus locatifs gratuitement en 2 minutes !",
     canonical: `${BASE_URL}/`,
-    h1: "Conciergerie Airbnb & Gestion Locative Haut de Gamme à Grenoble",
+    h1: "Conciergerie Airbnb à Grenoble : maximisez vos revenus locatifs",
     type: "website"
   },
   "/services": {

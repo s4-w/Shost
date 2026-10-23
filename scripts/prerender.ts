@@ -25,22 +25,30 @@ export async function prerender() {
       // Customize metadata in the template for this specific route
       let html = template;
 
-      // Replace title
+      // 1. Title
       html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${meta.title}</title>`);
 
-      // Replace meta description
-      html = html.replace(
-        /<meta\s+name="description"\s+content="[\s\S]*?"\s*\/?>/i,
-        `<meta name="description" content="${meta.description}" />`
-      );
+      // 2. Meta description
+      if (/<meta\s+name="description"\s+content="[\s\S]*?"\s*\/?>/i.test(html)) {
+        html = html.replace(
+          /<meta\s+name="description"\s+content="[\s\S]*?"\s*\/?>/i,
+          `<meta name="description" content="${meta.description}" />`
+        );
+      } else {
+        html = html.replace("</head>", `  <meta name="description" content="${meta.description}" />\n</head>`);
+      }
 
-      // Replace canonical link
-      html = html.replace(
-        /<link\s+rel="canonical"\s+href="[\s\S]*?"\s*\/?>/i,
-        `<link rel="canonical" href="${meta.canonical}" />`
-      );
+      // 3. Canonical link
+      if (/<link\s+rel="canonical"\s+href="[\s\S]*?"\s*\/?>/i.test(html)) {
+        html = html.replace(
+          /<link\s+rel="canonical"\s+href="[\s\S]*?"\s*\/?>/i,
+          `<link rel="canonical" href="${meta.canonical}" />`
+        );
+      } else {
+        html = html.replace("</head>", `  <link rel="canonical" href="${meta.canonical}" />\n</head>`);
+      }
 
-      // Replace Open Graph title and description
+      // 4. Open Graph tags
       html = html.replace(
         /<meta\s+property="og:title"\s+content="[\s\S]*?"\s*\/?>/i,
         `<meta property="og:title" content="${meta.title}" />`
@@ -53,6 +61,34 @@ export async function prerender() {
         /<meta\s+property="og:url"\s+content="[\s\S]*?"\s*\/?>/i,
         `<meta property="og:url" content="${meta.canonical}" />`
       );
+
+      // 5. Twitter Card tags (title, description, url)
+      if (/<meta\s+(?:name|property)="twitter:title"\s+content="[\s\S]*?"\s*\/?>/i.test(html)) {
+        html = html.replace(
+          /<meta\s+(?:name|property)="twitter:title"\s+content="[\s\S]*?"\s*\/?>/i,
+          `<meta name="twitter:title" content="${meta.title}" />`
+        );
+      } else {
+        html = html.replace("</head>", `  <meta name="twitter:title" content="${meta.title}" />\n</head>`);
+      }
+
+      if (/<meta\s+(?:name|property)="twitter:description"\s+content="[\s\S]*?"\s*\/?>/i.test(html)) {
+        html = html.replace(
+          /<meta\s+(?:name|property)="twitter:description"\s+content="[\s\S]*?"\s*\/?>/i,
+          `<meta name="twitter:description" content="${meta.description}" />`
+        );
+      } else {
+        html = html.replace("</head>", `  <meta name="twitter:description" content="${meta.description}" />\n</head>`);
+      }
+
+      if (/<meta\s+(?:name|property)="twitter:url"\s+content="[\s\S]*?"\s*\/?>/i.test(html)) {
+        html = html.replace(
+          /<meta\s+(?:name|property)="twitter:url"\s+content="[\s\S]*?"\s*\/?>/i,
+          `<meta name="twitter:url" content="${meta.canonical}" />`
+        );
+      } else {
+        html = html.replace("</head>", `  <meta name="twitter:url" content="${meta.canonical}" />\n</head>`);
+      }
 
       // Inject rendered app HTML into root div
       html = html.replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`);
