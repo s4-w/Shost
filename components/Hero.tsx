@@ -13,19 +13,19 @@ export default function Hero() {
     <section
       id="home"
       data-header-theme="dark"
-      className="relative min-h-[92vh] flex items-center overflow-hidden bg-surface"
+      className="relative min-h-[92vh] flex items-center overflow-hidden"
+      style={{ backgroundColor: "#d9d4cc" }}
     >
       {/* Background Image with High Quality & Dark Overlay (Contraste >= 4.5:1) */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src="/src/assets/images/hero_grenoble_alpine_1792350065806.jpg"
-          alt="Appartement de prestige à Grenoble avec vue panoramique sur les massifs alpins géré par la conciergerie SHOST"
-          className="w-full h-full object-cover object-center"
-          loading="eager"
-          fetchPriority="high"
-          width="1920"
-          height="1080"
-        />
+      <div
+        className="absolute inset-0 z-0 bg-no-repeat bg-cover bg-center"
+        style={{
+          backgroundColor: "#d9d4cc",
+          backgroundImage: "url('/images/hero.webp')",
+        }}
+        role="img"
+        aria-label="Appartement de prestige à Grenoble avec vue panoramique sur les massifs alpins géré par la conciergerie SHOST"
+      >
         {/* Dark overlay guaranteeing contrast ratio >= 4.5:1 for white text and logo */}
         <div className="absolute inset-0 bg-black/55 z-[1]" />
         <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/75 to-black/50 backdrop-blur-[0.5px] z-[2]" />

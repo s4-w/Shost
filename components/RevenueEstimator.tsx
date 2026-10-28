@@ -19,9 +19,9 @@ const MONTHS_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','
 const DAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 const ZONES_DATA = {
-  centre: { adr: 105, occ: 0.76, icon: "🏰", img: "https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?auto=format&fit=crop&q=80&w=800" },
-  montagne: { adr: 145, occ: 0.65, icon: "🏔️", img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800" },
-  peripherie: { adr: 85, occ: 0.72, icon: "🏡", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=800" }
+  centre: { adr: 105, occ: 0.76, icon: "🏰", img: "/images/sector-centre.webp" },
+  montagne: { adr: 145, occ: 0.65, icon: "🏔️", img: "/images/sector-montagne.webp" },
+  peripherie: { adr: 85, occ: 0.72, icon: "🏡", img: "/images/sector-peripherie.webp" }
 };
 
 const TYPE_MULT = { appartement: 1.0, maison: 1.15, loft: 1.1, villa: 1.35 };
@@ -176,7 +176,7 @@ export default function RevenueEstimator() {
             {/* Arrière-plan architecture alpine moderne */}
             <div className="absolute inset-0 z-0 opacity-35 transition-transform duration-[10s] hover:scale-110 font-light">
               <img 
-                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1000" 
+                src="/images/estimator-bg.webp" 
                 alt="Propriété moderne" 
                 className="w-full h-full object-cover"
               />

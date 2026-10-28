@@ -31,7 +31,7 @@ export default function Logo({ className = "", light = false }: LogoProps) {
         referrerPolicy="no-referrer"
         onError={() => {
           if (imgSrc === "/Logo-sans-fond.png") {
-            setImgSrc("https://i.postimg.cc/W1jN70Wd/Logo-sans-fond.png");
+            setImgSrc("/Logo-original-500.png");
           } else {
             setHasError(true);
           }
