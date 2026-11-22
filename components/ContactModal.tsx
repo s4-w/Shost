@@ -4,7 +4,7 @@ import { X, Send, Calendar, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/src/context/LanguageContext";
 
-const CONTACT_ENDPOINT = "COLLE_ICI_TON_URL/exec";
+const CONTACT_ENDPOINT = "https://script.google.com/macros/s/AKfycbzXCEisWvz0rEikh_JPHufMZL3PnuRIds63DAoqKcfuEanh0gxeF-nj-NZ9Utb_lL5R/exec";
 
 interface ContactModalProps {
   isOpen: boolean;

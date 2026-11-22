@@ -4,7 +4,7 @@ import { Mail, Phone, MapPin, Instagram, Calendar, ShieldCheck, CheckCircle2 } f
 import { useLanguage } from "@/src/context/LanguageContext";
 import SectionFooterNav from "./SectionFooterNav";
 
-const CONTACT_ENDPOINT = "COLLE_ICI_TON_URL/exec";
+const CONTACT_ENDPOINT = "https://script.google.com/macros/s/AKfycbzXCEisWvz0rEikh_JPHufMZL3PnuRIds63DAoqKcfuEanh0gxeF-nj-NZ9Utb_lL5R/exec";
 
 export default function Contact() {
   const { language } = useLanguage();
