@@ -4,6 +4,8 @@ import { Mail, Phone, MapPin, Instagram, Calendar, ShieldCheck, CheckCircle2 } f
 import { useLanguage } from "@/src/context/LanguageContext";
 import SectionFooterNav from "./SectionFooterNav";
 
+const CONTACT_ENDPOINT = "COLLE_ICI_TON_URL/exec";
+
 export default function Contact() {
   const { language } = useLanguage();
   const [nom, setNom] = useState("");
@@ -68,10 +70,10 @@ export default function Contact() {
     setErrorMessage("");
 
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch(CONTACT_ENDPOINT, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "text/plain;charset=utf-8",
         },
         body: JSON.stringify({
           name: nom.trim(),
@@ -83,13 +85,23 @@ export default function Contact() {
           consentRgpd: true,
           honeypot: honeypot,
           formStartedAt: formStartedAt,
+          source: "Section #contact",
         }),
       });
 
-      const resData = await response.json();
+      let resData: any = null;
+      try {
+        resData = await response.json();
+      } catch {
+        throw new Error(
+          language === "fr"
+            ? "Réponse invalide du serveur de contact. Veuillez réessayer ou nous contacter directement au 06 26 29 06 49."
+            : "Invalid response from contact server. Please try again."
+        );
+      }
 
-      if (!response.ok) {
-        throw new Error(resData.error || "Erreur lors de l'envoi");
+      if (!response.ok || resData?.ok !== true) {
+        throw new Error(resData?.error || "Erreur lors de l'envoi");
       }
 
       setStatus("success");
@@ -98,6 +110,7 @@ export default function Contact() {
       setEmail("");
       setMessage("");
       setConsentRgpd(false);
+      setFormStartedAt(Date.now());
     } catch (err: any) {
       console.error("Error submitting contact form", err);
       setStatus("error");

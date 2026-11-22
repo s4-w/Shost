@@ -4,6 +4,8 @@ import { X, Send, Calendar, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/src/context/LanguageContext";
 
+const CONTACT_ENDPOINT = "COLLE_ICI_TON_URL/exec";
+
 interface ContactModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -21,8 +23,15 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
   });
   const [consentRgpd, setConsentRgpd] = useState(false);
   const [honeypot, setHoneypot] = useState("");
+  const [formStartedAt, setFormStartedAt] = useState<number>(0);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    if (isOpen) {
+      setFormStartedAt(Date.now());
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -46,22 +55,38 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
     setErrorMessage("");
 
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch(CONTACT_ENDPOINT, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "text/plain;charset=utf-8",
         },
         body: JSON.stringify({
-          ...formData,
-          source: "ContactModal",
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          phone: formData.phone.trim(),
+          city: formData.city.trim(),
+          propertyType: formData.propertyType.trim(),
+          message: formData.message.trim(),
           consentRgpd: true,
           honeypot,
+          formStartedAt,
+          source: "ContactModal",
         }),
       });
 
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.error || "Erreur d'envoi");
+      let data: any = null;
+      try {
+        data = await response.json();
+      } catch {
+        throw new Error(
+          language === "fr"
+            ? "Réponse invalide du serveur de contact. Veuillez réessayer."
+            : "Invalid response from contact server. Please try again."
+        );
+      }
+
+      if (!response.ok || data?.ok !== true) {
+        throw new Error(data?.error || "Erreur d'envoi");
       }
 
       setStatus("success");
@@ -74,6 +99,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
         message: "",
       });
       setConsentRgpd(false);
+      setFormStartedAt(Date.now());
     } catch (err: any) {
       console.error(err);
       setStatus("error");
