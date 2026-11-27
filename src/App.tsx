@@ -18,6 +18,7 @@ import BlogIndexPage from "@/pages/BlogIndexPage";
 import BlogPostPage from "@/pages/BlogPostPage";
 import LegalPage from "@/pages/LegalPage";
 import NotFoundPage from "@/pages/NotFoundPage";
+import BreadcrumbSchema from "@/components/BreadcrumbSchema";
 
 function PageRouter() {
   const { path } = useRouter();
@@ -66,6 +67,7 @@ function PageRouter() {
 
   return (
     <div className="min-h-screen selection:bg-accent selection:text-white flex flex-col justify-between pb-14 md:pb-0">
+      <BreadcrumbSchema path={cleanPath} />
       <Navbar />
       <main id="main-content" className="flex-grow">
         {pageContent}

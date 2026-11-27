@@ -126,8 +126,8 @@ export default function SectorPage({ slug }: { slug: string }) {
 
       {/* Other Sectors Navigation */}
       <div className="container mx-auto px-6 max-w-5xl mb-24 text-left">
-        <h2 className="text-sm uppercase tracking-[0.2em] font-bold text-primary/60 mb-6">
-          Découvrez nos autres secteurs en Isère
+        <h2 className="text-sm uppercase tracking-[0.2em] font-bold text-primary mb-6">
+          Nos autres secteurs
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           {Object.values(SECTORS_DATA)

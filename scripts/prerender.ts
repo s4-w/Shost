@@ -90,6 +90,11 @@ export async function prerender() {
         html = html.replace("</head>", `  <meta name="twitter:url" content="${meta.canonical}" />\n</head>`);
       }
 
+      // Add noindex on 404 page
+      if (route === "/404") {
+        html = html.replace("</head>", `  <meta name="robots" content="noindex, nofollow" />\n</head>`);
+      }
+
       // Inject rendered app HTML into root div
       html = html.replace('<div id="root"></div>', `<div id="root">${appHtml}</div>`);
 
@@ -97,6 +102,8 @@ export async function prerender() {
       let outFilePath = templatePath;
       if (route === "/") {
         outFilePath = templatePath;
+      } else if (route === "/404") {
+        outFilePath = path.join(distDir, "404.html");
       } else {
         const routeDir = path.join(distDir, route.replace(/^\//, ""));
         if (!fs.existsSync(routeDir)) {

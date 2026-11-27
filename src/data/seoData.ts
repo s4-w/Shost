@@ -24,7 +24,7 @@ export const SEO_DATA: Record<string, SeoPageMeta> = {
     title: "Services Conciergerie Airbnb Grenoble | SHOST",
     description: "Découvrez les services SHOST à Grenoble : création d'annonces, ménage hôtelier, accueil 24/7, blanchisserie et optimisation dynamique des prix.",
     canonical: `${BASE_URL}/services`,
-    h1: "Nos Services de Conciergerie & Gestion Complète à Grenoble",
+    h1: "Services de conciergerie Airbnb à Grenoble et en Isère",
     type: "website"
   },
   "/tarifs": {

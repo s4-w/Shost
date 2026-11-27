@@ -39,11 +39,12 @@ export default function BlogPostPage({ slug }: { slug: string }) {
     "description": post.metaDescription || post.excerpt,
     "image": "https://shost-services.com/og-image-shost-2026.jpg",
     "datePublished": isoPublishedDate,
-    "dateModified": "2026-10-23T10:00:00+02:00",
+    "dateModified": "2026-11-27T10:00:00+01:00",
     "author": {
-      "@type": "Organization",
-      "name": "SHOST Conciergerie",
-      "url": "https://shost-services.com/"
+      "@type": "Person",
+      "name": "Salah",
+      "jobTitle": "Fondateur de SHOST Conciergerie",
+      "url": "https://shost-services.com/qui-sommes-nous"
     },
     "publisher": {
       "@type": "Organization",
@@ -59,6 +60,25 @@ export default function BlogPostPage({ slug }: { slug: string }) {
     },
     "inLanguage": "fr-FR",
     "articleSection": post.category
+  };
+
+  const renderRichText = (text: string) => {
+    const parts = text.split(/(\[[^\]]+\]\([^)]+\))/g);
+    return parts.map((part, i) => {
+      const match = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+      if (match) {
+        return (
+          <a
+            key={i}
+            href={match[2]}
+            className="text-accent hover:underline font-medium"
+          >
+            {match[1]}
+          </a>
+        );
+      }
+      return <React.Fragment key={i}>{part}</React.Fragment>;
+    });
   };
 
   return (
@@ -111,12 +131,12 @@ export default function BlogPostPage({ slug }: { slug: string }) {
               <h2 className="text-2xl font-serif text-primary font-bold">{sec.sectionTitle}</h2>
               {sec.paragraphs.map((p, pIdx) => (
                 <p key={pIdx} className="leading-relaxed">
-                  {p}
+                  {renderRichText(p)}
                 </p>
               ))}
               {sec.callout && (
                 <div className="my-6 p-6 rounded-2xl bg-[#FAF5EC]/80 border border-accent/30 font-medium text-primary text-sm">
-                  {sec.callout}
+                  {renderRichText(sec.callout)}
                 </div>
               )}
             </section>

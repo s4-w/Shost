@@ -96,7 +96,8 @@ export const RouterProvider: React.FC<{ initialPath?: string; children: React.Re
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const currentMeta = SEO_DATA[path] || SEO_DATA["/404"];
+    const cleanPath = path.length > 1 && path.endsWith("/") ? path.slice(0, -1) : path;
+    const currentMeta = SEO_DATA[cleanPath] || SEO_DATA["/404"];
     if (currentMeta) {
       // 1. Document title
       document.title = currentMeta.title;
